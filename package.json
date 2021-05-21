@@ -11,6 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "raspberrypi-node-camera-web-streamer": "^1.1.2"
+    "onoff": "^6.0.3",
+    "raspberrypi-node-camera-web-streamer": "^1.1.2",
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
