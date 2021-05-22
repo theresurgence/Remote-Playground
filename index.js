@@ -6,6 +6,9 @@ const server = app.listen(port, () => console.log(`Server started on port ${port
 var socket = require('socket.io');       //import socket server                           
 var io = socket(server);                                            
 
+var gpio1_status = 0;
+var gpio2_status = 0;
+var gpio3_status = 0;
 
 var online = 0; //number of online users
 
@@ -14,18 +17,33 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
     online += 1;
     io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
     
+    //Listening for events
     socket.on('disconnect', ()=> {
         console.log(socket.id, 'disconnected');
         online -= 1;
         io.sockets.emit('online', online);
     });
 
+    socket.on('gpio1_click', ()=> {
+        gpio1_status = !gpio1_status;
+        toggle1(gpio1_status);
+        io.sockets.emit('gpio1_click', gpio1_status);
+    });
+
+    socket.on('gpio2_click', ()=> {
+        gpio2_status = !gpio2_status;
+        toggle2(gpio2_status);
+        io.sockets.emit('gpio2_click', gpio2_status);
+    });
+
+    socket.on('gpio3_click', ()=> {
+        gpio3_status = !gpio3_status;
+        toggle3(gpio3_status);
+        io.sockets.emit('gpio3_click', gpio3_status);
+    });
+
+
 });
-
-
-
-
-
 
 
 

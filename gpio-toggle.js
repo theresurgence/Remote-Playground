@@ -6,10 +6,17 @@ const LED_2 = new Gpio(22, 'out');
 const LED_3 = new Gpio(26, 'out');
 
 //fn that toggles gpio given the parameters
-toggle = (gpio1, gpio2, gpio3) => {
-    LED_1.writeSync(gpio1 ? 1 : 0);
-    LED_2.writeSync(gpio2 ? 1 : 0);
-    LED_3.writeSync(gpio3 ? 1 : 0);
+toggle1 = (is_on) => {
+    LED_1.writeSync(is_on ? 1 : 0);
 };
 
-module.exports = { toggle }; //export toggle fn
+toggle2 = (is_on) => {
+    LED_2.writeSync(is_on ? 1 : 0);
+};
+
+toggle3 = (is_on) => {
+    LED_3.writeSync(is_on ? 1 : 0);
+};
+
+
+module.exports = { toggle1, toggle2, toggle3 }; //export toggle fns
