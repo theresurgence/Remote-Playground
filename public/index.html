@@ -1,9 +1,25 @@
-<html>
-<head>
-<title>Raspberry Pi - Camera Stream</title>
-</head>
-<body style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; background: #111;">
-<img src="stream.mjpg" style="position: fixed; top: 0px; left: 0px; right: 0px; height: 100%; width: calc(100% + 2px); object-fit: contain;">
-</body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+        <script src="/socket.io/socket.io.js"></script>
+
+        <title>Remote Playground</title>
+    </head>
+
+
+    <body>
+        <h1>Remote Playground</h1>
+
+        <p>Online: <em id="online"></em></p>
+
+
+        <img src="stream.mjpg" id="videoStream"> 
+
+
+
+        <script src="/main.js"></script>
+    </body>
 </html>
 
