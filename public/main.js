@@ -1,4 +1,5 @@
-var socket = io.connect('http://192.168.18.45:3000'); //client establishes websocket connection to server
+var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
+
 
 var online = document.getElementById('online'),
 
