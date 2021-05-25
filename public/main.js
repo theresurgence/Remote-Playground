@@ -1,4 +1,8 @@
-var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
+//************************8 uncomment this below if no RPI ******************************************************/
+// var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
+
+/**************************************88 comment if no RPI *****************************/
+var socket = io.connect('http://192.168.18.45:3000'); //client establishes websocket connection to server
 
 
 var online = document.getElementById('online'),
@@ -9,7 +13,7 @@ var online = document.getElementById('online'),
 
 //Listen for events
 socket.on('online', (online_num)=>{
-    online.innerHTML = online_num;  
+    online.innerHTML = `<b>Online: ${online_num}</b>`;  
 });
 
 socket.on('gpio1_click', (gpio1_status)=>{

@@ -47,17 +47,16 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
 
 
-// const toggle = require('./gpio-toggle').toggle; //import toggle fn from gpio-toggle module
-
-
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true);
+/************************************ COMMENT OUT if not PI  **********************************/
+const toggle = require('./gpio-toggle').toggle; //import toggle fn from gpio-toggle module
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    fps: 16,
+    encoding: 'JPEG',
+    quality: 10 //lower is faster
+}, '/stream.mjpg', true);
 
 
 app.use(express.static(__dirname+'/public')); //front-end files in public
