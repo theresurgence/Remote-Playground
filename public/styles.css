@@ -1,33 +1,41 @@
 :root {
     --coollime: #c9e265;
     --darkmodeblue: #152349;
+    --darkmodeblue2: #0b1328;
+    --darkmodeblue3: #28428a;
     --coralred: #ff5757;
+    --coralred2: #b30000;
     --darkhue1: #414141;
     --darkhue2: #242424;
 }
 
 #bigcontainer {
-    background-color: var(--coollime);
+    background-color: var(--darkmodeblue2);
     padding: 0;
     margin: 0;
-    font-family: 'Nunito';
+    border-bottom: solid var(--coralred) 14px;
+    font-family: 'Arial';
 }
 
 body {
     padding: 0;
     margin: 0;
-    background-color: var(--darkhue1);
+    background-image: url(https://lh3.googleusercontent.com/JNJUYzmGbHdtfHkhnfWFtO563txScqm878x4yu-tTVHp1JlIa5mpDTc7S_mUtrJdPGnoCz9Dbfp9vASLzE8k7W635OK8uWHDu5V4sHoz6x-_4mRRrVxe3e5MJGRma_49FZz5YyziJ5_rAPXO30a2JuCd6AhDfKSSC5sWiQb8nZfbwCYhP1Kg06DZC1Qiyb6QtGNR_iwxsUVsKUKaForiG_cE5eeDYkdtxCrLuQWkWbqpcvHaKLo-eHkWQQtsWsxjfoPkV9p04ZIYZNYiZ3ucjbKDELUHoPloGVthZO4wmQE7r3niC10TCJSa6Ojsn_MASkLtfdfkRhfvRmrPicsBM-BWUUwIVMocSCtoyeKEkgpjjOVx_kwGx6HOrUip7TSt0iIAKqQNUEcUclEKoDjQ9nNMI9qOA9_luoKpNWa0w4Ps6d6TPXGWgHmfvUPByfnTJIkqA5bUdUg2Da8pVOl2hBswrsTcF8rGZQBl6UB_zW0ZBHW8Y-Ne-bFQlEsfOis4xsthL8_z-Kc-aGXOfBRYWmk3vdY7xP-hZnw33hWy42wBWIJCX91ant1-Gd23WuL4ghHSgR9DzaBKfb51NrUiQWNBJnVqVNqjFEY7upkSvG_vqYp4a9HIZv5HkwO6CCHSTpCAdlK62oEhCoRR-dOqpcAyhx7Xw9zVK9SLnlJYWXYrk40JgIiPahePb-2fMcGIAn54BeHLL-WMA-AV_29Wk-o=w1666-h937-no?authuser=0);
+    opacity: 0.96;
     width: auto;
 }
 
 h1 {
     color: var(--coralred);
-    text-decoration: underline;
-    font-size: 24px;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: 2px 2px var(--coralred2);
 }
 
 p {
-    font-size: 18px;
+    font-size: 22px;
+    color: white;
 }
 
 input {
@@ -86,8 +94,8 @@ input {
 
 .nav-link {
     color: var(--darkmodeblue);
-    font-family: 'Courier-New', monospace;
     text-decoration: none;
+    font-family: monospace;
     font-size: 20px;
 }
 
@@ -99,12 +107,12 @@ input {
 }
 
 #online-box {
-    background-color: var(--darkhue2);
-    margin-top: 10px;
-    margin-right: 10px;
+    background-color: var(--darkmodeblue3);
+    margin-top: 30px;
+    margin-right: 30px;
     padding-left: 5px;
     padding-right: 100px;
-    border-bottom: solid white 5px;
+    border-bottom: solid var(--darkmodeblue) 4px;
     border-radius: 25px;
 }
 
@@ -119,6 +127,8 @@ input {
     background-color: var(--darkhue2);
     border-radius: 25px;
     border: solid white 4px;
+    margin: 50px;
+    padding-top: 14px;
 }
 
 #play-buttons {
@@ -141,16 +151,16 @@ input {
 }
 
 .pad5percent {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 /* Media Query*/
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
     body {
         background-color: var(--darkhue1);
-        width: 1200px;
+        width: 85%;
         margin: auto;
     }
 }
