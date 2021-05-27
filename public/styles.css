@@ -7,6 +7,7 @@
     --coralred2: #b30000;
     --darkhue1: #414141;
     --darkhue2: #242424;
+    --white2: #d9d9d9;
 }
 
 #bigcontainer {
@@ -20,8 +21,8 @@
 body {
     padding: 0;
     margin: 0;
-    /* background-image: url(https://lh3.googleusercontent.com/JNJUYzmGbHdtfHkhnfWFtO563txScqm878x4yu-tTVHp1JlIa5mpDTc7S_mUtrJdPGnoCz9Dbfp9vASLzE8k7W635OK8uWHDu5V4sHoz6x-_4mRRrVxe3e5MJGRma_49FZz5YyziJ5_rAPXO30a2JuCd6AhDfKSSC5sWiQb8nZfbwCYhP1Kg06DZC1Qiyb6QtGNR_iwxsUVsKUKaForiG_cE5eeDYkdtxCrLuQWkWbqpcvHaKLo-eHkWQQtsWsxjfoPkV9p04ZIYZNYiZ3ucjbKDELUHoPloGVthZO4wmQE7r3niC10TCJSa6Ojsn_MASkLtfdfkRhfvRmrPicsBM-BWUUwIVMocSCtoyeKEkgpjjOVx_kwGx6HOrUip7TSt0iIAKqQNUEcUclEKoDjQ9nNMI9qOA9_luoKpNWa0w4Ps6d6TPXGWgHmfvUPByfnTJIkqA5bUdUg2Da8pVOl2hBswrsTcF8rGZQBl6UB_zW0ZBHW8Y-Ne-bFQlEsfOis4xsthL8_z-Kc-aGXOfBRYWmk3vdY7xP-hZnw33hWy42wBWIJCX91ant1-Gd23WuL4ghHSgR9DzaBKfb51NrUiQWNBJnVqVNqjFEY7upkSvG_vqYp4a9HIZv5HkwO6CCHSTpCAdlK62oEhCoRR-dOqpcAyhx7Xw9zVK9SLnlJYWXYrk40JgIiPahePb-2fMcGIAn54BeHLL-WMA-AV_29Wk-o=w1666-h937-no?authuser=0); */
-    background-image: url();
+    /*background-image: url(https://lh3.googleusercontent.com/JNJUYzmGbHdtfHkhnfWFtO563txScqm878x4yu-tTVHp1JlIa5mpDTc7S_mUtrJdPGnoCz9Dbfp9vASLzE8k7W635OK8uWHDu5V4sHoz6x-_4mRRrVxe3e5MJGRma_49FZz5YyziJ5_rAPXO30a2JuCd6AhDfKSSC5sWiQb8nZfbwCYhP1Kg06DZC1Qiyb6QtGNR_iwxsUVsKUKaForiG_cE5eeDYkdtxCrLuQWkWbqpcvHaKLo-eHkWQQtsWsxjfoPkV9p04ZIYZNYiZ3ucjbKDELUHoPloGVthZO4wmQE7r3niC10TCJSa6Ojsn_MASkLtfdfkRhfvRmrPicsBM-BWUUwIVMocSCtoyeKEkgpjjOVx_kwGx6HOrUip7TSt0iIAKqQNUEcUclEKoDjQ9nNMI9qOA9_luoKpNWa0w4Ps6d6TPXGWgHmfvUPByfnTJIkqA5bUdUg2Da8pVOl2hBswrsTcF8rGZQBl6UB_zW0ZBHW8Y-Ne-bFQlEsfOis4xsthL8_z-Kc-aGXOfBRYWmk3vdY7xP-hZnw33hWy42wBWIJCX91ant1-Gd23WuL4ghHSgR9DzaBKfb51NrUiQWNBJnVqVNqjFEY7upkSvG_vqYp4a9HIZv5HkwO6CCHSTpCAdlK62oEhCoRR-dOqpcAyhx7Xw9zVK9SLnlJYWXYrk40JgIiPahePb-2fMcGIAn54BeHLL-WMA-AV_29Wk-o=w1666-h937-no?authuser=0);*/
+    background-image: url(../images/RetroRobots.jpg);
     opacity: 0.96;
     width: auto;
 }
@@ -75,12 +76,27 @@ input {
 
 #header {
     background-color: var(--darkmodeblue);
-    width: auto;
 }
 
-#logo {
+#header-container {
     display: flex;
-    justify-content: flex-left;
+    justify-content: space-between;
+}
+
+#form {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.inputs {
+    width: 200px;
+}
+
+#submit {
+    margin-right: 10px;
+    padding: 15px 0px 15px 0px;
 }
 
 #nav-bar {
@@ -99,6 +115,10 @@ input {
     text-decoration: none;
     font-family: monospace;
     font-size: 20px;
+}
+
+.label {
+    color: var(--coralred);
 }
 
 #statuses-container {
@@ -187,9 +207,16 @@ input {
 }
 
 #chat-text-box {
-    background-color: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white2);
+    justify-content: flex-end;
+    align-items: baseline;
     width: 75%;
-    margin-right: 5px;
+}
+
+#chat-input {
+    width: 200px;
 }
 
 /* GENERAL CLASSES */
@@ -250,9 +277,5 @@ input {
     #chat-container {
         width: 100%;
         height: 575px;
-    }
-
-    #chat-text-box {
-        margin-right: 20px;
     }
 }
