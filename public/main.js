@@ -1,8 +1,8 @@
 //************************8 uncomment this below if no RPI ******************************************************/
-// var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
+ var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
 
 /**************************************88 comment if no RPI *****************************/
-var socket = io.connect('http://192.168.18.45:3000'); //client establishes websocket connection to server
+//var socket = io.connect('http://192.168.18.45:3000'); //client establishes websocket connection to server
 
 
 var online = document.getElementById('online'),
@@ -26,6 +26,17 @@ socket.on('gpio2_click', (gpio2_status)=>{
 socket.on('gpio3_click', (gpio3_status)=>{
     gpio3.checked = (gpio3_status) ? true : false;
 });
+
+socket.on('message', text => {
+    const el = document.createElement('li');
+    el.innerHTML = text;
+    document.querySelector('ul').appendChild(el);
+});
+
+document.querySelector('button').onclick = () => {
+    const text = document.querySelector('#chat-input').value;
+    socket.emit('message', text);
+}
 
 gpio1.addEventListener('click', ()=>{
     socket.emit('gpio1_click');
