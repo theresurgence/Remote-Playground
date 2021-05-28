@@ -44,52 +44,45 @@
         </section>
     </div>
 
-    <section id="playground" class="pad5percent">
-        <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
-        <div id="play-chat-container">
-            <div id="play-container">
-                <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */ -->
-                <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div>
-                <div id="play-buttons">
-                    <input id="gpio1" type="button" class="button" value="LED1">
-                    <input id="gpio2" type="button" class="button" value="LED2">
-                    <input id="gpio3" type="button" class="button" value="LED3">
-                </div>
-            </div>
+    <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
+    <div id="play-chat-container">
+        <div id="play-container">
+            <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> --> 
+            <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div>
 
-            <section id="playground" class="pad5percent">
-                <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
-                <div id="play-chat-container">
-                    <div id="play-container">
-                        <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */
-                        <!-- <div id="play-box"><img id="videoStream" src="/images/playground.jpg"></div> /* Comment if no RPI */ -->
-                        <div id="play-buttons">
-                            <input id="gpio1" type="button" class="button" value="LED1">
-                            <input id="gpio2" type="button" class="button" value="LED2">
-                            <input id="gpio3" type="button" class="button" value="LED3">
-                        </div>
-                        <script src="/main.js"></script>
-                    </div>
-                    <!-- <div id="chat-container"> -->
-                    <!--     <div id="chat-header-box"> -->
-                    <!--         <h1 id="chat-header">LIVE CHAT</h1> -->
-                    <!--     </div> -->
-                    <!--     <div id="chat-text-box"> -->
-                    <!--     </div> -->
-                    <!-- </div> -->
-                    <div id="chat-container">
-                        <div id="chat-header-box">
-                            <h1 id="chat-header">LIVE CHAT</h1>
-                        </div>
-                        <div id="chat-text-box">
-                            <ul>
-                            </ul>
-                            <input id="chat-input" placeholder="Type to Chat">
-                            <button>Send</button>
-                        </div>
+            <div id="play-buttons">
+                <input id="gpio1" type="button" class="button" value="LED1">
+                <input id="gpio2" type="button" class="button" value="LED2">
+                <input id="gpio3" type="button" class="button" value="LED3">
+                <input id="gpio4" type="button" class="button" value="LED4">
             </div>
         </div>
+        <div id="chat-container">
+            <div id="chat-header-box">
+                <h1 id="chat-header">LIVE CHAT</h1>
+            </div>
+            <div id="chat-text-box">
+                <ul>
+                </ul>
+                <input id="chat-input" placeholder="Type to Chat">
+                <button id="submit-msg">Send</button>
+            </div>
+        </div>
+    </div>
     </section>
+
+    <div>
+
+        <div id="simon-buttons">
+            <input id="simon1" type="button" class="button" value="LED1">
+            <input id="simon2" type="button" class="button" value="LED2">
+            <input id="simon3" type="button" class="button" value="LED3">
+            <input id="simon4" type="button" class="button" value="LED3">
+        </div>
+
+
+    </div>
+
 
     <section id="about" class="pad5percent">
         <h1 id="about-heading">ABOUT</h1>
@@ -105,6 +98,7 @@
 
 
     </div>
+
 </body>
 </html>
 

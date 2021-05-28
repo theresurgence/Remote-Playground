@@ -6,6 +6,9 @@ const LED_2 = new Gpio(22, 'out');
 const LED_3 = new Gpio(26, 'out');
 const LED_4 = new Gpio(12, 'out');
 
+var simon_history = []; 
+var user_history = [];
+
 const leds_list = [LED_1, LED_2, LED_3, LED_4];
 
 function sleep(ms) {
@@ -39,14 +42,6 @@ async function blinks(simon_history) {
     } while (i < simon_history.length);
 };
 
-// async function simon(simon_history, iter) {
-
-//     for (let i = 0; i < iter; i++) {
-//         blinks(simon_history);
-//         await sleep(500);
-//     }
-// };
-
 // do this when no one online / never invoke the led 
 function endBlink(LED) { //function to stop blinking
     LED_ctl(LED, 0); // Turn LED off
@@ -61,7 +56,6 @@ module.exports = {
     blink,
     blinks,
     endBlink,
-    // simon,
     sleep
 }; //export toggle fns
 

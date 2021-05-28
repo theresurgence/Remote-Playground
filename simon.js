@@ -1,14 +1,50 @@
 const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 
 
-
 var simon_history = []; 
+var user_history = []; 
 
-// gpio.blinks(simon_history);
-// gpio.blinks(simon_history);
 
-gpio.blinks(simon_history);
+var user_input = -1;
 
+async function user_inputs() {
+
+    for (let i=0; i<simon_history.length; i++) {
+        user_history.push(user_input);
+        await gpio.blinks(simon_history);
+
+    }
+    if (user_input == simon_history[simon_history.length-1]) {
+
+}
+
+
+
+
+async function simon() {
+    var game_on = true;
+
+    while (game_on) {
+
+        await gpio.blinks(simon_history);
+
+        console.log();
+        if (user_input == simon_history[simon_history.length-1]) {
+            user_history.push(user_input);
+            await gpio.blinks(simon_history);
+
+        }
+
+
+        game_on = false;
+    }
+}
+
+
+
+
+
+simon();
 
 
 
