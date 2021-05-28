@@ -26,19 +26,19 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
     socket.on('gpio1_click', ()=> {
         gpio1_status = !gpio1_status;
-        toggle1(gpio1_status);
+        LED1(gpio1_status);
         io.sockets.emit('gpio1_click', gpio1_status);
     });
 
     socket.on('gpio2_click', ()=> {
         gpio2_status = !gpio2_status;
-        toggle2(gpio2_status);
+        LED2(gpio2_status);
         io.sockets.emit('gpio2_click', gpio2_status);
     });
 
     socket.on('gpio3_click', ()=> {
         gpio3_status = !gpio3_status;
-        toggle3(gpio3_status);
+        LED3(gpio3_status);
         io.sockets.emit('gpio3_click', gpio3_status);
     });
 
@@ -48,8 +48,9 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
 
 /************************************ COMMENT OUT if not PI  **********************************/
-const toggle = require('./gpio-toggle').toggle; //import toggle fn from gpio-toggle module
+const toggle = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+/************************************ COMMENT OUT if not PI  **********************************/
 videoStream.acceptConnections(app, {
     width: 1280,
     height: 720,
