@@ -1,9 +1,6 @@
 const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 
 
-var simon_history = []; 
-var user_history = []; 
-
 
 var user_input = -1;
 
@@ -17,8 +14,6 @@ async function user_inputs() {
     if (user_input == simon_history[simon_history.length-1]) {
 
 }
-
-
 
 
 async function simon() {
@@ -44,7 +39,7 @@ async function simon() {
 
 
 
-simon();
+// simon();
 
 
 
