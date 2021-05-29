@@ -9,7 +9,12 @@ var online = document.getElementById('online'),
 
     gpio1 = document.getElementById('gpio1'),
     gpio2 = document.getElementById('gpio2'),
-    gpio3 = document.getElementById('gpio3');
+    gpio3 = document.getElementById('gpio3'),
+    userpassbox = document.getElementById("userpass"),
+    inputfield = document.getElementById("user");
+    signup = document.getElementById("signuplink");
+
+var tempname = null;
 
 //Listen for events
 socket.on('online', (online_num)=>{
@@ -27,15 +32,24 @@ socket.on('gpio3_click', (gpio3_status)=>{
     gpio3.checked = (gpio3_status) ? true : false;
 });
 
-socket.on('message', text => {
+socket.on('message', (text) => {
     const el = document.createElement('li');
     el.innerHTML = text;
     document.querySelector('ul').appendChild(el);
 });
 
-document.querySelector('button').onclick = () => {
+document.querySelector('#loginbutton').onclick = () => {
+    tempname = document.getElementById("user").value;
+    document.getElementById("loginbutton").value = "SIGNOUT";
+    document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
+    userpassbox.removeChild(inputfield); 
+    signup.innerHTML = 'PROFILE';
+    signup.href="profile.html";
+}
+
+document.querySelector('#chatbutton').onclick = () => {
     const text = document.querySelector('#chat-input').value;
-    socket.emit('message', text);
+    socket.emit('message', text, tempname);
 }
 
 gpio1.addEventListener('click', ()=>{

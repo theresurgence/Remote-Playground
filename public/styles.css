@@ -83,9 +83,15 @@ input {
     justify-content: space-between;
 }
 
-#form {
+/*#form {
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
+    margin-right: 20px;
+}*/
+
+#userpass {
+    display: flex;
     align-items: center;
     margin-right: 20px;
 }
@@ -94,8 +100,9 @@ input {
     width: 200px;
 }
 
-#submit {
-    margin-right: 10px;
+#loginbutton {
+    /* margin-right: 10px; */
+    margin-left: 10px;
     padding: 15px 0px 15px 0px;
 }
 

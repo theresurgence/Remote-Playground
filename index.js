@@ -1,6 +1,17 @@
 const express = require('express');
+const sqlite3 = require('sqlite3');
+const path = require('path');
+
 const app = express();
-const port = 3000;
+
+let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the UserInfo Database');
+});
+
+const port = 3000; 
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
 var socket = require('socket.io');       //import socket server                           
@@ -42,9 +53,16 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('gpio3_click', gpio3_status);
     });
 
-    socket.on('message', (message) => {
+    // socket.on('loggedIn', (tempname) => {
+    //     console.log(tempname);
+    // })
+
+    socket.on('message', (message, tempname) => {
         console.log(message);
-        io.emit('message', `${socket.id.substr(0,2)}: ${message}`);
+        if (tempname == null)
+            io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
+        else
+            io.emit('message', `${tempname}: ${message}`);
     });
 
 
