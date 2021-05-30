@@ -5,7 +5,7 @@ const server = app.listen(port, () => console.log(`Server started on port ${port
 const sqlite3 = require('sqlite3');
 const path = require('path');
 const gpio = require('./gpio-toggle'); //import gpio functions and variables
-var socket = require('socket.io');       //import socket server                           
+const socket = require('socket.io');       //import socket server                           
 
 /************************************ COMMENT OUT if not PI  **********************************/
 // const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
@@ -28,7 +28,7 @@ let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
 });
 
 
-var io = socket(server);                                            
+const io = socket(server);                                            
 
 var gpio1_status, gpio2_status, gpio3_status, gpio4_status= 0;
 
@@ -53,9 +53,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
     socket.on('gpio1_down', ()=> { 
         gpio.LED_ctl(gpio.LED_1,1);
-        
-
-        
     });
     socket.on('gpio1_leave', ()=> { gpio.LED_ctl(gpio.LED_1,0); });
 
@@ -78,7 +75,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         simon_on = true;
 
 
-
         console.log("SIMON Start")
 
         // SIMON game???
@@ -92,7 +88,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         console.log("SIMON END")
     });
 
-
     socket.on('message', (message, tempname) => {
         console.log(message);
         if (tempname == null)
@@ -100,8 +95,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         else
             io.emit('message', `${tempname}: ${message}`);
     });
-
-
 });
 
 

@@ -1,8 +1,8 @@
 //************************ uncomment this below if no RPI ******************************************************/
-var socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// var socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
 
 const online = document.getElementById('online'),
     gpio1 = document.getElementById('gpio1'),
@@ -13,7 +13,7 @@ const online = document.getElementById('online'),
     userpassbox = document.getElementById("userpass"),
     inputfield = document.getElementById("user"),
     signup = document.getElementById("signuplink"),
-    simon_startquit_btn= document.getElementById('simon-startquit');
+    simon_startquit_btn = document.getElementById('simon-startquit');
 
 // var tempname = null;   //*************************************************
 
@@ -82,14 +82,11 @@ socket.on('simon-start-onlooker', ()=>{
 
 socket.on('simon-start-player', ()=>{
     console.log(simon_start_btn.value);
-
-
 });
 
 
 socket.on('simon-end-onlooker', ()=>{
     document.getElementById('play-buttons').style.display = "flex";
-
 });
 
 socket.on('simon-end-player', ()=>{
