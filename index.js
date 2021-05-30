@@ -1,8 +1,24 @@
 const express = require('express');
+const app = express();
+const port = 3000; 
+const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('sqlite3');
 const path = require('path');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+var socket = require('socket.io');       //import socket server                           
 
-const app = express();
+/************************************ COMMENT OUT if not PI  **********************************/
+// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+
+// videoStream.acceptConnections(app, {
+//     width: 1280,
+//     height: 720,
+//     fps: 16,
+//     encoding: 'JPEG',
+//     quality: 10 //lower is faster
+// }, '/stream.mjpg', true); 
+
+/************************************ COMMENT OUT if not PI  **********************************/
 
 let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
     if (err) {
@@ -11,12 +27,7 @@ let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
     console.log('Connected to the UserInfo Database');
 });
 
-const port = 3000; 
-const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
-const gpio = require('./gpio-toggle'); //import gpio functions and variables
-
-var socket = require('socket.io');       //import socket server                           
 var io = socket(server);                                            
 
 var gpio1_status, gpio2_status, gpio3_status, gpio4_status= 0;
@@ -43,7 +54,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
     socket.on('gpio1_down', ()=> { 
         gpio.LED_ctl(gpio.LED_1,1);
         
-
 
         
     });
@@ -97,18 +107,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
 
 
-/************************************ COMMENT OUT if not PI  **********************************/
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
-
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
-
-/************************************ COMMENT OUT if not PI  **********************************/
 
 app.use(express.static(__dirname+'/public')); //front-end files in public
 

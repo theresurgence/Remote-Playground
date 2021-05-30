@@ -1,10 +1,10 @@
-//************************8 uncomment this below if no RPI ******************************************************/
- var socket = io.connect('http://localhost:3000'); //client establishes websocket connection to server
+//************************ uncomment this below if no RPI ******************************************************/
+var socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
-/**************************************88 comment if no RPI *****************************/
-// var socket = io.connect('http://192.168.18.45:3000'); //client establishes websocket connection to server
+/************************************** comment if no RPI *****************************/
+// var socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
 
-var online = document.getElementById('online'),
+const online = document.getElementById('online'),
     gpio1 = document.getElementById('gpio1'),
     gpio2 = document.getElementById('gpio2'),
     gpio3 = document.getElementById('gpio3'),
@@ -13,9 +13,9 @@ var online = document.getElementById('online'),
     userpassbox = document.getElementById("userpass"),
     inputfield = document.getElementById("user"),
     signup = document.getElementById("signuplink"),
-    simon_startquit_btn= document.getElementById('simon-startquit'),
+    simon_startquit_btn= document.getElementById('simon-startquit');
 
-var tempname = null;
+// var tempname = null;   //*************************************************
 
 
 //Listen for events
