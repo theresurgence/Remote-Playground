@@ -1,25 +1,35 @@
 const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
-const LED_1 = new Gpio(17, 'out');
-const LED_2 = new Gpio(22, 'out');
-const LED_3 = new Gpio(26, 'out');
-const LED_4 = new Gpio(12, 'out');
+const LED_1 = new Gpio(17, 'out'),
+    LED_2 = new Gpio(22, 'out'),
+    LED_3 = new Gpio(26, 'out'),
+    LED_4 = new Gpio(12, 'out');
+
+const leds_list = [LED_1, LED_2, LED_3, LED_4];
 
 var simon_history = []; 
 var user_history = [];
 
-const leds_list = [LED_1, LED_2, LED_3, LED_4];
-
+//for use in async function using await to pause within the async fn
+//code outside the async function still runs
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-};
+}
 
-//fn that sets given gpio to a high or low
+//sets given gpio/LED to a high or low
 function LED_ctl(LED, gpio_status) {
     LED.writeSync(gpio_status);
+}
+
+async function fast_blink(curr_LED) {
+    LED_ctl(curr_LED, 1);
+    await sleep(100); //sleep only within function, rest of code will still run normally
+    LED_ctl(curr_LED, 0);
+    await sleep(100);
 };
 
+//on LED for 1s, off for 1s
 async function blink(curr_LED) {
     LED_ctl(curr_LED, 1);
     await sleep(1000); //sleep only within function, rest of code will still run normally
@@ -35,10 +45,11 @@ async function blinks(simon_history) {
     let i = 0;
     do {
         let curr_LED = leds_list[simon_history[i]];
+        console.log(i)
         blink(curr_LED);
+        await sleep(3000);
         i++;
 
-        await sleep(2000);
     } while (i < simon_history.length);
 };
 
@@ -50,13 +61,17 @@ function endBlink(LED) { //function to stop blinking
 
 
 
+
 module.exports = { 
     LED_1, LED_2, LED_3, LED_4,
     LED_ctl,
     blink,
+    fast_blink,
     blinks,
     endBlink,
-    sleep
+    sleep,
+    simon_history,
+    user_history
 }; //export toggle fns
 
 
