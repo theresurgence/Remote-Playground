@@ -15,7 +15,7 @@ const online = document.getElementById('online'),
     signup = document.getElementById("signuplink"),
     simon_startquit_btn = document.getElementById('simon-startquit');
 
-// var tempname = null;   //*************************************************
+var tempname = null;   //*************************************************
 
 
 //Listen for events
@@ -29,16 +29,18 @@ socket.on('message', text => {
     document.querySelector('ul').appendChild(el);
 });
 
-document.querySelector('#loginbutton').onclick = () => {
-    tempname = document.getElementById("user").value;
-    document.getElementById("loginbutton").value = "SIGNOUT";
-    document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
-    userpassbox.removeChild(inputfield); 
-    signup.innerHTML = 'PROFILE';
-    signup.href="profile.html";
-}
+// Front-end Temp Login, keep it disabled for now
+// document.querySelector('#loginbutton').onclick = () => {
+//     tempname = document.getElementById("user").value;
+//     document.getElementById("loginbutton").value = "SIGNOUT";
+//     document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
+//     userpassbox.removeChild(inputfield); 
+//     signup.innerHTML = 'PROFILE';
+//     signup.href="profile.html";
+// }
 
 document.querySelector('#chatbutton').onclick = () => {
+    console.log("Send");
     const text = document.querySelector('#chat-input').value;
     socket.emit('message', text, tempname);
 }

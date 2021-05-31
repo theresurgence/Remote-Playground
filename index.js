@@ -4,7 +4,7 @@ const port = 3000;
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('sqlite3');
 const path = require('path');
-const gpio = require('./gpio-toggle'); //import gpio functions and variables
+// const gpio = require('./gpio-toggle'); //import gpio functions and variables
 const socket = require('socket.io');       //import socket server                           
 
 /************************************ COMMENT OUT if not PI  **********************************/
