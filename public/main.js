@@ -34,7 +34,7 @@ socket.on('gpio4_click', (gpio4_status)=>{
     gpio4.checked = (gpio4_status) ? true : false;
 });
 
-socket.on('message', text => {
+socket.on('message', (text) => {
     const el = document.createElement('li');
     el.innerHTML = text;
     document.querySelector('ul').appendChild(el);
@@ -53,8 +53,6 @@ document.querySelector('#chatbutton').onclick = () => {
     const text = document.querySelector('#chat-input').value;
     socket.emit('message', text, tempname);
 }
-
-
 
 gpio1.addEventListener('click', ()=>{
     socket.emit('gpio1_click');

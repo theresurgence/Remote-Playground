@@ -11,11 +11,11 @@
 
 
 <body>
-    <div id="bigcontainer">
+    <div class="bigcontainer">
 
         <header id="header">
-            <div id="header-container"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px>
-                <!--<form action="" id="form">
+            <div id="header-container"> <a href="index.html"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px> </a>
+                <form action="auth" method="POST" id="form">
                 <div id="userpass">
                     <label for="user" id="user-label" class="nav-link label">USERNAME:</label>
                     <input id="user" type="email" name="email" class="inputs" placeholder="example@abc.com" required>
@@ -23,13 +23,13 @@
                     <input id="password" type="password" name="password" class="inputs" required>
                 </div>
                 <input type="submit" id="submit" value="LOGIN" class="button">
-            </form>-->
-                <div id="userpass">
+            </form>
+                <!-- <div id="userpass">
                     <label for="user" id="user-label" class="nav-link label">USER-ID:</label>
                     <input id="user" type="text" name="user" class="inputs" value="">
-                    <!-- <button class="button" id="loginbutton"> LOGIN </button> -->
+                    <button class="button" id="loginbutton"> LOGIN </button> 
                     <input id="loginbutton" type="button" class="button" value="LOGIN">
-                </div>
+                </div> -->
             </div>
 
         <nav id="nav-bar">
@@ -51,34 +51,38 @@
         </section>
     </div>
 
-    <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
-    <div id="play-chat-container">
-        <div id="play-container">
-            <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> --> 
-            <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div>
-
-            <div id="play-buttons">
-                <input id="gpio1" type="button" class="button" value="LED1">
-                <input id="gpio2" type="button" class="button" value="LED2">
-                <input id="gpio3" type="button" class="button" value="LED3">
-                <input id="gpio4" type="button" class="button" value="LED4">
+    <section id="playground" class="pad5percent">
+        <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
+        <div id="play-chat-container">
+            <div id="play-container">
+                <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */ -->
+                <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div>
+                <div id="play-buttons">
+                    <input id="gpio1" type="button" class="button" value="LED1">
+                    <input id="gpio2" type="button" class="button" value="LED2">
+                    <input id="gpio3" type="button" class="button" value="LED3">
+                    <input id="gpio4" type="button" class="button" value="LED4">
+                </div>
             </div>
             <div id="chat-container">
                 <div id="chat-header-box">
                     <h1 id="chat-header">LIVE CHAT</h1>
                 </div>
                 <div id="chat-text-box">
+                    <div id="text-box">
                     <ul>
                     </ul>
+                    </div>
+                    <div id="chat-input-con">
                     <input id="chat-input" placeholder="Type to Chat">
                     <input id="chatbutton" type="button" class="button" value="Send">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
 
-    <div>
+    <!-- <div>
         <div id="simon-buttons">
             <input id="simon1" type="button" class="button" value="LED1">
             <input id="simon2" type="button" class="button" value="LED2">
@@ -87,7 +91,7 @@
         </div>
 
 
-    </div>
+    </div> -->
 
 
     <section id="about" class="pad5percent">

@@ -21,7 +21,7 @@ var gpio1_status, gpio2_status, gpio3_status, gpio4_status= 0;
 
 var online = 0; //number of online users
 
-const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
+// const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 
 io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
     console.log(socket.id, 'connected');
@@ -58,7 +58,6 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         gpio.LED_ctl(gpio.LED_4, gpio4_status)
         io.sockets.emit('gpio4_click', gpio4_status);
     });
-
     
     socket.on('start_simon', ()=> {
         gpio1_status = !gpio1_status;
@@ -78,7 +77,7 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 });
 
 
-gpio.LED_ctl(gpio.LED_1, 'a');
+// gpio.LED_ctl(gpio.LED_1, 'a');
 
 
 /************************************ COMMENT OUT if not PI  **********************************/

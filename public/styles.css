@@ -8,9 +8,10 @@
     --darkhue1: #414141;
     --darkhue2: #242424;
     --white2: #d9d9d9;
+    --white3: #b3b3b3;
 }
 
-#bigcontainer {
+.bigcontainer {
     background-color: var(--darkmodeblue2);
     padding: 0;
     margin: 0;
@@ -199,7 +200,7 @@ input {
     border-radius: 25px;
     border: solid white 4px;
     margin: 50px;
-    height: 300px;
+    max-height: 300px;
 }
 
 #chat-header-box {
@@ -216,12 +217,19 @@ input {
 #chat-text-box {
     display: flex;
     flex-direction: column;
-    background-color: var(--white2);
-    justify-content: flex-end;
-    align-items: baseline;
-    width: 75%;
+    background-color: var(--white3);
+    width: 80%;
 }
 
+#text-box {
+    overflow-y: scroll;
+    background-color: var(--white2);
+    height: 300px;
+}
+
+#chat-input-con {
+    display: flex;
+}
 #chat-input {
     width: 200px;
 }
@@ -245,6 +253,19 @@ input {
     margin-right: 2%;
 }
 
+/* SIGN UP PAGE*/
+#signup {
+    margin-left: 5%;
+}
+
+#signupcontainer {
+    display: flex;
+}
+  
+.form-entry {
+    width: 200px;
+}
+
 /* Media Query*/
 
 @media (min-width: 768px) {
@@ -260,15 +281,11 @@ input {
         justify-content: space-between;
     }
 
-    #online-box {
-        background-color: var(--darkmodeblue3);
+    #online-box {    
         margin-top: 30px;
         margin-right: 30px;
         padding-left: 5px;
         padding-right: 100px;
-        border-bottom: solid var(--darkmodeblue) 4px;
-        border-radius: 25px;
-        height: 50px;
     }
 
     #online-count {
