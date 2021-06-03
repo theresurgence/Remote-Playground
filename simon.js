@@ -1,7 +1,12 @@
 const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 
-gpio.LED_ctl(gpio.LED_1, 0);
 
+ gpio.simon_game();
+
+
+
+// gpio.blink(gpio.LED_1);
+// gpio.blink(gpio.LED_2);
 
 // var user_input = -1;
 

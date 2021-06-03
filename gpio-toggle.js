@@ -2,9 +2,9 @@ const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
 const LED_1 = new Gpio(17, 'out'),
-    LED_2 = new Gpio(22, 'out'),
-    LED_3 = new Gpio(26, 'out'),
-    LED_4 = new Gpio(12, 'out');
+      LED_2 = new Gpio(22, 'out'),
+      LED_3 = new Gpio(26, 'out'),
+      LED_4 = new Gpio(12, 'out');
 
 const leds_list = [LED_1, LED_2, LED_3, LED_4];
 
@@ -37,7 +37,8 @@ async function blink(curr_LED) {
     await sleep(1000);
 };
 
-async function blinks(simon_history) {
+async function blinks() {
+    console.log("************************************newblink\n");
     let random_led = Math.floor(Math.random() * 4);
     simon_history.push(random_led);
     console.log(simon_history);
@@ -46,12 +47,28 @@ async function blinks(simon_history) {
     do {
         let curr_LED = leds_list[simon_history[i]];
         console.log(i)
-        blink(curr_LED);
-        await sleep(3000);
+        await blink(curr_LED); //ensures that blink happens one at a time
         i++;
 
     } while (i < simon_history.length);
 };
+
+
+async function simon_game() {
+    await blinks();
+    await sleep(1000);
+    await blinks();
+    await sleep(1000);
+    await blinks();
+}
+
+
+
+
+
+
+
+
 
 // do this when no one online / never invoke the led 
 function endBlink(LED) { //function to stop blinking
@@ -71,7 +88,8 @@ module.exports = {
     endBlink,
     sleep,
     simon_history,
-    user_history
+    user_history,
+    simon_game
 }; //export toggle fns
 
 
