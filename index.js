@@ -4,19 +4,19 @@ const port = 3000;
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('sqlite3');
 const path = require('path');
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
 const socket = require('socket.io');       //import socket server                           
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    fps: 16,
+    encoding: 'JPEG',
+    quality: 10 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 

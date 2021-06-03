@@ -1,8 +1,8 @@
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
 
 const online = document.getElementById('online'),
     gpio1 = document.getElementById('gpio1'),
