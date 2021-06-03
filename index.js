@@ -51,19 +51,19 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('online', online);
     });
 
-    socket.on('gpio1_down', ()=> { 
+    socket.on('gpio1_on', ()=> { 
         gpio.LED_ctl(gpio.LED_1,1);
     });
-    socket.on('gpio1_leave', ()=> { gpio.LED_ctl(gpio.LED_1,0); });
+    socket.on('gpio1_off', ()=> { gpio.LED_ctl(gpio.LED_1,0); });
 
-    socket.on('gpio2_down', ()=> { gpio.LED_ctl(gpio.LED_2,1); });
-    socket.on('gpio2_leave', ()=> { gpio.LED_ctl(gpio.LED_2,0);});
+    socket.on('gpio2_on', ()=> { gpio.LED_ctl(gpio.LED_2,1); });
+    socket.on('gpio2_off', ()=> { gpio.LED_ctl(gpio.LED_2,0);});
 
-    socket.on('gpio3_down', ()=> { gpio.LED_ctl(gpio.LED_3,1); });
-    socket.on('gpio3_leave', ()=> { gpio.LED_ctl(gpio.LED_3,0);});
+    socket.on('gpio3_on', ()=> { gpio.LED_ctl(gpio.LED_3,1); });
+    socket.on('gpio3_off', ()=> { gpio.LED_ctl(gpio.LED_3,0);});
 
-    socket.on('gpio4_down', ()=> { gpio.LED_ctl(gpio.LED_4,1); });
-    socket.on('gpio4_leave', ()=> { gpio.LED_ctl(gpio.LED_4,0);});
+    socket.on('gpio4_on', ()=> { gpio.LED_ctl(gpio.LED_4,1); });
+    socket.on('gpio4_off', ()=> { gpio.LED_ctl(gpio.LED_4,0);});
 
     
     socket.on('simon-start', ()=> {
@@ -73,14 +73,38 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.to('onlookers room').emit('simon-start-onlooker');
         io.to('simon room').emit('simon-start-player');
         simon_on = true;
+        gpio.simon_start();
+
+        ///////////////////////////////////
+
+        // socket.on('gpio1_down1', ()=> { 
+        //     gpio.LED_ctl(gpio.LED_1,1);
+            
+        // });
+
+        // socket.on('gpio1_leave1', ()=> { 
+        //     gpio.LED_ctl(gpio.LED_1,0); });
 
 
-        console.log("SIMON Start")
+
+
+
+
+
+
+
+
+
+        /////////////////////////////////////////
+
+        console.log("SIMON START")
 
         // SIMON game???
     });
 
     socket.on('simon-end', ()=> {
+        simon_on = false;
+        gpio.simon_end();
         socket.leave('simon room')
         socket.join('onlookers room');
 

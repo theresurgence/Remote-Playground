@@ -17,6 +17,11 @@ const online = document.getElementById('online'),
 
 var tempname = null;   //*************************************************
 
+const gpio_list = [gpio1, gpio2, gpio3, gpio4];
+
+
+
+
 
 //Listen for events
 socket.on('online', (online_num)=>{
@@ -46,26 +51,34 @@ document.querySelector('#chatbutton').onclick = () => {
 }
 
 
+function addMultipleEventListener(element, events, handler) {
+  events.forEach(e => element.addEventListener(e, handler))
+}
 
-gpio1.addEventListener("mousedown", ()=>{ socket.emit('gpio1_down'); }); 
-gpio1.addEventListener('mouseup', ()=>{ socket.emit('gpio1_leave'); });
-gpio1.addEventListener("touchstart", ()=>{ socket.emit('gpio1_down'); }); 
-gpio1.addEventListener('touchend', ()=>{ socket.emit('gpio1_leave'); });
+function removeMultipleEventListener(element, events, handler) {
+  events.forEach(e => element.addEventListener(e, handler))
+}
 
-gpio2.addEventListener('mousedown', ()=>{ socket.emit('gpio2_down'); }); 
-gpio2.addEventListener('mouseup', ()=>{ socket.emit('gpio2_leave'); });
-gpio2.addEventListener("touchstart", ()=>{ socket.emit('gpio2_down'); }); 
-gpio2.addEventListener('touchend', ()=>{ socket.emit('gpio2_leave'); });
+//Accounting for both touch and mouse events to toggle the 4 gpios on or off
+for (let i = 0; i < 4; i++) {
+    addMultipleEventListener(gpio_list[i], ["mousedown", "touchstart"], ()=>{ socket.emit(`gpio${i + 1}_on`);});
+    addMultipleEventListener(gpio_list[i], ["mouseup", "touchend", "mouseleave"], ()=>{ socket.emit(`gpio${i + 1}_off`);});
+    console.log(`gpio${i + 1}_on`);
+}
 
-gpio3.addEventListener('mousedown', ()=>{ socket.emit('gpio3_down'); }); 
-gpio3.addEventListener('mouseup', ()=>{ socket.emit('gpio3_leave'); });
-gpio3.addEventListener("touchstart", ()=>{ socket.emit('gpio3_down'); }); 
-gpio3.addEventListener('touchend', ()=>{ socket.emit('gpio3_leave'); });
+// function simon_start_setup() {
+//     for (let i = 0; i < 4; i++) {
+//         addMultipleEventListener(gpio_list[i], ["mousedown", "touchstart"], ()=>{ 
+//             socket.emit(`gpio${i + 1}_on`);
+//         });
+//         addMultipleEventListener(gpio_list[i], ["mouseup", "touchend", "mouseleave"], ()=>{ 
+//             socket.emit(`gpio${i + 1}_off`);
+//         });
+//     }
+// }
 
-gpio4.addEventListener('mousedown', ()=>{ socket.emit('gpio4_down'); }); 
-gpio4.addEventListener('mouseup', ()=>{ socket.emit('gpio4_leave'); });
-gpio4.addEventListener("touchstart", ()=>{ socket.emit('gpio4_down'); }); 
-gpio4.addEventListener('touchend', ()=>{ socket.emit('gpio4_leave'); });
+
+
 
 simon_startquit_btn.onclick = () => { 
     if (simon_startquit_btn.value == "Start") {
@@ -77,22 +90,42 @@ simon_startquit_btn.onclick = () => {
     }
 };
 
+var simon_on = false; 
+
+socket.on('simon-end-all', ()=>{
+    simon_end_setup();
+
+
+
+});
+
+socket.on('simon-start-all', ()=>{
+    simon_start_setup();
+
+
+});
+
+
 socket.on('simon-start-onlooker', ()=>{
     document.getElementById('play-buttons').style.display = "none";
+    simon_on = true; 
 });
 
 
 socket.on('simon-start-player', ()=>{
     console.log(simon_start_btn.value);
+    simon_on = true; 
 });
 
 
 socket.on('simon-end-onlooker', ()=>{
     document.getElementById('play-buttons').style.display = "flex";
+    simon_on = false; 
 });
 
 socket.on('simon-end-player', ()=>{
 
+    simon_on = false; 
 });
 
 

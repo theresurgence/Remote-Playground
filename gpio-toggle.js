@@ -54,18 +54,24 @@ async function blinks() {
 };
 
 
-async function simon_game() {
+async function simon_start() {
     await blinks();
-    await sleep(1000);
-    await blinks();
-    await sleep(1000);
-    await blinks();
+    // await sleep(1000);
+    // await blinks();
+    // await sleep(1000);
+    // await blinks();
 }
 
 
+// async function 
 
 
+async function simon_end() {
+    simon_history = [];
+}
 
+
+var curr_choice; 
 
 
 
@@ -89,7 +95,9 @@ module.exports = {
     sleep,
     simon_history,
     user_history,
-    simon_game
+    simon_start,
+    simon_end,
+    curr_choice
 }; //export toggle fns
 
 
