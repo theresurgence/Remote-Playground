@@ -1,12 +1,12 @@
 const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
-const LED_1 = new Gpio(17, 'out'),
-      LED_2 = new Gpio(22, 'out'),
-      LED_3 = new Gpio(26, 'out'),
-      LED_4 = new Gpio(12, 'out');
+const LED_0 = new Gpio(17, 'out'),
+      LED_1 = new Gpio(22, 'out'),
+      LED_2 = new Gpio(26, 'out'),
+      LED_3 = new Gpio(12, 'out');
 
-const leds_list = [LED_1, LED_2, LED_3, LED_4];
+const leds_list = [LED_0, LED_1, LED_2, LED_3];
 
 var simon_history = []; 
 var user_history = [];
@@ -39,7 +39,7 @@ async function blink(curr_LED) {
 
 async function blinks() {
     console.log("************************************newblink\n");
-    let random_led = Math.floor(Math.random() * 4);
+    let random_led = Math.floor(Math.random() * 3);
     simon_history.push(random_led);
     console.log(simon_history);
 
@@ -86,7 +86,7 @@ function endBlink(LED) { //function to stop blinking
 
 
 module.exports = { 
-    LED_1, LED_2, LED_3, LED_4,
+    LED_1, LED_2, LED_3, LED_0,
     LED_ctl,
     blink,
     fast_blink,

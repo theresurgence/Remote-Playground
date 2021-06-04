@@ -4,11 +4,19 @@
 /************************************** comment if no RPI *****************************/
 const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
 
+function addMultipleEventListener(element, events, handler) {
+  events.forEach(e => element.addEventListener(e, handler))
+}
+
+function removeMultipleEventListener(element, events, handler) {
+  events.forEach(e => element.addEventListener(e, handler))
+}
+
 const online = document.getElementById('online'),
+    gpio0 = document.getElementById('gpio0'),
     gpio1 = document.getElementById('gpio1'),
     gpio2 = document.getElementById('gpio2'),
     gpio3 = document.getElementById('gpio3'),
-    gpio4 = document.getElementById('gpio4'),
 
     userpassbox = document.getElementById("userpass"),
     inputfield = document.getElementById("user"),
@@ -17,9 +25,10 @@ const online = document.getElementById('online'),
 
 var tempname = null;   //*************************************************
 
-const gpio_list = [gpio1, gpio2, gpio3, gpio4];
+var simon_on = false; 
+var simon_says = false;
 
-
+const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 
 
 
@@ -51,32 +60,22 @@ document.querySelector('#chatbutton').onclick = () => {
 }
 
 
-function addMultipleEventListener(element, events, handler) {
-  events.forEach(e => element.addEventListener(e, handler))
-}
-
-function removeMultipleEventListener(element, events, handler) {
-  events.forEach(e => element.addEventListener(e, handler))
-}
-
 //Accounting for both touch and mouse events to toggle the 4 gpios on or off
-for (let i = 0; i < 4; i++) {
-    addMultipleEventListener(gpio_list[i], ["mousedown", "touchstart"], ()=>{ socket.emit(`gpio${i + 1}_on`);});
-    addMultipleEventListener(gpio_list[i], ["mouseup", "touchend", "mouseleave"], ()=>{ socket.emit(`gpio${i + 1}_off`);});
-    console.log(`gpio${i + 1}_on`);
+//led is gpio number (0,1,2,3)
+for (let led = 0; led < 4; led++) {  
+    addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], ()=>{ 
+        if (!simon_says)
+            socket.emit(`gpio${led}_on`);  //gpio0_on (0,1,2,3)
+        if (simon_on) {
+            user_says = led;
+            socket.emit(`user-says`, user_says);
+        }
+    });
+    addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
+        if (!simon_says)
+            socket.emit(`gpio${led}_off`);
+    });
 }
-
-// function simon_start_setup() {
-//     for (let i = 0; i < 4; i++) {
-//         addMultipleEventListener(gpio_list[i], ["mousedown", "touchstart"], ()=>{ 
-//             socket.emit(`gpio${i + 1}_on`);
-//         });
-//         addMultipleEventListener(gpio_list[i], ["mouseup", "touchend", "mouseleave"], ()=>{ 
-//             socket.emit(`gpio${i + 1}_off`);
-//         });
-//     }
-// }
-
 
 
 
@@ -84,13 +83,15 @@ simon_startquit_btn.onclick = () => {
     if (simon_startquit_btn.value == "Start") {
         socket.emit('simon-start'); 
         simon_startquit_btn.value = "Quit";
+        simon_on = true;
+
     } else {
         socket.emit('simon-end'); 
         simon_startquit_btn.value = "Start";
+        simon_on = false;
     }
 };
 
-var simon_on = false; 
 
 socket.on('simon-end-all', ()=>{
     simon_end_setup();

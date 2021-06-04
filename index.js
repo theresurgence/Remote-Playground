@@ -51,19 +51,19 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('online', online);
     });
 
-    socket.on('gpio1_on', ()=> { 
-        gpio.LED_ctl(gpio.LED_1,1);
+    socket.on('gpio0_on', ()=> { 
+        gpio.LED_ctl(gpio.LED_0,1);
     });
-    socket.on('gpio1_off', ()=> { gpio.LED_ctl(gpio.LED_1,0); });
+    socket.on('gpio0_off', ()=> { gpio.LED_ctl(gpio.LED_0,0); });
+
+    socket.on('gpio1_on', ()=> { gpio.LED_ctl(gpio.LED_1,1); });
+    socket.on('gpio1_off', ()=> { gpio.LED_ctl(gpio.LED_1,0);});
 
     socket.on('gpio2_on', ()=> { gpio.LED_ctl(gpio.LED_2,1); });
     socket.on('gpio2_off', ()=> { gpio.LED_ctl(gpio.LED_2,0);});
 
     socket.on('gpio3_on', ()=> { gpio.LED_ctl(gpio.LED_3,1); });
     socket.on('gpio3_off', ()=> { gpio.LED_ctl(gpio.LED_3,0);});
-
-    socket.on('gpio4_on', ()=> { gpio.LED_ctl(gpio.LED_4,1); });
-    socket.on('gpio4_off', ()=> { gpio.LED_ctl(gpio.LED_4,0);});
 
     
     socket.on('simon-start', ()=> {
@@ -73,7 +73,7 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.to('onlookers room').emit('simon-start-onlooker');
         io.to('simon room').emit('simon-start-player');
         simon_on = true;
-        gpio.simon_start();
+        // gpio.simon_start();
 
         ///////////////////////////////////
 
@@ -111,6 +111,15 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.to('onlookers room').emit('simon-end-onlooker');
         console.log("SIMON END")
     });
+
+    socket.on('user-says', (user_says)=> {
+        console.log(user_says);
+    });
+
+
+
+
+
 
     socket.on('message', (message, tempname) => {
         console.log(message);
