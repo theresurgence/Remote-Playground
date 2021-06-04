@@ -26,7 +26,7 @@ const online = document.getElementById('online'),
 var tempname = null;   //*************************************************
 
 var simon_on = false; 
-var simon_says = false;
+var simon_speaks = false;
 
 const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 
@@ -49,7 +49,7 @@ socket.on('message', text => {
 //     document.getElementById("loginbutton").value = "SIGNOUT";
 //     document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
 //     userpassbox.removeChild(inputfield); 
-//     signup.innerHTML = 'PROFILE';
+
 //     signup.href="profile.html";
 // }
 
@@ -64,23 +64,28 @@ document.querySelector('#chatbutton').onclick = () => {
 //led is gpio number (0,1,2,3)
 for (let led = 0; led < 4; led++) {  
     addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], ()=>{ 
-        if (!simon_says)
-            socket.emit(`gpio${led}_on`);  //gpio0_on (0,1,2,3)
-        if (simon_on) {
-            user_says = led;
-            socket.emit(`user-says`, user_says);
+        if (!simon_speaks) {
+            socket.emit(`gpio${led}_on`);  //gpio0_on (0,1,2,3))
+            console.log(simon_speaks);
+            console.log(!simon_speaks);
+
+            if (simon_on) {
+                socket.emit(`user-says`, led);
+            }
         }
     });
     addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
-        if (!simon_says)
+        if (!simon_speaks)
             socket.emit(`gpio${led}_off`);
     });
 }
 
+socket.on('is-simon-speaking', ()=>{ simon_speaks = (simon_speaks) ? false : true; });
 
 
 simon_startquit_btn.onclick = () => { 
     if (simon_startquit_btn.value == "Start") {
+        socket.emit('user-says-init'); 
         socket.emit('simon-start'); 
         simon_startquit_btn.value = "Quit";
         simon_on = true;
@@ -94,15 +99,12 @@ simon_startquit_btn.onclick = () => {
 
 
 socket.on('simon-end-all', ()=>{
-    simon_end_setup();
-
-
+    // simon_end_setup();
 
 });
 
 socket.on('simon-start-all', ()=>{
-    simon_start_setup();
-
+    // simon_start_setup();
 
 });
 
@@ -138,19 +140,4 @@ socket.on('simon-end-player', ()=>{
 // const socket = require('socket.io-client')
 // import { io } from "socket.io-client"
 // const conn = socket(host, { upgrade: false, transports: ['websocket'] })
-
-// socket.on('gpio1_click', (gpio1_status)=>{
-//     gpio1.checked = (gpio1_status) ? true : false;
-// });
-
-// socket.on('gpio2_click', (gpio2_status)=>{
-//     gpio2.checked = (gpio2_status) ? true : false;
-// });
-// socket.on('gpio3_click', (gpio3_status)=>{
-//     gpio3.checked = (gpio3_status) ? true : false;
-// });
-
-// socket.on('gpio4_click', (gpio4_status)=>{
-//     gpio4.checked = (gpio4_status) ? true : false;
-// });
 

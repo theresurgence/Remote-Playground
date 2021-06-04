@@ -30,11 +30,41 @@ let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
 
 const io = socket(server);                                            
 
-var gpio1_status, gpio2_status, gpio3_status, gpio4_status= 0;
-
 var online = 0; //number of online users
-
+var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
+
+var hist = gpio.simon_history;
+var hist_len = gpio.simon_history.length;
+var hist_i = 0; 
+
+// async function async_user_says(socket) {
+//     socket.on('user-says', (user_says)=> {
+//         hist = gpio.simon_history;
+//         hist_len = gpio.simon_history.length;
+
+//         console.log(`History List: ${hist}`)
+//         console.log(`User says: ${user_says}   Hist: ${hist[hist_i]}`);
+//         console.log(`Index: ${hist_i}  Hist_len = ${hist_len}`);
+
+//         if (user_says == hist[hist_i]) { //correct
+//             hist_i++;
+//             if (hist_i == hist_len) {  //all correct
+//                 // io.sockets.emit('simon_correct');
+//                 console.log('simon pass');
+//                 await gpio.simon_start();
+//                 io.to('simon room').emit('is-simon-speaking');
+//             }
+//         }
+//         else{
+//             console.log("FAIL***************************8");
+//             // gpio.simon_end();
+//         } //wrong answer
+
+//         console.log();
+
+//     });
+// }
 
 
 io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
@@ -44,78 +74,18 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
     online += 1;
     io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
     
-    //Listening for events
     socket.on('disconnect', ()=> {
         console.log(socket.id, 'disconnected');
         online -= 1;
         io.sockets.emit('online', online);
     });
 
-    socket.on('gpio0_on', ()=> { 
-        gpio.LED_ctl(gpio.LED_0,1);
-    });
-    socket.on('gpio0_off', ()=> { gpio.LED_ctl(gpio.LED_0,0); });
+    require('./websockets/gpio-onoff')(socket);
 
-    socket.on('gpio1_on', ()=> { gpio.LED_ctl(gpio.LED_1,1); });
-    socket.on('gpio1_off', ()=> { gpio.LED_ctl(gpio.LED_1,0);});
-
-    socket.on('gpio2_on', ()=> { gpio.LED_ctl(gpio.LED_2,1); });
-    socket.on('gpio2_off', ()=> { gpio.LED_ctl(gpio.LED_2,0);});
-
-    socket.on('gpio3_on', ()=> { gpio.LED_ctl(gpio.LED_3,1); });
-    socket.on('gpio3_off', ()=> { gpio.LED_ctl(gpio.LED_3,0);});
-
-    
-    socket.on('simon-start', ()=> {
-        socket.leave('onlookers room')
-        socket.join('simon room ');
-
-        io.to('onlookers room').emit('simon-start-onlooker');
-        io.to('simon room').emit('simon-start-player');
-        simon_on = true;
-        // gpio.simon_start();
-
-        ///////////////////////////////////
-
-        // socket.on('gpio1_down1', ()=> { 
-        //     gpio.LED_ctl(gpio.LED_1,1);
-            
-        // });
-
-        // socket.on('gpio1_leave1', ()=> { 
-        //     gpio.LED_ctl(gpio.LED_1,0); });
-
-
-
-
-
-
-
-
-
-
-
-        /////////////////////////////////////////
-
-        console.log("SIMON START")
-
-        // SIMON game???
-    });
-
-    socket.on('simon-end', ()=> {
-        simon_on = false;
-        gpio.simon_end();
-        socket.leave('simon room')
-        socket.join('onlookers room');
-
-        io.to('onlookers room').emit('simon-end-onlooker');
-        console.log("SIMON END")
-    });
-
-    socket.on('user-says', (user_says)=> {
-        console.log(user_says);
-    });
-
+    simon_sockets = require('./websockets/simon')
+    simon_sockets.simon_start(socket, io);
+    simon_sockets.user_says_init(socket, io);
+    simon_sockets.simon_end(socket, io);
 
 
 

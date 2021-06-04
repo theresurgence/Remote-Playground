@@ -8,8 +8,9 @@ const LED_0 = new Gpio(17, 'out'),
 
 const leds_list = [LED_0, LED_1, LED_2, LED_3];
 
-var simon_history = []; 
+var simon_history = [3,1,2,3,0]; 
 var user_history = [];
+var hist_index = 0;
 
 //for use in async function using await to pause within the async fn
 //code outside the async function still runs
@@ -32,7 +33,7 @@ async function fast_blink(curr_LED) {
 //on LED for 1s, off for 1s
 async function blink(curr_LED) {
     LED_ctl(curr_LED, 1);
-    await sleep(1000); //sleep only within function, rest of code will still run normally
+    await sleep(1000); //sleep only within function, code outside fn will still run normally
     LED_ctl(curr_LED, 0);
     await sleep(1000);
 };
@@ -46,7 +47,7 @@ async function blinks() {
     let i = 0;
     do {
         let curr_LED = leds_list[simon_history[i]];
-        console.log(i)
+        // console.log(i)
         await blink(curr_LED); //ensures that blink happens one at a time
         i++;
 
@@ -56,6 +57,7 @@ async function blinks() {
 
 async function simon_start() {
     await blinks();
+    hist_index = 0;
     // await sleep(1000);
     // await blinks();
     // await sleep(1000);
@@ -97,7 +99,8 @@ module.exports = {
     user_history,
     simon_start,
     simon_end,
-    curr_choice
+    curr_choice,
+    hist_index
 }; //export toggle fns
 
 
