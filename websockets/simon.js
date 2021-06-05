@@ -1,116 +1,91 @@
 const gpio = require('../gpio-toggle'); //import gpio functions and variables
+const simon_info  = gpio.simon_info;
+
+module.exports = {
+    simon_start,
+    player_says,
+    socket_simon_end,
+} 
 
 async function simon_start(socket, io) {
     socket.on('simon-start', ()=> {
-        socket.leave('onlookers room')
+        socket.leave('public room');
         socket.join('simon room');
 
-        io.to('onlookers room').emit('simon-start-onlooker');
+        io.to('public room').emit('simon-start-public');
         io.to('simon room').emit('simon-start-player');
 
         simon_on = true;
+
         console.log("SIMON SAYS STARTS")
 
-        simon_says(socket,io);
+        simon_says(socket, io);  //simon will start blinking
     });
 
 }
 
 async function simon_says(socket, io) {
-    io.to('simon room').emit('toggle-simon-speaking');
+    io.to('simon room').emit('simon-is-speaking');  //to true
     await gpio.simon_blinks();
 
-    user_says_init(socket, io);
+    io.to('simon room').emit('simon-not-speaking');  //to false
 
-    io.to('simon room').emit('toggle-simon-speaking');
-    //user can start speaking
+    gpio.index_reset(); //reset hist_index
+    console.log('Player can speak');
 }
 
-function user_says_init(socket, io) {
-    socket.on('user-says-init', ()=> {
-        hist = gpio.simon_history;
-        hist_len = gpio.simon_history.length;
-        hist_i = 0;
-        console.log('user speaks init');
-        console.log(hist);
-    });
-}
-function user_says(socket, io) {
-    socket.on('user-says', async (user_led)=> {
-        hist = gpio.simon_history;
-        hist_len = gpio.simon_history.length;
+function player_says(socket, io) {
+    socket.on('player-says', async (player_led)=> {
+        var hist = simon_info.hist;
+        var hist_len = simon_info.hist.length;
+        var index = simon_info.index;
 
         console.log(`History List: ${hist}`)
-        console.log(`User says: ${user_led}   Hist: ${hist[hist_i]}`);
-        console.log(`Index: ${hist_i}  Hist_len = ${hist_len}`);
+        console.log(`User says: ${player_led}   Simon says: ${hist[index]}`);
+        console.log(`Index: ${index}  Hist_len = ${hist_len}`);
 
-        if (user_led == hist[hist_i]) { //correct
-            hist_i++;
-            if (hist_i == hist_len) {  //all correct
-                // io.sockets.emit('simon_correct');
-                console.log('simon pass');
-                await gpio.simon_start();
-                io.to('simon room').emit('toggle-simon-speaking');
+        // if (player_led == hist[gpio.hist_index]) { //correct
+        if (player_led == hist[simon_info.index]) { //correct
+            console.log('this led is correct')
+
+            console.log(`Index: ${simon_info.index}  Hist_len = ${hist_len}`);
+            gpio.index_add();
+
+            if (simon_info.index == hist_len) {  //all correct
+                console.log('All Correct');
+
+                await simon_says(socket, io);
             }
         }
-        else{
-            console.log("FAIL***************************8");
-            // gpio.simon_end();
-        } //wrong answer
+
+        else{  //player is wrong
+
+            simon_end(socket,io);
+            console.log("FAIL***************************");
+        } 
 
         console.log();
     });
 }
 
 
-
 function simon_end(socket, io) {
-    socket.on('simon-end', ()=> {
-        simon_on = false;
-        gpio.simon_end();
-        socket.leave('simon room')
-        socket.join('onlookers room');
+        
+    simon_on = false;
+    socket.emit('simon-end-player');
+    socket.emit('simon-end-public');
 
-        io.to('onlookers room').emit('simon-end-onlooker');
-        console.log("SIMON END")
+    socket.leave('simon room');
+    socket.join('public room');
+
+    gpio.hist_reset();
+
+    console.log("SIMON END")
+}
+
+
+function socket_simon_end(socket, io) {
+    socket.on('simon-end', ()=> {
+        simon_end(socket,io);
     });
 }
-
-
-module.exports = {
-    simon_start,
-    user_says_init,
-    user_says,
-    simon_end
-
-}
-
-
-
-    // async_user_says(socket);
-
-    // socket.on('user-says', (user_says)=> {
-    //     hist = gpio.simon_history;
-    //     hist_len = gpio.simon_history.length;
-
-    //     console.log(`History List: ${hist}`)
-    //     console.log(`User says: ${user_says}   Hist: ${hist[hist_i]}`);
-    //     console.log(`Index: ${hist_i}  Hist_len = ${hist_len}`);
-
-    //     if (user_says == hist[hist_i]) { //correct
-    //         hist_i++;
-    //         if (hist_i == hist_len) {  //all correct
-    //             // io.sockets.emit('simon_correct');
-    //             console.log('simon pass');
-    //             await gpio.simon_start();
-    //             io.to('simon room').emit('is-simon-speaking');
-    //         }
-    //     }
-    //     else{
-    //         console.log("FAIL***************************8");
-    //         // gpio.simon_end();
-    //     } //wrong answer
-            
-    //     console.log();
-        
-    // });

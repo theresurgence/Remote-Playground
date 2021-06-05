@@ -66,11 +66,9 @@ for (let led = 0; led < 4; led++) {
     addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], ()=>{ 
         if (!simon_speaks) {
             socket.emit(`gpio${led}_on`);  //gpio0_on (0,1,2,3))
-            console.log(simon_speaks);
-            console.log(!simon_speaks);
 
             if (simon_on) {
-                socket.emit(`user-says`, led);
+                socket.emit(`player-says`, led);
             }
         }
     });
@@ -80,52 +78,45 @@ for (let led = 0; led < 4; led++) {
     });
 }
 
-socket.on('toggle-simon-speaking', ()=>{ simon_speaks = (simon_speaks) ? false : true; });
+socket.on('simon-is-speaking', ()=>{ simon_speaks = true });
+socket.on('simon-not-speaking', ()=>{ simon_speaks = false });
 
 
 simon_startquit_btn.onclick = () => { 
     if (simon_startquit_btn.value == "Start") {
-        socket.emit('user-says-init'); 
         socket.emit('simon-start'); 
         simon_startquit_btn.value = "Quit";
         simon_on = true;
 
     } else {
+        simon_on = false;
         socket.emit('simon-end'); 
         simon_startquit_btn.value = "Start";
-        simon_on = false;
     }
 };
 
 
-socket.on('simon-end-all', ()=>{
-    // simon_end_setup();
-
-});
-
-socket.on('simon-start-all', ()=>{
-    // simon_start_setup();
-
-});
-
-
-socket.on('simon-start-onlooker', ()=>{
+socket.on('simon-start-public', ()=>{
     document.getElementById('play-buttons').style.display = "none";
-    simon_on = true; 
 });
 
+/* NEED TO ADD MORE CCODE */
 socket.on('simon-start-player', ()=>{
-    console.log(simon_start_btn.value);
-    simon_on = true; 
+    //////SOME CODE HERE TO TELL PLAYER THE GAME HAS STARTED
+    //
 });
 
-socket.on('simon-end-onlooker', ()=>{
+socket.on('simon-end-public', ()=>{
     document.getElementById('play-buttons').style.display = "flex";
     simon_on = false; 
 });
 
+/* NEED TO ADD MORE CODE */
 socket.on('simon-end-player', ()=>{
     simon_on = false; 
+    simon_startquit_btn.value = "Start";
+    console.log("CHNAGE BUTTON");
+    /// GAME OVER CODE OR SMTH////
 });
 
 
