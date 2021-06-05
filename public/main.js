@@ -80,7 +80,7 @@ for (let led = 0; led < 4; led++) {
     });
 }
 
-socket.on('is-simon-speaking', ()=>{ simon_speaks = (simon_speaks) ? false : true; });
+socket.on('toggle-simon-speaking', ()=>{ simon_speaks = (simon_speaks) ? false : true; });
 
 
 simon_startquit_btn.onclick = () => { 
@@ -114,12 +114,10 @@ socket.on('simon-start-onlooker', ()=>{
     simon_on = true; 
 });
 
-
 socket.on('simon-start-player', ()=>{
     console.log(simon_start_btn.value);
     simon_on = true; 
 });
-
 
 socket.on('simon-end-onlooker', ()=>{
     document.getElementById('play-buttons').style.display = "flex";
@@ -127,10 +125,14 @@ socket.on('simon-end-onlooker', ()=>{
 });
 
 socket.on('simon-end-player', ()=>{
-
     simon_on = false; 
 });
 
+
+////
+socket.on('simon-says', ()=>{
+    simon_on = false; 
+});
 
 
 

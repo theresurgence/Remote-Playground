@@ -80,14 +80,13 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('online', online);
     });
 
-    require('./websockets/gpio-onoff')(socket);
+    require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
 
     simon_sockets = require('./websockets/simon')
     simon_sockets.simon_start(socket, io);
     simon_sockets.user_says_init(socket, io);
+    simon_sockets.user_says(socket, io);
     simon_sockets.simon_end(socket, io);
-
-
 
 
 
