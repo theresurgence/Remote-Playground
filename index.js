@@ -15,6 +15,7 @@ const bcrypt = require('bcrypt');
 const flash = require('express-flash');
 const session = require('express-session');   
 
+// const initializePassport = require('passport-config');
 const initializePassport = require('./passport-config');
 initializePassport(
     passport, 
@@ -38,53 +39,15 @@ videoStream.acceptConnections(app, {
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
+require('./websockets-server/main')(socket(server)); //import websockets main file
+
+
 let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
     if (err) {
         return console.error(err.message);
     }
     console.log('Connected to the UserInfo Database');
 });
-
-
-const io = socket(server);                                            
-
-var online = 0; //number of online users
-var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
-var simon_on = false; 
-
-io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
-    console.log(socket.id, 'connected');
-    socket.join('public room');   //public room 
-
-    online += 1;
-    io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
-    
-    socket.on('disconnect', ()=> {
-        console.log(socket.id, 'disconnected');
-        online -= 1;
-        io.sockets.emit('online', online);
-    });
-
-    require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
-
-    simon_sockets = require('./websockets/simon')
-    simon_sockets.simon_start(socket, io);
-    simon_sockets.socket_simon_end(socket, io);
-    simon_sockets.player_says(socket, io);
-
-
-
-    socket.on('message', (message, tempname) => {
-        console.log(message);
-        if (tempname == null)
-            io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
-        else
-            io.emit('message', `${tempname}: ${message}`);
-    });
-});
-
-
-
 
 
 app.use(express.static(__dirname+'/public')); //front-end files in public

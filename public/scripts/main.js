@@ -30,7 +30,7 @@ const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 
 
 /* Import Websockets module */
-requirejs(['./websockets-client/main'])(document, 
+require('./websockets-client/main')(document, 
     socket,
     addMultipleEventListener,
     gpio_list,
