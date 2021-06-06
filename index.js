@@ -4,19 +4,19 @@ const port = 3000;
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('sqlite3');
 const path = require('path');
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
 const socket = require('socket.io');       //import socket server                           
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    fps: 16,
+    encoding: 'JPEG',
+    quality: 10 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -30,63 +30,32 @@ let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
 
 const io = socket(server);                                            
 
-var gpio1_status, gpio2_status, gpio3_status, gpio4_status= 0;
-
 var online = 0; //number of online users
-
+var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 
 
 io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
     console.log(socket.id, 'connected');
-    socket.join('onlookers room');   //onlookers room 
+    socket.join('public room');   //public room 
 
     online += 1;
     io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
     
-    //Listening for events
     socket.on('disconnect', ()=> {
         console.log(socket.id, 'disconnected');
         online -= 1;
         io.sockets.emit('online', online);
     });
 
-    socket.on('gpio1_down', ()=> { 
-        gpio.LED_ctl(gpio.LED_1,1);
-    });
-    socket.on('gpio1_leave', ()=> { gpio.LED_ctl(gpio.LED_1,0); });
+    require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
 
-    socket.on('gpio2_down', ()=> { gpio.LED_ctl(gpio.LED_2,1); });
-    socket.on('gpio2_leave', ()=> { gpio.LED_ctl(gpio.LED_2,0);});
-
-    socket.on('gpio3_down', ()=> { gpio.LED_ctl(gpio.LED_3,1); });
-    socket.on('gpio3_leave', ()=> { gpio.LED_ctl(gpio.LED_3,0);});
-
-    socket.on('gpio4_down', ()=> { gpio.LED_ctl(gpio.LED_4,1); });
-    socket.on('gpio4_leave', ()=> { gpio.LED_ctl(gpio.LED_4,0);});
-
-    
-    socket.on('simon-start', ()=> {
-        socket.leave('onlookers room')
-        socket.join('simon room ');
-
-        io.to('onlookers room').emit('simon-start-onlooker');
-        io.to('simon room').emit('simon-start-player');
-        simon_on = true;
+    simon_sockets = require('./websockets/simon')
+    simon_sockets.simon_start(socket, io);
+    simon_sockets.socket_simon_end(socket, io);
+    simon_sockets.player_says(socket, io);
 
 
-        console.log("SIMON Start")
-
-        // SIMON game???
-    });
-
-    socket.on('simon-end', ()=> {
-        socket.leave('simon room')
-        socket.join('onlookers room');
-
-        io.to('onlookers room').emit('simon-end-onlooker');
-        console.log("SIMON END")
-    });
 
     socket.on('message', (message, tempname) => {
         console.log(message);
@@ -108,29 +77,3 @@ app.use(express.static(__dirname+'/public')); //front-end files in public
 
 
 
-
-
-/* FOR USE LATER */
-// socket.on('gpio1_click', ()=> {
-//     gpio1_status = (gpio1_status) ? 0 : 1;
-//     gpio.LED_ctl(gpio.LED_1, gpio1_status)
-//     io.sockets.emit('gpio1_click', gpio1_status);
-// });
-
-// socket.on('gpio2_click', ()=> {
-//     gpio2_status = (gpio2_status) ? 0 : 1;
-//     gpio.LED_ctl(gpio.LED_2, gpio2_status)
-//     io.sockets.emit('gpio2_click', gpio2_status);
-// });
-
-// socket.on('gpio3_click', ()=> {
-//     gpio3_status = (gpio3_status) ? 0 : 1;
-//     gpio.LED_ctl(gpio.LED_3, gpio3_status)
-//     io.sockets.emit('gpio3_click', gpio3_status);
-// });
-
-// socket.on('gpio4_click', ()=> {
-//     gpio4_status = (gpio4_status) ? 0 : 1;
-//     gpio.LED_ctl(gpio.LED_4, gpio4_status)
-//     io.sockets.emit('gpio4_click', gpio4_status);
-// });
