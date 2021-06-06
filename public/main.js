@@ -28,6 +28,7 @@ var tempname = null;   //*************************************************
 var simon_on = false; 
 var simon_speaks = false;
 
+
 const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 
 
@@ -59,6 +60,7 @@ document.querySelector('#chatbutton').onclick = () => {
     socket.emit('message', text, tempname);
 }
 
+var clicked_led = [false,false,false,false];
 
 //Accounting for both touch and mouse events to toggle the 4 gpios on or off
 //led is gpio number (0,1,2,3)
@@ -66,15 +68,20 @@ for (let led = 0; led < 4; led++) {
     addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], ()=>{ 
         if (!simon_speaks) {
             socket.emit(`gpio${led}_on`);  //gpio0_on (0,1,2,3))
-
-            if (simon_on) {
-                socket.emit(`player-says`, led);
-            }
+            clicked_led[led] = true;
         }
     });
     addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
         if (!simon_speaks)
-            socket.emit(`gpio${led}_off`);
+            if (clicked_led[led]) {
+                if (simon_on) {
+                    socket.emit(`player-says`, led);
+                }
+
+                console.log("TURNING OFF LED");
+                socket.emit(`gpio${led}_off`);
+                clicked_led[led] = false;
+            }
     });
 }
 
