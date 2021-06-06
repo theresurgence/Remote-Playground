@@ -14,15 +14,15 @@
     <div class="bigcontainer">
 
         <header id="header">
-            <div id="header-container"> <a href="index.html"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px> </a>
-                <form action="" id="form">
+            <div id="header-container"> <a href="/"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px> </a>
+                <form action="/profile" id="form">
                 <div id="userpass">
-                    <label for="user" id="user-label" class="nav-link label">USERNAME:</label>
+                    <label for="user" id="user-label" class="nav-link label">EMAIL:</label>
                     <input id="user" type="email" name="email" class="inputs" placeholder="example@abc.com" required>
                     <label for="password" id="password-label" class="nav-link label">PASSWORD:</label>
                     <input id="password" type="password" name="password" class="inputs" required>
                 </div>
-                <input type="submit" id="submit" value="LOGIN" class="button">
+                <input type="submit" id="loginbutton" value="LOGIN" class="button">
             </form>
             </div>
 
@@ -31,7 +31,7 @@
             <a href="#playground" class="nav-link">PLAYGROUND</a>
             <a href="#leader" class="nav-link">LEADERBOARDS</a>
             <a href="#contact" class="nav-link">CONTACT US</a>
-            <a href="signup.html" class="nav-link">SIGN UP</a>
+            <a href="/signup" class="nav-link">SIGN UP</a>
         </nav>
         </header>
         
@@ -39,7 +39,7 @@
         <h1>Register</h1>
         <p> Fill up the following to create your RemotePlayground account.</p>
         <div id="signupcontainer">
-        <form action="" method="post">
+        <form action="/signup" method="post">
           <div class="form-entry">
           <label class="nav-link label">Email: </label>
           <input type="email" name="email" class="inputs" required>
@@ -58,7 +58,7 @@
           </div>
           <br>
           <div class="form-entry">
-          <input type="submit" name="submit" value="submit">
+          <input type="submit" value="SUBMIT" class="button">
           </div>
           </div>
         </form>

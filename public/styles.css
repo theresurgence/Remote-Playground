@@ -83,26 +83,26 @@ input {
     justify-content: space-between;
 }
 
-/*#form {
+#form {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     margin-right: 20px;
-}*/
+}
 
-#userpass {
+/* #userpass {
     display: flex;
     align-items: center;
     margin-right: 20px;
-}
+} */
 
 .inputs {
     width: 200px;
 }
 
 #loginbutton {
-    /* margin-right: 10px; */
-    margin-left: 10px;
+    margin-right: 10px;
+    /* margin-left: 10px; */
     padding: 15px 0px 15px 0px;
 }
 

@@ -13,20 +13,19 @@
     <div class="bigcontainer">
 
         <header id="header">
-            <div id="header-container"> <a href="index.html"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px> </a>
-                <form action="auth" method="POST" id="form">
+            <div id="header-container"> <a href="/"> <img id="header-img" src="/images/rmt_plygrd_logo_2.png" height=170px width=170px> </a>
+                <form action="/profile" method="POST" id="form">
                 <div id="userpass">
-                    <label for="user" id="user-label" class="nav-link label">USERNAME:</label>
+                    <label for="user" id="user-label" class="nav-link label">EMAIL:</label>
                     <input id="user" type="email" name="email" class="inputs" placeholder="example@abc.com" required>
                     <label for="password" id="password-label" class="nav-link label">PASSWORD:</label>
                     <input id="password" type="password" name="password" class="inputs" required>
                 </div>
-                <input type="submit" id="submit" value="LOGIN" class="button">
+                <input type="submit" id="loginbutton" value="LOGIN" class="button">
             </form>
                 <!-- <div id="userpass">
                     <label for="user" id="user-label" class="nav-link label">USER-ID:</label>
                     <input id="user" type="text" name="user" class="inputs" value="">
-                    <button class="button" id="loginbutton"> LOGIN </button> 
                     <input id="loginbutton" type="button" class="button" value="LOGIN">
                 </div> -->
             </div>
@@ -36,7 +35,7 @@
             <a href="#playground" class="nav-link">PLAYGROUND</a>
             <a href="#leader" class="nav-link">LEADERBOARDS</a>
             <a href="#contact" class="nav-link">CONTACT US</a>
-            <a id="signuplink" href="signup.html" class="nav-link">SIGN UP</a>
+            <a id="signuplink" href="/signup" class="nav-link">SIGN UP</a>
         </nav>
         </header>
 
