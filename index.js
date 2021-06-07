@@ -40,6 +40,10 @@ var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
+//import all web sockets required
+require('./websockets-server/main')(socket(server)); 
+
+
 let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
     if (err) {
         return console.error(err.message);
