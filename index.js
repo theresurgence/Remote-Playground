@@ -39,7 +39,8 @@ videoStream.acceptConnections(app, {
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
-require('./websockets-server/main')(socket(server)); //import websockets main file
+//import all web sockets required
+require('./websockets-server/main')(socket(server)); 
 
 
 let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {

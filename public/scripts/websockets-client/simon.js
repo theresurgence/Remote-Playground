@@ -2,7 +2,7 @@
 
 var clicked_led = [false,false,false,false];
 
-module.exports = function(socket, 
+export function simon_sockets(socket, 
     addMultipleEventListener,
     gpio_list,
     simon_on,

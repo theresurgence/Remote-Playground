@@ -1,15 +1,19 @@
+import { simon_sockets } from './simon.js';
+
 /* Main Client Websockets Events */
 
 var tempname = null;
 
-module.exports = function(document,
+export function main_sockets(document,
     socket, 
     addMultipleEventListener,
     gpio_list,
     simon_on,
     simon_speaks,
     simon_startquit_btn,
-    play_btns)  {
+    play_btns, 
+    chat_btn
+)  {
 
     //Listen for events
     socket.on('online', (online_num)=>{
@@ -28,7 +32,7 @@ module.exports = function(document,
         socket.emit('message', text, tempname);
     }
 
-    require('./simon')(socket,
+    simon_sockets(socket,
         addMultipleEventListener,
         gpio_list,
         simon_on,
