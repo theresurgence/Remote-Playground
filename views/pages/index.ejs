@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="/socket.io/socket.io.js"></script>
+    <script defer src="/main.js"></script>
+    <!-- <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <title>Remote Playground</title>
+</head>
+
+<body>
+    <div class="bigcontainer">
+
+        <header id="header">
+            <%- include('../partials/header') %>
+        </header>
+
+    <div id="statuses-container">
+        <section id="leader">
+            <div id="leader-box"> <p id="leader-heading"><b>LeaderBoard: </b></p></div>
+        </section>
+
+        <section id="online-count">
+            <div id="online-box"><p id="online"><b>Online: 0</b></p></div>
+        </section>
+    </div>
+
+    <section id="playground" class="pad5percent">
+        <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
+        <div id="play-chat-container">
+            <div id="play-container">
+                <!-- <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div> -->
+                <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */
+                    <div id="play-buttons">
+                        <input id="simon-startquit" type="button" class="button" value="Start">
+                        <input id="gpio0" type="button" class="button leds" value="LED0">
+                        <input id="gpio1" type="button" class="button leds" value="LED1">
+                        <input id="gpio2" type="button" class="button leds" value="LED2">
+                        <input id="gpio3" type="button" class="button leds" value="LED3">
+                    </div>
+                </div>
+            <div id="chat-container">
+                <div id="chat-header-box">
+                    <h1 id="chat-header">LIVE CHAT</h1>
+                </div>
+                <div id="chat-text-box">
+                    <div id="text-box">
+                    <ul>
+                    </ul>
+                    </div>
+                    <div id="chat-input-con">
+                    <input id="chat-input" placeholder="Type to Chat">
+                    <input id="chatbutton" type="button" class="button" value="Send">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="pad5percent">
+        <h1 id="about-heading">ABOUT</h1>
+        <p>
+            When we think about interactive entertainment, we commonly tend towards triple A games on the latest consoles, or live-streaming platforms like YouTube or Twitch as the premiere embodiments of interactive entertainment. <br><br> We aim to <u>REDEFINE</u> the limits of what interactive entertainment can be, by introducing a way for individuals to enact real-time physical changes through a few simple clicks on a website, while receiving real-time feedback on those very changes. <br><br> Hence, we hope to be the initial spark that <u>IGNITES</u> a new wave of interactive entertainment based on interfacing software-hardware at a user-friendly level, in order to provide the highest levels of entertainment for the <u>MASSES</u>.
+        </p>
+    </section>
+
+    <section id="contact" class="pad5percent">
+        <h1 id="contact-heading">CONTACT US</h1>
+        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+    </section>
+
+
+    </div>
+
+</body>
+</html>
+
