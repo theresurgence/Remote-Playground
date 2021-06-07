@@ -1,8 +1,8 @@
 //************************ uncomment this below if no RPI ******************************************************/
-// const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
 
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
@@ -57,6 +57,7 @@ socket.on('message', text => {
 document.querySelector('#chatbutton').onclick = () => {
     console.log("Send");
     const text = document.querySelector('#chat-input').value;
+    tempname = document.getElementById("user").innerHTML;
     socket.emit('message', text, tempname);
 }
 

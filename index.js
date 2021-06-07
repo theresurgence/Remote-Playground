@@ -7,15 +7,15 @@ const app = express();
 const port = process.env.PORT || 3000; 
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('sqlite3');
+const ejs = require('ejs');
 const path = require('path');
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
 const socket = require('socket.io');       //import socket server    
 const passport = require('passport');
 const bcrypt = require('bcrypt');    
 const flash = require('express-flash');
 const session = require('express-session');   
-
 const initializePassport = require('./passport-config');
+
 initializePassport(
     passport, 
     email => users.find(user => user.email === email),
@@ -23,18 +23,19 @@ initializePassport(
 )
 
 const users = []; //eventually store users' data in database
+var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-const gpio = require('./gpio-toggle'); //import gpio functions and variables
-const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+// const gpio = require('./gpio-toggle'); //import gpio functions and variables
+// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-videoStream.acceptConnections(app, {
-    width: 1280,
-    height: 720,
-    fps: 16,
-    encoding: 'JPEG',
-    quality: 10 //lower is faster
-}, '/stream.mjpg', true); 
+// videoStream.acceptConnections(app, {
+//     width: 1280,
+//     height: 720,
+//     fps: 16,
+//     encoding: 'JPEG',
+//     quality: 10 //lower is faster
+// }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -65,7 +66,7 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('online', online);
     });
 
-    require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
+    // require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
 
     simon_sockets = require('./websockets/simon')
     simon_sockets.simon_start(socket, io);
@@ -76,7 +77,7 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 
     socket.on('message', (message, tempname) => {
         console.log(message);
-        if (tempname == null)
+        if (!auth)
             io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
         else
             io.emit('message', `${tempname}: ${message}`);
@@ -84,10 +85,10 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
 });
 
 
+app.use(express.static(__dirname+'/public')); //render static files
+app.set('view engine', 'ejs'); //sets view engine to ejs
 
 
-
-app.use(express.static(__dirname+'/public')); //front-end files in public
 app.use(express.urlencoded({ extended: false}));
 app.use(flash());
 app.use(session({
@@ -101,19 +102,49 @@ app.use(passport.session());
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname+'/public/index.html');
-})
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/index', {
+            auth: auth 
+        });
+    } else {
+    res.render('pages/index', {
+        auth: auth,
+        userid: req.user.name
+    });
+    }
+});
 
 app.get('/signup', (req, res) => {
-    res.sendFile(__dirname+'/public/signup.html');
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/signup', {
+            auth: auth 
+        });
+    } else {
+        res.render('pages/signup', {
+            auth: auth,
+            userid: req.user.name
+        });
+    }
+    
 });
 
 app.get('/profile', (req, res) => {
-    res.sendFile(__dirname+'/public/profile.html');
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/profile', {
+            auth: auth 
+        });
+    } else {
+    res.render('pages/profile', {
+        auth: auth,
+        userid: req.user.name
+    });
+    }
 });
 
 app.post('/profile', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
-
 
 app.post('/signup', async (req, res) => {
     try {
