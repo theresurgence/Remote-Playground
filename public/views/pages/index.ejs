@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <script defer src="/socket.io/socket.io.js"></script>
+    <script defer src="../../../socket.io/socket.io.js"></script>
     <script defer type="module" src="../../scripts/main.js"></script>
     <!-- <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <title>Remote Playground</title>
@@ -30,8 +30,8 @@
         <h1 id="play-heading" class="textctr">PLAYGROUND</h1>
         <div id="play-chat-container">
             <div id="play-container">
-                <!-- <div id="play-box"><img id="videoStream" src="/images/maintenance_logo.png"></div> -->
-                <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */
+                <div id="play-box"><img id="videoStream" src="../../images/maintenance_logo.png"></div>
+                <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */ -->
                     <div id="play-buttons">
                         <input id="simon-startquit" type="button" class="button" value="Start">
                         <input id="gpio0" type="button" class="button leds" value="LED0">

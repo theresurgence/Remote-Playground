@@ -43,20 +43,12 @@ var auth = false;
 //import all web sockets required
 require('./websockets-server/main')(socket(server)); 
 
-
-let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
-    if (err) {
-        return console.error(err.message);
-    }
-    console.log('Connected to the UserInfo Database');
-});
-
-
-const io = socket(server);                                            
-
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
+
+/* Web Sockets */
+const io = socket(server);                                            
 
 io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
     console.log(socket.id, 'connected');
@@ -71,14 +63,12 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
         io.sockets.emit('online', online);
     });
 
-    // require('./websockets/gpio-onoff')(socket); //websockets with onoff functionality 
+    require('./websockets-server/gpio-onoff')(socket); //websockets with onoff functionality 
 
-    simon_sockets = require('./websockets/simon')
+    simon_sockets = require('./websockets-server/simon')
     simon_sockets.simon_start(socket, io);
     simon_sockets.socket_simon_end(socket, io);
     simon_sockets.player_says(socket, io);
-
-
 
     socket.on('message', (message, tempname) => {
         console.log(message);
@@ -89,10 +79,17 @@ io.on('connection', (socket) => { //when a new client connects to server, websoc
     });
 });
 
+let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
+    if (err) {
+        return console.error(err.message);
+    }
+    console.log('Connected to the UserInfo Database');
+});
 
-app.use(express.static(__dirname+'/public')); //render static files
+
+app.use(express.static(__dirname+'/public')); //render static files like images
+app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs
-
 
 app.use(express.urlencoded({ extended: false}));
 app.use(flash());

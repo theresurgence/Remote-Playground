@@ -1,5 +1,4 @@
-// gpio = require('../gpio-toggle');
-
+gpio = require('../gpio-toggle');
 
 module.exports = function (socket) {
 
