@@ -1,5 +1,20 @@
 # Orbital-2021
 
+*# If no RPI:
+
+# index.js
+- Commeout out if no PI line 29 :uncomment the cam and onoff ==                 
+
+# websockets-server/main-sockets                                      
+- Line 22 // uncomment all simon websockets 
+
+# public/scripts/main-client-script.js 
+- comment the websocket port thing                                              
+~                                                                                              
+
+
+
+
 
 1. Install nvm (node version manager) https://nodejs.org/en/download/current/
 
@@ -14,4 +29,4 @@
    refresh the webpage when testing.:
 -   nodemon index.js
 
-5. Open webpage by going to web browser:  http://local.host:3000
+5. Open webpage by going to web browser:  http://localhost:3000

@@ -18,14 +18,16 @@ module.exports = function (io) {
             io.sockets.emit('online', online);
         });
 
-        /* GPIO onoff websockets */
-        require('./gpio-onoff')(socket); 
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io);
-        simon_sockets.socket_simon_end(socket, io);
-        simon_sockets.player_says(socket, io);
+        /***************** RPI COMMENT OUT **************************************************************************/
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io);
+        // simon_sockets.socket_simon_end(socket, io);
+        // simon_sockets.player_says(socket, io);
+        /***************** RPI COMMENT OUT **************************************************************************/
 
 
         socket.on('message', (message, tempname) => {

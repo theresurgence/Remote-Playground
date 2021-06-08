@@ -45,7 +45,7 @@ export function main_sockets(document,
 
 // Front-end Temp Login, keep it disabled for now
 // document.querySelector('#loginbutton').onclick = () => {
-//     tempname = document.getElementById("user").value;
+
 //     document.getElementById("loginbutton").value = "SIGNOUT";
 //     document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
 //     userpassbox.removeChild(inputfield); 

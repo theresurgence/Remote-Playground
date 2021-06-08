@@ -1,5 +1,5 @@
 /* Import Websockets module */
-import { main_sockets } from './websockets-client/main.js'
+import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/

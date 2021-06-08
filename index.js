@@ -40,44 +40,13 @@ var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
-//import all web sockets required
-require('./websockets-server/main')(socket(server)); 
-
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 
-/* Web Sockets */
-const io = socket(server);                                            
+/* import all web sockets required */
+require('./websockets-server/main-sockets')(socket(server)); 
 
-io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
-    console.log(socket.id, 'connected');
-    socket.join('public room');   //public room 
-
-    online += 1;
-    io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
-    
-    socket.on('disconnect', ()=> {
-        console.log(socket.id, 'disconnected');
-        online -= 1;
-        io.sockets.emit('online', online);
-    });
-
-    require('./websockets-server/gpio-onoff')(socket); //websockets with onoff functionality 
-
-    simon_sockets = require('./websockets-server/simon')
-    simon_sockets.simon_start(socket, io);
-    simon_sockets.socket_simon_end(socket, io);
-    simon_sockets.player_says(socket, io);
-
-    socket.on('message', (message, tempname) => {
-        console.log(message);
-        if (!auth)
-            io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
-        else
-            io.emit('message', `${tempname}: ${message}`);
-    });
-});
 
 let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
     if (err) {
