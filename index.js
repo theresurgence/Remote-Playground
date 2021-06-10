@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
 const socket = require('socket.io');       //import socket server    
@@ -18,9 +18,7 @@ const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
 
 initializePassport(
-    passport,
-    // email => users.find(user => user.email === email),
-    // id => users.find(user => user.id === id) 
+    passport, 
     getUserbyEmail,
     getUserbyId
 )
@@ -30,41 +28,31 @@ function getUserbyEmail(email) {
 
     let sql = `SELECT * from userinfo WHERE email = '${email}'`;
 
-    db.serialize(() => {
-        db.get(sql, (err, row) => {
+        console.log('before detention barracks')
+        return db.prepare(sql, (err, row) => {
             if (err) {
                 return console.error(err.message);
             }
             if (row) {
-                console.log(row);
-                console.trace("here");
                 return row;
             }
             else
                 console.log("Can't find row");
-        });
-    });
-
-    // db.close();
+        }).get();
 };
 
 function getUserbyId(id) {
 
-    let sql = `SELECT DISTINCT id from userinfo WHERE id = ${id}`;
+    let sql = `SELECT * from userinfo WHERE id = ${id}`;
 
-    db.serialize(() => {
-        db.get(sql, (err, row) => {
+    return db.prepare(sql, (err, row) => {
             if (err) {
                 return console.error(err.message);
             }
             return row;
-        });
-    });
-
-    // db.close();
+        }).get();
 };
 
-const users = [];
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -81,13 +69,14 @@ var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
-let db = new sqlite3.Database(path.resolve('./userinfo.db'), (err) => {
-    if (err) {
-        return console.error(err.message);
-    }
-    console.log('Connected to the UserInfo Database');
-});
+// let db = new sqlite3.Database(path.resolve('./userinfo.db'), (err) => {
+//     if (err) {
+//         return console.error(err.message);
+//     }
+//     console.log('Connected to the UserInfo Database');
+// });
 
+let db = new sqlite3(path.resolve('./userinfo.db'));
 
 const io = socket(server);                                            
 
@@ -151,6 +140,7 @@ app.get('/', (req, res) => {
             auth: auth 
         });
     } else {
+    console.log(req.user.id);
     res.render('pages/index', {
         auth: auth,
         userid: req.user.name
@@ -176,9 +166,7 @@ app.get('/signup', (req, res) => {
 app.get('/profile', (req, res) => {
     auth = req.isAuthenticated();
     if (!auth) {
-        res.render('pages/profile', {
-            auth: auth 
-        });
+        res.status(404).send('Error: Invalid Access, not logged in');
     } else {
     res.render('pages/profile', {
         auth: auth,
