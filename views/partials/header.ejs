@@ -18,8 +18,8 @@
 <% } else { %>   
      <div class="content-centre">
     <form action="/logout?_method=DELETE" method="POST">
-        <div id="userpass">  
-    <p class="nav-link label">Welcome, <div id="user" class="nav-link label"><%= userid %>!</div> </p>
+        <div id="loggedpass">  
+    <p class="nav-link label">Welcome, </p><div id="user" class="nav-link label"><%= userid %></div><p class="nav-link label">!</p>
     <input type="submit" id="logoutbutton" value="LOGOUT" class="button buttonpad">
         </div>
     </form>

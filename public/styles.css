@@ -12,7 +12,10 @@
 }
 
 .bigcontainer {
-    background-color: var(--darkmodeblue2);
+    background: linear-gradient(145deg, #2b4794, #243b7c);
+    border-radius: 56px;
+    box-shadow: 56px 56px 112px #1a2a58,
+                -56px -56px 112px #365abc;
     padding: 0;
     margin: 0;
     border-bottom: solid var(--coralred) 14px;
@@ -75,12 +78,21 @@ input {
 /*IDs & Classes in top-down ordering*/
 
 #header {
-    background-color: var(--darkmodeblue);
+    border-top-right-radius: 56px;
+    border-top-left-radius: 56px;
+    background: linear-gradient(145deg, #16254e, #132042);
+    box-shadow:  20px 20px 41px #0d162f,
+                -20px -20px 41px #1d3063;
+}
+
+#header-img {
+    border-top-left-radius: 56px;
 }
 
 #header-container {
     display: flex;
     justify-content: space-between;
+    
 }
 
 #form {
@@ -91,9 +103,13 @@ input {
 }
 
 #userpass {
-    display: flex;
-    align-items: center;
     margin-right: 10px;
+}
+
+#loggedpass {
+    margin-right: 10px;
+    display:flex;
+    align-items: center;
 }
 
 .inputs {
@@ -149,6 +165,10 @@ input {
     width: 250px;
     border: solid var(--darkmodeblue3) 4px;
     border-radius: 5px;
+    border-radius: 28px;
+    background: linear-gradient(145deg, #174b57, #1b5968);
+    box-shadow:  14px 14px 28px #10353e,
+             -14px -14px 28px #227184;
 }
 
 #leader-heading {

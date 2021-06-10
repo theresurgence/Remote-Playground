@@ -44,16 +44,6 @@ socket.on('message', text => {
     document.querySelector('ul').appendChild(el);
 });
 
-// Front-end Temp Login, keep it disabled for now
-// document.querySelector('#loginbutton').onclick = () => {
-//     tempname = document.getElementById("user").value;
-//     document.getElementById("loginbutton").value = "SIGNOUT";
-//     document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
-//     userpassbox.removeChild(inputfield); 
-
-//     signup.href="profile.html";
-// }
-
 document.querySelector('#chatbutton').onclick = () => {
     console.log("Send");
     const text = document.querySelector('#chat-input').value;

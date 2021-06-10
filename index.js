@@ -18,12 +18,53 @@ const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
 
 initializePassport(
-    passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
+    passport,
+    // email => users.find(user => user.email === email),
+    // id => users.find(user => user.id === id) 
+    getUserbyEmail,
+    getUserbyId
 )
 
-const users = []; //eventually store users' data in database
+
+function getUserbyEmail(email) {
+
+    let sql = `SELECT * from userinfo WHERE email = '${email}'`;
+
+    db.serialize(() => {
+        db.get(sql, (err, row) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            if (row) {
+                console.log(row);
+                console.trace("here");
+                return row;
+            }
+            else
+                console.log("Can't find row");
+        });
+    });
+
+    // db.close();
+};
+
+function getUserbyId(id) {
+
+    let sql = `SELECT DISTINCT id from userinfo WHERE id = ${id}`;
+
+    db.serialize(() => {
+        db.get(sql, (err, row) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            return row;
+        });
+    });
+
+    // db.close();
+};
+
+const users = [];
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -40,7 +81,7 @@ var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
-let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
+let db = new sqlite3.Database(path.resolve('./userinfo.db'), (err) => {
     if (err) {
         return console.error(err.message);
     }
@@ -157,17 +198,30 @@ app.post('/signup', async (req, res) => {
             email: req.body.email,
             password: hashedPassword
         });
+        db.serialize( () => {
+            initUser(req.body.username, req.body.email, hashedPassword, 0);
+            db.all('SELECT * FROM userinfo', (err, results) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(results);
+            });
+        });
+        // db.close();
         res.redirect('/');
     } catch {
         res.redirect('/signup');
     }
-    console.log(users);
 });
 
 app.delete('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 });
+
+function initUser (name, email, password, score) {
+    db.run(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`);
+}
 
 // function checkAuthenticated(req, res, next) {
 //     if (req.isAuthenticated()) {
