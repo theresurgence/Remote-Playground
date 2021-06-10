@@ -29,6 +29,7 @@ export function main_sockets(document,
     chat_btn.onclick = () => {
         console.log("Send");
         const text = document.querySelector('#chat-input').value;
+        tempname = document.getElementById("user").innerHTML;
         socket.emit('message', text, tempname);
     }
 
@@ -41,18 +42,6 @@ export function main_sockets(document,
         play_btns);
 
 }
-
-
-// Front-end Temp Login, keep it disabled for now
-// document.querySelector('#loginbutton').onclick = () => {
-
-//     document.getElementById("loginbutton").value = "SIGNOUT";
-//     document.getElementById("user-label").innerHTML =`Welcome, ${tempname}!`;
-//     userpassbox.removeChild(inputfield); 
-
-//     signup.href="profile.html";
-// }
-
 
 
 /* Possible Code to be added eventually */

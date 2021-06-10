@@ -32,8 +32,8 @@ module.exports = function (io) {
 
         socket.on('message', (message, tempname) => {
             console.log(message);
-            if (tempname == null)
-                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
+            if (tempname === "")
+                io.emit('message', `Guest${socket.id.substr(0,3)}:hey ${message}`);
             else
                 io.emit('message', `${tempname}: ${message}`);
         });

@@ -69,13 +69,6 @@ var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
-// let db = new sqlite3.Database(path.resolve('./userinfo.db'), (err) => {
-//     if (err) {
-//         return console.error(err.message);
-//     }
-//     console.log('Connected to the UserInfo Database');
-// });
-
 let db = new sqlite3(path.resolve('./userinfo.db'));                                         
 
 var online = 0; //number of online users
@@ -84,15 +77,6 @@ var simon_on = false;
 
 /* import all web sockets required */
 require('./websockets-server/main-sockets')(socket(server)); 
-
-
-let db = new sqlite3.Database(path.resolve('./.userinfo.db'), (err) => {
-    if (err) {
-        return console.error(err.message);
-    }
-    console.log('Connected to the UserInfo Database');
-});
-
 
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
