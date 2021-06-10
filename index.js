@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
 const socket = require('socket.io');       //import socket server    
@@ -19,11 +19,40 @@ const methodOverride = require('method-override');
 
 initializePassport(
     passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
+    getUserbyEmail,
+    getUserbyId
 )
 
-const users = []; //eventually store users' data in database
+
+function getUserbyEmail(email) {
+
+    let sql = `SELECT * from userinfo WHERE email = '${email}'`;
+
+        console.log('before detention barracks')
+        return db.prepare(sql, (err, row) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            if (row) {
+                return row;
+            }
+            else
+                console.log("Can't find row");
+        }).get();
+};
+
+function getUserbyId(id) {
+
+    let sql = `SELECT * from userinfo WHERE id = ${id}`;
+
+    return db.prepare(sql, (err, row) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            return row;
+        }).get();
+};
+
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -39,6 +68,15 @@ var auth = false;
 // }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
+
+// let db = new sqlite3.Database(path.resolve('./userinfo.db'), (err) => {
+//     if (err) {
+//         return console.error(err.message);
+//     }
+//     console.log('Connected to the UserInfo Database');
+// });
+
+let db = new sqlite3(path.resolve('./userinfo.db'));                                         
 
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
@@ -80,6 +118,7 @@ app.get('/', (req, res) => {
             auth: auth 
         });
     } else {
+    console.log(req.user.id);
     res.render('pages/index', {
         auth: auth,
         userid: req.user.name
@@ -105,9 +144,7 @@ app.get('/signup', (req, res) => {
 app.get('/profile', (req, res) => {
     auth = req.isAuthenticated();
     if (!auth) {
-        res.render('pages/profile', {
-            auth: auth 
-        });
+        res.status(404).send('Error: Invalid Access, not logged in');
     } else {
     res.render('pages/profile', {
         auth: auth,
@@ -127,17 +164,30 @@ app.post('/signup', async (req, res) => {
             email: req.body.email,
             password: hashedPassword
         });
+        db.serialize( () => {
+            initUser(req.body.username, req.body.email, hashedPassword, 0);
+            db.all('SELECT * FROM userinfo', (err, results) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(results);
+            });
+        });
+        // db.close();
         res.redirect('/');
     } catch {
         res.redirect('/signup');
     }
-    console.log(users);
 });
 
 app.delete('/logout', (req, res) => {
     req.logOut();
     res.redirect('/');
 });
+
+function initUser (name, email, password, score) {
+    db.run(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`);
+}
 
 // function checkAuthenticated(req, res, next) {
 //     if (req.isAuthenticated()) {
