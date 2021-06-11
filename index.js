@@ -110,6 +110,21 @@ app.get('/', (req, res) => {
     }
 });
 
+app.get('/about', (req, res) => {
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/about', {
+            auth: auth 
+        });
+    } else {
+    console.log(req.user.id);
+    res.render('pages/about', {
+        auth: auth,
+        userid: req.user.name
+    });
+    }
+});
+
 app.get('/signup', (req, res) => {
     auth = req.isAuthenticated();
     if (!auth) {
@@ -141,13 +156,7 @@ app.post('/profile', passport.authenticate('local', { successRedirect: '/profile
 
 app.post('/signup', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
-        });
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);       
         db.serialize( () => {
             initUser(req.body.username, req.body.email, hashedPassword, 0);
             db.all('SELECT * FROM userinfo', (err, results) => {
@@ -157,7 +166,7 @@ app.post('/signup', async (req, res) => {
                 console.log(results);
             });
         });
-        // db.close();
+
         res.redirect('/');
     } catch {
         res.redirect('/signup');

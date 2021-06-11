@@ -21,7 +21,19 @@ const online = document.getElementById('online'),
     inputfield = document.getElementById("user"),
     signup = document.getElementById("signuplink"),
     play_btns = document.getElementById('play-buttons'),
-    chat_btn = document.getElementById('chatbutton');
+    chat_btn = document.getElementById('chatbutton'),
+    navbar = document.getElementById('nav-bar');
+
+    var sticky = navbar.offsetTop;
+
+    window.onscroll = () => {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky");
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+
 
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))

@@ -11,22 +11,10 @@
     --white3: #b3b3b3;
 }
 
-.bigcontainer {
-    background: linear-gradient(145deg, #2b4794, #243b7c);
-    border-radius: 56px;
-    box-shadow: 56px 56px 112px #1a2a58,
-                -56px -56px 112px #365abc;
-    padding: 0;
-    margin: 0;
-    border-bottom: solid var(--coralred) 14px;
-    font-family: 'Arial';
-}
-
 body {
     padding: 0;
     margin: 0;
-    background-image: url(images/RetroRobots.jpg);
-    opacity: 0.96;
+    background-color: var(--darkhue2);
     width: auto;
 }
 
@@ -78,11 +66,7 @@ input {
 /*IDs & Classes in top-down ordering*/
 
 #header {
-    border-top-right-radius: 56px;
-    border-top-left-radius: 56px;
-    background: linear-gradient(145deg, #16254e, #132042);
-    box-shadow:  20px 20px 41px #0d162f,
-                -20px -20px 41px #1d3063;
+    background: var(--darkmodeblue);
 }
 
 #header-img {
@@ -91,19 +75,14 @@ input {
 
 #header-container {
     display: flex;
-    justify-content: space-between;
-    
-}
-
-#form {
-    display: flex;
-    flex-direction: row-reverse;
     align-items: center;
-    margin-right: 20px;
+    justify-content:space-between;
 }
 
 #userpass {
+    display: flex;
     margin-right: 10px;
+    align-items: center;
 }
 
 #loggedpass {
@@ -113,7 +92,9 @@ input {
 }
 
 .inputs {
-    width: 200px;
+    height: 30px;
+    width: 150px;
+    font-size: 12px;
 }
 
 .buttonpad {
@@ -127,6 +108,7 @@ input {
     flex-wrap: wrap;
     background-color: var(--coralred);
     justify-content: space-evenly;
+    overflow: hidden;
 }
 
     #nav-bar a:hover {
@@ -140,8 +122,16 @@ input {
     font-size: 20px;
 }
 
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 .label {
     color: var(--coralred);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #statuses-container {
@@ -293,12 +283,6 @@ input {
 /* Media Query*/
 
 @media (min-width: 768px) {
-    body {
-        background-color: var(--darkhue1);
-        width: 85%;
-        margin: auto;
-    }
-
     #statuses-container {
         display: flex;
         flex-direction: row;
