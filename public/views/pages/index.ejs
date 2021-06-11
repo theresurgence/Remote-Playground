@@ -14,48 +14,43 @@
         <header id="header">
             <%- include('../partials/header') %>
         </header>
+    <div class="big-container">
 
-    <div id="statuses-container">
+    <div class="queue-container"></div>
+
+    <div class="statuses-container">
         <section id="leader">
             <div id="leader-box"> <p id="leader-heading"><b>LeaderBoard: </b></p></div>
         </section>
+    </div>        
 
-        <section id="online-count">
-            <div id="online-box"><p id="online"><b>Online: 0</b></p></div>
-        </section>
+    <div class="playground-container">
+        <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=100px width=100px></div>
+        <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */ -->
     </div>
+    
+    <div class="play-buttons">                  
+        <input id="simon-startquit" type="button" class="button" value="Start">
+        <input id="gpio0" type="button" class="button leds" value="LED0">
+        <input id="gpio1" type="button" class="button leds" value="LED1">
+        <input id="gpio2" type="button" class="button leds" value="LED2">
+        <input id="gpio3" type="button" class="button leds" value="LED3">               
+    </div>        
 
-    <section id="playground" class="pad5percent">
-        <div id="play-chat-container">
-            <div id="play-container">
-                <div id="play-box"><img id="videoStream" src="../../images/maintenance_logo.png"></div>
-                <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> /* Comment if no RPI */ -->
-                    <div id="play-buttons">
-                        <input id="simon-startquit" type="button" class="button" value="Start">
-                        <input id="gpio0" type="button" class="button leds" value="LED0">
-                        <input id="gpio1" type="button" class="button leds" value="LED1">
-                        <input id="gpio2" type="button" class="button leds" value="LED2">
-                        <input id="gpio3" type="button" class="button leds" value="LED3">
-                    </div>
-                </div>
-            <div id="chat-container">
-                <div id="chat-header-box">
-                    <h1 id="chat-header">LIVE CHAT</h1>
-                </div>
-                <div id="chat-text-box">
-                    <div id="text-box">
-                    <ul>
-                    </ul>
-                    </div>
-                    <div id="chat-input-con">
-                    <input id="chat-input" placeholder="Type to Chat">
-                    <input id="chatbutton" type="button" class="button" value="Send">
-                    </div>
-                </div>
+    <div class="chat-container">
+         <div id="chat-text-box">
+            <div id="text-box">
+                <ul>
+                </ul>
+            </div>
+            <div id="chat-input-con">
+            <input id="chat-input" placeholder="Type to Chat">
+            <input id="chatbutton" type="button" class="button" value="Send">
             </div>
         </div>
-    </section>
+    </div>
 
+    </div>
 </body>
 </html>
 
