@@ -7,6 +7,7 @@ module.exports = function (io) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
         console.log(socket.id, 'connected');
+        var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
         socket.join('public room');   //public room 
 
         online += 1;
@@ -33,9 +34,9 @@ module.exports = function (io) {
         socket.on('message', (message, tempname) => {
             console.log(message);
             if (tempname === "")
-                io.emit('message', `Guest${socket.id.substr(0,3)}:hey ${message}`);
+                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`, r, g, b);
             else
-                io.emit('message', `${tempname}: ${message}`);
+                io.emit('message', `${tempname}: ${message}`, r, g, b);
         });
     });
 }

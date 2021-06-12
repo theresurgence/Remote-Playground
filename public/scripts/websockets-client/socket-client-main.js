@@ -20,9 +20,10 @@ export function main_sockets(document,
         online.innerHTML = `<b>Online: ${online_num}</b>`;  
     });
 
-    socket.on('message', text => {
+    socket.on('message', (text, r, g, b) => {
         const el = document.createElement('li');
         el.innerHTML = text;
+        el.style.color = `rgb(${r}, ${g}, ${b})`;
         document.querySelector('ul').appendChild(el);
     });
 

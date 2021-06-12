@@ -31,6 +31,10 @@ p {
     color: white;
 }
 
+li {
+    list-style-type: none;
+}
+
 input {
     padding: 10px 20px;
     box-sizing: border-box;
@@ -157,6 +161,9 @@ input {
 
 .queue-container {
     background-color: var(--coralblue);
+    background-image: url('images/queue_graphic.png');
+    background-repeat: no-repeat;
+    background-size: auto;
     grid-area: queue;
 }
 
@@ -268,6 +275,10 @@ input {
 .buttonpad {
     margin-right: 10px;
     padding: 15px 0px 15px 0px;
+}
+
+.credtext {
+    color: var(--coralred);
 }
 
 /* SIGN UP PAGE*/
