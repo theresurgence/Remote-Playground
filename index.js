@@ -96,16 +96,30 @@ app.use(methodOverride('_method'));
 
 
 app.get('/', (req, res) => {
+
     auth = req.isAuthenticated();
+    function topthree () {
+        let sql = 'SELECT name, score FROM userinfo LIMIT 3';
+        db.prepare(sql, (err, rows) => {
+            if (err)
+                console.log(err);
+            console.log(rows);
+            return rows;
+        }).all();
+    };
+
+    var entries = topthree();
+
+    console.log(entries);
     if (!auth) {
         res.render('pages/index', {
-            auth: auth 
+            auth: auth,
         });
     } else {
     console.log(req.user.id);
     res.render('pages/index', {
         auth: auth,
-        userid: req.user.name
+        userid: req.user.name,
     });
     }
 });
@@ -146,6 +160,20 @@ app.get('/profile', (req, res) => {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
     res.render('pages/profile', {
+        auth: auth,
+        userid: req.user.name
+    });
+    }
+});
+
+app.get('/leaderboard', (req, res) => {
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/leaderboard', {
+            auth: auth 
+        });
+    } else {
+    res.render('pages/leaderboard', {
         auth: auth,
         userid: req.user.name
     });

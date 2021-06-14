@@ -7,19 +7,21 @@
   <link rel="stylesheet" href="styles.css">
   <script src="/socket.io/socket.io.js"></script>
   <script defer src="/main.js"></script>
-  <title>Sign-Up</title>
+  <title><%= userid %>'s Profile</title>
 </head>
 
 <body>
     <div class="bigcontainer">
-
+        
         <header id="header">
             <%- include('../partials/header') %>
         </header>
 
-        <section id="profile">
-            <h1>Profile</h1>           
+        <div class="notasbigcontainer bgOrange">
+        <section id="profile" class="pad5percent">
+            <h1><%= userid %></h1>           
         </section>
+        </div>
 
 
 

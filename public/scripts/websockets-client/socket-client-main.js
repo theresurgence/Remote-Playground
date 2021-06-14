@@ -22,9 +22,17 @@ export function main_sockets(document,
 
     socket.on('message', (text, r, g, b) => {
         const el = document.createElement('li');
+        var textbox = document.getElementById('text-box');
         el.innerHTML = text;
         el.style.color = `rgb(${r}, ${g}, ${b})`;
-        document.querySelector('ul').appendChild(el);
+        textbox.querySelector('ul').appendChild(el);
+    });
+
+    socket.on('leaderboard', (entry) => {
+        const ent = document.createElement('li');
+        var leaderbox = document.getElementById('leader-box');
+        ent.innerHTML = entry;
+        leaderbox.querySelector('ul').appendChild(ent);
     });
 
     chat_btn.onclick = () => {

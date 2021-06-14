@@ -12,39 +12,46 @@
   
 <body>
     <div class="bigcontainer">
+      
 
         <header id="header">
           <%- include('../partials/header') %>
         </header>
-        
-      <section id="signup"> 
-        <h1>Register</h1>
-        <p> Fill up the following to create your RemotePlayground account.</p>
-        <div id="signupcontainer">
-        <form action="/signup" method="post">
-          <div class="form-entry">
-          <label class="nav-link label">Email: </label>
-          <input type="email" name="email" class="inputs" required>
-          </div>
-          <div class="form-entry">
-          <label class="nav-link label">Username: </label>
-          <input type="text" name="username" class="inputs" required>
-          </div>
-          <div class="form-entry">
-          <label class="nav-link label">Password: </label>
-          <input type="password" name="password" class="inputs" required>
-          </div>
-          <div class="form-entry">
-          <label class="nav-link label">Confirm Password: </label>
-          <input type="password" name="confirm_password" class="inputs" required>
-          </div>
-          <br>
-          <div class="form-entry">
-          <input type="submit" value="SUBMIT" class="button buttonpad">
-          </div>
-          </div>
-        </form>
-      </section>
+
+        <div class="notasbigcontainer bgBlue">
+          <section id="signup"> 
+            <h1 class="textshdw">REGISTER</h1>
+            <p> Fill up the following to create your RemotePlayground account.</p>
+            <div id="signupcontainer">
+            <form action="/signup" method="post">
+              <div class="form-entry">
+              <label class="nav-link textshdw whiten">Email: </label>
+              <input type="email" name="email" class="inputs" required>
+              </div>
+              <br>
+              <div class="form-entry">
+              <label class="nav-link textshdw whiten">Username: </label>
+              <input type="text" name="username" class="inputs" required>
+              </div>
+              <br>
+              <div class="form-entry">
+              <label class="nav-link textshdw whiten">Password: </label>
+              <input type="password" name="password" class="inputs" required>
+              </div>
+              <br>
+              <div class="form-entry">
+              <label class="nav-link textshdw whiten">Confirm Password: </label>
+              <input type="password" name="confirm_password" class="inputs" required>
+              </div>
+              <br>
+              <div class="form-entry">
+              <input type="submit" value="SUBMIT" class="button buttonpad">
+              </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
   </div>
 </body>
 </html>

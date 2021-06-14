@@ -7,7 +7,7 @@
     --darkmodeblue: #152349;
     --darkbrown: #492b15;
     --darkmodeblue2: #0b1328;
-    --darkmodeblue3: #28428a; 
+    --darkmodeblue3: #868b97; 
     --coralred2: #b30000;
     --darkhue1: #414141;
     --darkhue2: #242424;
@@ -18,21 +18,33 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: var(--darkhue1);
+    background-color: #242424;
 }
 
 h1 {
-    color: var(--coralred);
+    color: whitesmoke;
     font-size: 32px; 
+    text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
 }
 
 p {
     font-size: 22px;
     color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
 }
 
 li {
     list-style-type: none;
+    font-family: monospace;
+    font-weight: bold;
 }
 
 input {
@@ -108,7 +120,7 @@ input {
 #nav-bar {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--darkbrown);
+    background-color: var(--darkmodeblue2);
     justify-content: space-evenly;
     overflow: hidden;
 }
@@ -159,6 +171,17 @@ input {
      "playbtn chat";
 }
 
+.notasbigcontainer {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 3%; 
+    box-shadow: 10px 15px black;
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+    
+}
+
 .queue-container {
     background-color: var(--coralblue);
     background-image: url('images/queue_graphic.png');
@@ -176,22 +199,11 @@ input {
     grid-area: status;
 }
 
-#leader-box {
-    background-color: var(--coollime);
-    margin-top: 30px;
-    margin-left: 30px;
-    padding-left: 5px;
-    padding-right: 20px;
-    border: solid var(--coralred) 4px;
-    border-radius: 5px;
-    border-radius: 28px;
- 
-}
-
 #leader-heading {
     font-size: 16px;
     font-family: 'Courier New', monospace;
     text-align: center;
+    text-decoration: underline;
 }
 
 .playground-container {
@@ -244,6 +256,30 @@ input {
 
 /* GENERAL CLASSES */
 
+.textshdw {
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+.bgRed {
+    background-color: var(--coralred);
+}
+
+.bgBlue {
+    background-color: var(--coralblue);
+}
+
+.bgGreen {
+    background-color: var(--coralgreen);
+}
+
+.bgOrange {
+    background-color: var(--coralorange);
+}
+
 .textctr {
     text-align: center;
 }
@@ -268,7 +304,7 @@ input {
 
 .inputs {
     height: 30px;
-    width: 200px;
+    width: 250px;
     font-size: 12px;
 }
 
@@ -279,6 +315,10 @@ input {
 
 .credtext {
     color: var(--coralred);
+}
+
+.whiten {
+    color: white;
 }
 
 /* SIGN UP PAGE*/

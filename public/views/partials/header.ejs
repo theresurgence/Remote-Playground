@@ -9,9 +9,9 @@
     <form action="/profile" method="POST" id="form">
         
     <div id="userpass">        
-        <label for="user" id="user-label" class="nav-link label">EMAIL:</label>
+        <label for="user" id="user-label" class="nav-link label textshdw">EMAIL:</label>
         <input id="user" type="email" name="email" class="inputs" required>
-        <label for="password" id="password-label" class="nav-link label">PASSWORD:</label>
+        <label for="password" id="password-label" class="nav-link label textshdw">PASSWORD:</label>
         <input id="password" type="password" name="password" class="inputs" required>
         <label class="nav-link label"> <% if (messages.error) { %>
             <%= messages.error %>
@@ -25,7 +25,7 @@
      <div class="content-centre">
     <form action="/logout?_method=DELETE" method="POST">
         <div id="loggedpass">  
-    <p class="nav-link credtext">Welcome, </p><div id="user" class="nav-link credtext"> <%= userid %></div><p class="nav-link credtext">!</p>
+    <p class="nav-link credtext textshdw">Welcome, </p><div id="user" class="nav-link credtext textshdw"> <%= userid %></div><p class="nav-link credtext textshdw">!</p>
     <input type="submit" id="logoutbutton" value="LOGOUT" class="button buttonpad">
         </div>
     </form>
@@ -36,13 +36,12 @@
 </div>
 
 <nav id="nav-bar">
-<a href="/about" class="nav-link">ABOUT</a>
-<a href="/#playground" class="nav-link">PLAYGROUND</a>
-<a href="/#leader" class="nav-link">LEADERBOARDS</a>
-<a href="/#contact" class="nav-link">CONTACT US</a>
+<a href="/about" class="nav-link textshdw">ABOUT</a>
+<a href="/" class="nav-link textshdw">PLAYGROUND</a>
+<a href="/leaderboard" class="nav-link textshdw">LEADERBOARDS</a>
 <% if (!auth) { %>
-<a id="signuplink" href="/signup" class="nav-link">SIGN UP</a>
+<a id="signuplink" href="/signup" class="nav-link textshdw">SIGN UP</a>
 <% } else { %>
-<a id="profilelink" href="/profile" class="nav-link">PROFILE</a>
+<a id="profilelink" href="/profile" class="nav-link textshdw">PROFILE</a>
 <% } %>
 </nav>
