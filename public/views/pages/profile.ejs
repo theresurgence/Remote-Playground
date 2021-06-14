@@ -10,7 +10,7 @@
   <title><%= userid %>'s Profile</title>
 </head>
 
-<body>
+<body class="bgBlue">
     <div class="bigcontainer">
         
         <header id="header">
@@ -18,9 +18,19 @@
         </header>
 
         <div class="notasbigcontainer bgOrange">
+
         <section id="profile" class="pad5percent">
-            <h1><%= userid %></h1>           
+            <div id="profilecontainer1">
+            <div id="username">
+            <h1><%= userid %></h1>
+            </div>
+            <div id="profile-pic-main">
+            <img id="header-img" src="../../images/default_avatar.png" height=100px width=100px>
+            </div>
+            </div>
         </section>
+
+        
         </div>
 
 
