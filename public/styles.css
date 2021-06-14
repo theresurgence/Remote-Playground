@@ -89,6 +89,7 @@ input {
     text-align: center;
     transition: top .01s linear;
     text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    cursor: pointer;
 }
 .btn-3d.red:hover    {background-color: #e74c3c;}
 .btn-3d.blue:hover   {background-color: #699DD1;}
@@ -311,12 +312,13 @@ input {
     border-radius: 10px;
 }
 
-#leader-heading {
+.leader-text {
     font-size: 16px;
     font-family: 'Courier New', monospace;
     text-align: center;
     text-decoration: underline;
 }
+
 
 .playground-container {
     grid-area: playground;
