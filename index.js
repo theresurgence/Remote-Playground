@@ -96,14 +96,43 @@ app.use(methodOverride('_method'));
 
 
 app.get('/', (req, res) => {
+
     auth = req.isAuthenticated();
+    function topthree () {
+        let sql = 'SELECT name, score FROM userinfo LIMIT 3';
+        db.prepare(sql, (err, rows) => {
+            if (err)
+                console.log(err);
+            console.log(rows);
+            return rows;
+        }).all();
+    };
+
+    var entries = topthree();
+
+    console.log(entries);
     if (!auth) {
         res.render('pages/index', {
-            auth: auth 
+            auth: auth,
         });
     } else {
     console.log(req.user.id);
     res.render('pages/index', {
+        auth: auth,
+        userid: req.user.name,
+    });
+    }
+});
+
+app.get('/about', (req, res) => {
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/about', {
+            auth: auth 
+        });
+    } else {
+    console.log(req.user.id);
+    res.render('pages/about', {
         auth: auth,
         userid: req.user.name
     });
@@ -137,17 +166,25 @@ app.get('/profile', (req, res) => {
     }
 });
 
+app.get('/leaderboard', (req, res) => {
+    auth = req.isAuthenticated();
+    if (!auth) {
+        res.render('pages/leaderboard', {
+            auth: auth 
+        });
+    } else {
+    res.render('pages/leaderboard', {
+        auth: auth,
+        userid: req.user.name
+    });
+    }
+});
+
 app.post('/profile', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
 
 app.post('/signup', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
-        });
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);       
         db.serialize( () => {
             initUser(req.body.username, req.body.email, hashedPassword, 0);
             db.all('SELECT * FROM userinfo', (err, results) => {
@@ -157,7 +194,7 @@ app.post('/signup', async (req, res) => {
                 console.log(results);
             });
         });
-        // db.close();
+
         res.redirect('/');
     } catch {
         res.redirect('/signup');
