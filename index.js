@@ -98,19 +98,7 @@ app.use(methodOverride('_method'));
 app.get('/', (req, res) => {
 
     auth = req.isAuthenticated();
-    function topthree () {
-        let sql = 'SELECT name, score FROM userinfo LIMIT 3';
-        db.prepare(sql, (err, rows) => {
-            if (err)
-                console.log(err);
-            console.log(rows);
-            return rows;
-        }).all();
-    };
 
-    var entries = topthree();
-
-    console.log(entries);
     if (!auth) {
         res.render('pages/index', {
             auth: auth,
@@ -226,5 +214,15 @@ function initUser (name, email, password, score) {
 //     next();
 // }
 
+    // function topthree () {
+    //     let sql = 'SELECT name, score FROM userinfo LIMIT 3';
+    //     db.prepare(sql, (err, rows) => {
+    //         if (err)
+    //             console.log(err);
+    //         console.log(rows);
+    //         return rows;
+    //     }).all();
+    // };
 
+    // var entries = topthree();
 
