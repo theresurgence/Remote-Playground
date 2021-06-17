@@ -17,16 +17,20 @@
             <%- include('../partials/header') %>
         </header>
 
-        <div class="notasbigcontainer bgOrange">
+        <div class="notasbigcontainer bgOrange smallifycont">
 
         <section id="profile" class="pad5percent">
             <div id="profilecontainer1">
-            <div id="username">
-            <h1><%= userid %></h1>
-            </div>
-            <div id="profile-pic-main">
-            <img id="header-img" src="../../images/default_avatar.png" height=100px width=100px>
-            </div>
+
+                <div id="profile-pic-main" style="padding-top: 10px;">
+                    <img id="header-img" src="../../images/default_avatar.png" height=100px width=100px style="border-radius: 50%;">
+                </div>
+                <div id="username">
+                    <h1><%= userid %></h1>
+                </div>
+                <p>Email: <u><%= usermail %></u></p>
+                <p>PlayScore: <u><%= userscore %></u></p>
+                
             </div>
         </section>
 

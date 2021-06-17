@@ -99,27 +99,25 @@ app.get('/', (req, res) => {
 
     auth = req.isAuthenticated();
     function topthree () {
-        let sql = 'SELECT name, score FROM userinfo LIMIT 3';
-        db.prepare(sql, (err, rows) => {
-            if (err)
-                console.log(err);
-            console.log(rows);
-            return rows;
-        }).all();
-    };
+        let sql = 'SELECT name, score FROM userinfo ORDER BY score DESC LIMIT 3';
+        return db.prepare(sql).all();
+    }
 
-    var entries = topthree();
+    let entries = topthree();
 
-    console.log(entries);
+    console.log(entries[0]);
+
     if (!auth) {
         res.render('pages/index', {
             auth: auth,
+            entries: entries
         });
     } else {
     console.log(req.user.id);
     res.render('pages/index', {
         auth: auth,
         userid: req.user.name,
+        entries: entries
     });
     }
 });
@@ -161,21 +159,33 @@ app.get('/profile', (req, res) => {
     } else {
     res.render('pages/profile', {
         auth: auth,
-        userid: req.user.name
+        userid: req.user.name,
+        usermail: req.user.email,
+        userscore: req.user.score
     });
     }
 });
 
 app.get('/leaderboard', (req, res) => {
     auth = req.isAuthenticated();
+
+    function topthree () {
+        let sql = 'SELECT name, score FROM userinfo ORDER BY score DESC;';
+        return db.prepare(sql).all();
+    }
+
+    let entries = topthree();
+
     if (!auth) {
         res.render('pages/leaderboard', {
-            auth: auth 
+            auth: auth,
+            entries: entries
         });
     } else {
     res.render('pages/leaderboard', {
         auth: auth,
-        userid: req.user.name
+        userid: req.user.name,
+        entries: entries
     });
     }
 });
@@ -185,18 +195,12 @@ app.post('/profile', passport.authenticate('local', { successRedirect: '/profile
 app.post('/signup', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);       
-        db.serialize( () => {
             initUser(req.body.username, req.body.email, hashedPassword, 0);
-            db.all('SELECT * FROM userinfo', (err, results) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(results);
-            });
-        });
-
+            db.prepare('SELECT * FROM userinfo;').all();
         res.redirect('/');
-    } catch {
+        
+    } catch (error) {
+        console.error(error);
         res.redirect('/signup');
     }
 });
@@ -207,7 +211,7 @@ app.delete('/logout', (req, res) => {
 });
 
 function initUser (name, email, password, score) {
-    db.run(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`);
+    db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
 }
 
 // function checkAuthenticated(req, res, next) {
