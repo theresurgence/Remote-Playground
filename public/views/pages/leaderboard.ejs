@@ -16,13 +16,15 @@
             <%- include('../partials/header') %>
         </header>
 
-        <div class="notasbigcontainer bgGreen">
+        <div class="notasbigcontainer bgGreen smallifycont">
 
         <section id="leaderboard" class="pad5percent">
-            <h1>LEADERBOARDS</h1>                  
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id erat cursus nisl luctus feugiat vel sit amet sem. Nunc commodo fermentum dictum. Aliquam erat volutpat. Nulla facilisi. Vivamus eget metus sit amet lacus pharetra feugiat a et velit. Donec consequat non ligula ac sagittis. Sed gravida risus non sem imperdiet, in aliquet nisi vehicula. Curabitur sit amet sollicitudin eros, quis rhoncus arcu.
-
-            Curabitur hendrerit malesuada velit, blandit efficitur turpis. Ut nisi purus, dignissim quis nisi eget, porttitor gravida ante. Vestibulum efficitur vestibulum felis, ac suscipit ligula tempus non. Integer viverra eros et nisi fermentum sollicitudin. Donec quis ornare est. Proin dignissim tellus at efficitur pulvinar. Ut scelerisque nisi a tempus placerat. Quisque dictum facilisis ante id consequat. Duis id nunc sit amet ligula sagittis venenatis. Sed dignissim augue eu consectetur scelerisque.</p>
+            <h1 class="leader-text" style="font-size: 36px;">LEADERBOARDS</h1>   
+            <ol>
+                <% for (let i = 0; i < entries.length; i++) { %>
+                    <li class="textshdw" style="font-size: 20px; color: whitesmoke"><%= i+1 %>.  <%= entries[i].name %> - <%= entries[i].score %> </li>
+                <% } %>
+            </ol>                       
         </section>
 
         </div>

@@ -283,6 +283,8 @@ input {
 .notasbigcontainer {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 90%;
     margin: 3%; 
     box-shadow: 10px 15px black;
@@ -376,6 +378,11 @@ input {
 
 /* GENERAL CLASSES */
 
+.smallifycont {
+    width: 40%;
+    margin-left: 28%;
+}
+
 .textshdw {
     text-shadow:
         -1px -1px 0 #000,
@@ -458,8 +465,11 @@ input {
 
 #profilecontainer1 {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
+
 /* Media Query*/
 
 @media (min-width: 768px) {
