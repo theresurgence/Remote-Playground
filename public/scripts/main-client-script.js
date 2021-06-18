@@ -17,6 +17,8 @@ const online = document.getElementById('online'),
 
     simon_startquit_btn = document.getElementById('simon-startquit'),
 
+    curr_score = document.getElementById('curr_score'),
+
     userpassbox = document.getElementById("userpass"),
     inputfield = document.getElementById("user"),
     signup = document.getElementById("signuplink"),
@@ -55,7 +57,8 @@ main_sockets(document,
     simon_speaks,
     simon_startquit_btn,
     play_btns,
-    chat_btn
+    chat_btn,
+    curr_score
 );
 
 

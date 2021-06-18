@@ -1,6 +1,8 @@
 const gpio = require('../gpio-toggle'); //import gpio functions and variables
 const simon_info  = gpio.simon_info;
 
+var curr_score = 0;
+
 module.exports = {
     simon_start,
     player_says,
@@ -9,6 +11,8 @@ module.exports = {
 
 async function simon_start(socket, io) {
     socket.on('simon-start', ()=> {
+        io.sockets.emit('curr_score', curr_score); 
+
         socket.leave('public room');
         socket.join('simon room');
 
@@ -24,11 +28,12 @@ async function simon_start(socket, io) {
 
 }
 
-async function simon_says(socket, io) {
+async function simon_says(socket, io, curr_score) {
     io.to('simon room').emit('simon-is-speaking');  //to true
     await gpio.simon_blinks();
 
     io.to('simon room').emit('simon-not-speaking');  //to false
+
 
     gpio.index_reset(); //reset hist_index
     console.log('Player can speak');
@@ -54,7 +59,10 @@ function player_says(socket, io) {
             if (simon_info.index == hist_len) {  //all correct
                 console.log('All Correct');
 
-                await simon_says(socket, io);
+                curr_score += 1;
+                console.log(`\nCurr Score: ${curr_score}\n`);
+                io.sockets.emit('curr_score', curr_score); 
+                await simon_says(socket, io, curr_score);
             }
         }
 
@@ -62,6 +70,7 @@ function player_says(socket, io) {
 
             simon_end(socket,io);
             console.log("FAIL***************************");
+            curr_score = 0;
         } 
 
         console.log();

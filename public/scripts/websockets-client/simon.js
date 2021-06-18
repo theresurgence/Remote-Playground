@@ -50,6 +50,7 @@ export function simon_sockets(socket,
         });
     }
 
+
     socket.on('simon-is-speaking', ()=>{ simon_speaks = true });
     socket.on('simon-not-speaking', ()=>{ simon_speaks = false });
 

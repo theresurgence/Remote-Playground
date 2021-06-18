@@ -62,7 +62,9 @@ const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 videoStream.acceptConnections(app, {
     width: 1280,
     height: 720,
-    fps: 25,
+    // width: 1920,
+    // height: 1080,
+    fps: 20,
     encoding: 'JPEG',
     quality: 10 //lower is faster
 }, '/stream.mjpg', true); 
@@ -75,9 +77,19 @@ var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 
-app.use(session({ secret: 'somevalue' }));
+
+// app.use(session({ secret: 'somevalue' }));
+// use of this????
+app.use(session({
+    secret: 'somevalue',
+    resave: true,
+    saveUninitialized: true
+}));
+
 /* import all web sockets required */
 require('./websockets-server/main-sockets')(socket(server)); 
+
+
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs

@@ -12,10 +12,16 @@ export function main_sockets(document,
     simon_speaks,
     simon_startquit_btn,
     play_btns, 
-    chat_btn
+    chat_btn,
+    curr_score
 )  {
 
     //Listen for events
+    socket.on('curr_score', (score)=>{
+        curr_score.innerHTML = `<b>Score: ${score}</b>`;  
+        console.log("CHANGE SCORE");
+    });
+
     socket.on('online', (online_num)=>{
         online.innerHTML = `<b>Online: ${online_num}</b>`;  
     });
