@@ -56,16 +56,16 @@ function getUserbyId(id) {
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    fps: 16,
+    encoding: 'JPEG',
+    quality: 10 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 

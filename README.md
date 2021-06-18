@@ -15,7 +15,6 @@
 
 
 
-
 1. Install nvm (node version manager) https://nodejs.org/en/download/current/
 
 2. install latest version of nodejs using nvm
