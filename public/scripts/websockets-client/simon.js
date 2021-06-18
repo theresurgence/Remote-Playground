@@ -15,7 +15,9 @@ export function simon_sockets(socket,
     //led is gpio number (0,1,2,3)
     for (let led = 0; led < 4; led++) {  
 
-        addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], ()=>{ 
+        addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], (event)=>{ 
+        // addMultipleEventListener(gpio_list[led], ["mousedown"], ()=>{ 
+        // addMultipleEventListener(gpio_list[led], ["touchstart"], ()=>{ 
 
             /* Only when simon not speaking, can user
              * toggle leds on and off */
@@ -24,12 +26,16 @@ export function simon_sockets(socket,
                 //gpio0_on (0,1,2,3))
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[led] = true; //flag
+                console.log("DOWN!");
+                event.preventDefault(); //prevents touchstart and mousedown events double counting!
             }
         });
 
+        // addMultipleEventListener(gpio_list[led], ["touchend"], ()=>{ 
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
+        // addMultipleEventListener(gpio_list[led], ["mouseup", "mouseleave"], ()=>{ 
 
-            if (!simon_speaks)
+            if (!simon_speaks) {
 
                 //only triggered when button has been
                 //clicked before
@@ -40,6 +46,7 @@ export function simon_sockets(socket,
 
                     if (simon_on) {socket.emit(`player-says`, led); } //player's input is taken into account if simon game is in progress
                 }
+            }
         });
     }
 
