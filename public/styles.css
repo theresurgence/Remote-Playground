@@ -295,13 +295,28 @@ input {
 
 .queue-container {
     background-color: var(--coralblue);
-    background-image: url('images/queue_graphic.png');
+    /* background-image: url('images/queue_graphic.png');
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: auto; */
     grid-area: queue;
     border: solid 2px whitesmoke;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
+
+.queue-box {
+    height: 100px;
+    width: 100px;
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+}
+
+/* #queuebutton {
+    margin-right: 5px;
+    justify-self: flex-end;
+} */
 
 .statuses-container {
     background-color: var(--coralgreen);

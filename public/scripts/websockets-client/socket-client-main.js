@@ -35,6 +35,8 @@ export function main_sockets(document,
         leaderbox.querySelector('ul').appendChild(ent);
     });
 
+    
+
     chat_btn.onclick = () => {
         console.log("Send");
         const text = document.querySelector('#chat-input').value;
