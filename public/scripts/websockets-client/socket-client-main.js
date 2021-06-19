@@ -12,7 +12,9 @@ export function main_sockets(document,
     simon_speaks,
     simon_startquit_btn,
     play_btns, 
-    chat_btn
+    chat_btn,
+    queue_btn,
+    exit_btn
 )  {
 
     //Listen for events
@@ -35,7 +37,21 @@ export function main_sockets(document,
         leaderbox.querySelector('ul').appendChild(ent);
     });
 
-    
+    socket.on('queuestatus', (queueinfo) => {
+        const ent = document.createElement('p');
+    });
+
+    queue_btn.onclick = () => {
+        console.log("Queue");
+        tempname = document.getElementById("user").innerHTML;
+        socket.emit('enterqueue', tempname);
+    }
+
+    exit_btn.onclick = () => {
+        console.log("Exit");
+        tempname = document.getElementById("user").innerHTML;
+        socket.emit('exitqueue', tempname);
+    }
 
     chat_btn.onclick = () => {
         console.log("Send");

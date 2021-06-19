@@ -1,6 +1,9 @@
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 var online = 0; //number of online users
+const sqlite3 = require('better-sqlite3');
+const path = require('path');
+
 
 
 module.exports = function (io) {
@@ -37,7 +40,32 @@ module.exports = function (io) {
                 io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`, r, g, b);
             else
                 io.emit('message', `${tempname}: ${message}`, r, g, b);
+        });        
+
+        const db = new sqlite3(path.resolve('./userinfo.db')); 
+
+        socket.on('enterqueue', (tempname) => {
+            if (tempname === "")
+                console.log("Not registered User");
+            else { 
+                db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
+                let queueinfo = db.prepare('SELECT * FROM queuestack').all();
+                console.log(queueinfo);
+                io.emit('queuestatus', queueinfo);
+            }
         });
+
+        socket.on('exitqueue', (tempname) => {
+            if (tempname === "")
+                console.log("Not registered User");
+            else { 
+                db.prepare(`DELETE FROM queuestack WHERE name = '${tempname}'`).run();
+                let queueinfo = db.prepare('SELECT * FROM queuestack').all();
+                console.log(queueinfo);
+                io.emit('queuestatus', queueinfo);
+            }
+        })
+
     });
 }
 
