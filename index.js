@@ -71,10 +71,10 @@ let db = new sqlite3(path.resolve('./userinfo.db'));
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
-
+const queue = [];
 // app.use(session({ secret: 'somevalue' }));
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server)); 
+require('./websockets-server/main-sockets')(socket(server), queue); 
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs

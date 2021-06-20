@@ -37,8 +37,26 @@ export function main_sockets(document,
         leaderbox.querySelector('ul').appendChild(ent);
     });
 
-    socket.on('queuestatus', (queueinfo) => {
-        const ent = document.createElement('p');
+    socket.on('queuestatus', (queue) => {
+        tempname = document.getElementById("user").innerHTML;
+        let queue_no = undefined;
+        console.log(queue_no);
+        for (let i = 0; i < queue.length; i++) {
+            if (queue[i] == tempname) {
+                queue_no = i;
+                console.log('test');
+                console.log(queue_no);
+                break;
+            }
+        }
+
+        //find tempname in the queue, then return the number
+        if (queue_no === undefined)
+            queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
+        else if (queue_no === 0)
+            queuetext.innerHTML = `<b>Queue Number: You're In!</b>`;
+        else
+            queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
     });
 
     queue_btn.onclick = () => {

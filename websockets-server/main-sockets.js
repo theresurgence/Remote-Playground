@@ -6,7 +6,7 @@ const path = require('path');
 
 
 
-module.exports = function (io) {
+module.exports = function (io, queue) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
         console.log(socket.id, 'connected');
@@ -42,16 +42,23 @@ module.exports = function (io) {
                 io.emit('message', `${tempname}: ${message}`, r, g, b);
         });        
 
-        const db = new sqlite3(path.resolve('./userinfo.db')); 
+        // const db = new sqlite3(path.resolve('./userinfo.db')); 
+        let isQueued = false;
 
         socket.on('enterqueue', (tempname) => {
             if (tempname === "")
                 console.log("Not registered User");
             else { 
-                db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
-                let queueinfo = db.prepare('SELECT * FROM queuestack').all();
-                console.log(queueinfo);
-                io.emit('queuestatus', queueinfo);
+                // db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
+                // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
+                // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${tempname}'`).all();
+                if (!isQueued) {
+                    queue.push(tempname);
+                    isQueued = true;
+             
+                }      
+                console.log(queue);         
+                io.emit('queuestatus', queue);
             }
         });
 
@@ -59,10 +66,22 @@ module.exports = function (io) {
             if (tempname === "")
                 console.log("Not registered User");
             else { 
-                db.prepare(`DELETE FROM queuestack WHERE name = '${tempname}'`).run();
-                let queueinfo = db.prepare('SELECT * FROM queuestack').all();
-                console.log(queueinfo);
-                io.emit('queuestatus', queueinfo);
+                // db.prepare(`DELETE FROM queuestack WHERE name = '${tempname}'`).run();
+                // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
+                // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${tempname}'`).all();
+                let index;           
+                for (let i = 0; i < queue.length; i++) {
+                    if (queue[i] == tempname) {
+                        index = i;
+                        break;
+                    }                        
+                }
+                if (isQueued) {
+                    queue.splice(index, 1);
+                    isQueued = false;     
+                }
+                console.log(queue); 
+                io.emit('queuestatus', queue);
             }
         })
 
