@@ -22,6 +22,8 @@ const online = document.getElementById('online'),
     signup = document.getElementById("signuplink"),
     play_btns = document.getElementById('play-buttons'),
     chat_btn = document.getElementById('chatbutton'),
+    queue_btn = document.getElementById('queuebutton'),
+    exit_btn = document.getElementById('exitbutton'),
     navbar = document.getElementById('nav-bar');
 
     var sticky = navbar.offsetTop;
@@ -55,7 +57,9 @@ main_sockets(document,
     simon_speaks,
     simon_startquit_btn,
     play_btns,
-    chat_btn
+    chat_btn,
+    queue_btn,
+    exit_btn
 );
 
 

@@ -12,7 +12,9 @@ export function main_sockets(document,
     simon_speaks,
     simon_startquit_btn,
     play_btns, 
-    chat_btn
+    chat_btn,
+    queue_btn,
+    exit_btn
 )  {
 
     //Listen for events
@@ -34,6 +36,40 @@ export function main_sockets(document,
         ent.innerHTML = entry;
         leaderbox.querySelector('ul').appendChild(ent);
     });
+
+    socket.on('queuestatus', (queue) => {
+        tempname = document.getElementById("user").innerHTML;
+        let queue_no = undefined;
+        console.log(queue_no);
+        for (let i = 0; i < queue.length; i++) {
+            if (queue[i] == tempname) {
+                queue_no = i;
+                console.log('test');
+                console.log(queue_no);
+                break;
+            }
+        }
+
+        //find tempname in the queue, then return the number
+        if (queue_no === undefined)
+            queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
+        else if (queue_no === 0)
+            queuetext.innerHTML = `<b>Queue Number: You're In!</b>`;
+        else
+            queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
+    });
+
+    queue_btn.onclick = () => {
+        console.log("Queue");
+        tempname = document.getElementById("user").innerHTML;
+        socket.emit('enterqueue', tempname);
+    }
+
+    exit_btn.onclick = () => {
+        console.log("Exit");
+        tempname = document.getElementById("user").innerHTML;
+        socket.emit('exitqueue', tempname);
+    }
 
     chat_btn.onclick = () => {
         console.log("Send");

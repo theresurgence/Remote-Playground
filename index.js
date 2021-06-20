@@ -28,7 +28,6 @@ function getUserbyEmail(email) {
 
     let sql = `SELECT * from userinfo WHERE email = '${email}'`;
 
-        console.log('before detention barracks')
         return db.prepare(sql, (err, row) => {
             if (err) {
                 return console.error(err.message);
@@ -36,8 +35,6 @@ function getUserbyEmail(email) {
             if (row) {
                 return row;
             }
-            else
-                console.log("Can't find row");
         }).get();
 };
 
@@ -74,10 +71,10 @@ let db = new sqlite3(path.resolve('./userinfo.db'));
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
-
-app.use(session({ secret: 'somevalue' }));
+const queue = [];
+// app.use(session({ secret: 'somevalue' }));
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server)); 
+require('./websockets-server/main-sockets')(socket(server), queue); 
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs
@@ -111,7 +108,6 @@ app.get('/', (req, res) => {
             entries: entries
         });
     } else {
-    console.log(req.user.id);
     res.render('pages/index', {
         auth: auth,
         userid: req.user.name,
@@ -127,7 +123,6 @@ app.get('/about', (req, res) => {
             auth: auth 
         });
     } else {
-    console.log(req.user.id);
     res.render('pages/about', {
         auth: auth,
         userid: req.user.name
@@ -212,19 +207,4 @@ function initUser (name, email, password, score) {
     db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
 }
 
-// function checkAuthenticated(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         return next();
-//     }
-
-//     res.redirect('/');
-// }
-
-// function checkNotAuthenticated(req, res, next) {
-//     if (req.isAuthenticated()) {
-//         return res.redirect('/');
-//     }
-
-//     next();
-// }
 
