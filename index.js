@@ -64,9 +64,9 @@ videoStream.acceptConnections(app, {
     height: 720,
     // width: 1920,
     // height: 1080,
-    fps: 20,
+    fps: 10,
     encoding: 'JPEG',
-    quality: 10 //lower is faster
+    quality: 1 //lower is faster
 }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -87,7 +87,7 @@ app.use(session({
 }));
 
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server)); 
+require('./websockets-server/main-sockets')(socket(server), db); //db as param!
 
 
 app.use(express.static(__dirname+'/public')); //render static files like images
@@ -222,6 +222,9 @@ app.delete('/logout', (req, res) => {
 
 function initUser (name, email, password, score) {
     db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
+
+    //score table
+    db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
 
 // function checkAuthenticated(req, res, next) {

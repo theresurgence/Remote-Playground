@@ -2,7 +2,7 @@
 
 var clicked_led = [false,false,false,false];
 
-export function simon_sockets(socket, 
+export function simon_sockets(document, socket, 
     addMultipleEventListener,
     gpio_list,
     simon_on,
@@ -16,8 +16,6 @@ export function simon_sockets(socket,
     for (let led = 0; led < 4; led++) {  
 
         addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], (event)=>{ 
-        // addMultipleEventListener(gpio_list[led], ["mousedown"], ()=>{ 
-        // addMultipleEventListener(gpio_list[led], ["touchstart"], ()=>{ 
 
             /* Only when simon not speaking, can user
              * toggle leds on and off */
@@ -31,9 +29,7 @@ export function simon_sockets(socket,
             }
         });
 
-        // addMultipleEventListener(gpio_list[led], ["touchend"], ()=>{ 
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
-        // addMultipleEventListener(gpio_list[led], ["mouseup", "mouseleave"], ()=>{ 
 
             if (!simon_speaks) {
 
@@ -55,16 +51,21 @@ export function simon_sockets(socket,
     socket.on('simon-not-speaking', ()=>{ simon_speaks = false });
 
     simon_startquit_btn.onclick = () => { 
+        let player_name = document.getElementById("user").innerHTML;
+        console.log(`Player name: ${player_name}`);
+
         //To start game
         if (simon_startquit_btn.value == "Start") {
-            socket.emit('simon-start'); 
+
+            socket.emit('simon-start', player_name); 
+
             simon_startquit_btn.value = "Quit";
             simon_on = true;
 
         //To quit a game in progress 
         } else {
             simon_on = false;
-            socket.emit('simon-end'); 
+            socket.emit('simon-end', player_name); 
             simon_startquit_btn.value = "Start";
         }
     };

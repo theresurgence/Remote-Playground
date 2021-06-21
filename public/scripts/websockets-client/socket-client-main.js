@@ -48,13 +48,14 @@ export function main_sockets(document,
         socket.emit('message', text, tempname);
     }
 
-    simon_sockets(socket,
+    simon_sockets(document, socket,
         addMultipleEventListener,
         gpio_list,
         simon_on,
         simon_speaks,
         simon_startquit_btn,
-        play_btns);
+        play_btns,
+        );
 
 }
 
