@@ -53,16 +53,18 @@ function getUserbyId(id) {
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     fps: 16,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    // width: 1920,
+    // height: 1080,
+    fps: 10,
+    encoding: 'JPEG',
+    quality: 1 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -71,10 +73,22 @@ let db = new sqlite3(path.resolve('./userinfo.db'));
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
-const queue = [];
+
 // app.use(session({ secret: 'somevalue' }));
+// use of this????
+app.use(session({
+    secret: 'somevalue',
+    resave: true,
+    saveUninitialized: true
+}));
+
+const queue = [];
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server), queue); 
+require('./websockets-server/main-sockets')(socket(server), queue, db); 
+
+
+
+
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs
@@ -205,6 +219,9 @@ app.delete('/logout', (req, res) => {
 
 function initUser (name, email, password, score) {
     db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
+
+    //score table
+    db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
 
 

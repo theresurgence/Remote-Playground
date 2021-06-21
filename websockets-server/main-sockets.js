@@ -4,9 +4,7 @@ var online = 0; //number of online users
 const sqlite3 = require('better-sqlite3');
 const path = require('path');
 
-
-
-module.exports = function (io, queue) {
+module.exports = function (io, queue, db) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
         console.log(socket.id, 'connected');
@@ -24,13 +22,13 @@ module.exports = function (io, queue) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        // /* Simon Says Mini Game websockets */
-        // simon_sockets = require('./simon')
-        // simon_sockets.simon_start(socket, io);
-        // simon_sockets.socket_simon_end(socket, io);
-        // simon_sockets.player_says(socket, io);
+        /* Simon Says Mini Game websockets */
+        simon_sockets = require('./simon')
+        simon_sockets.simon_start(socket, io, db );
+        simon_sockets.socket_simon_end(socket, io);
+        simon_sockets.player_says(socket, io);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 

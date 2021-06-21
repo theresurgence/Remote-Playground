@@ -3,10 +3,10 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('http://192.168.18.45:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://192.168.18.44:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
@@ -21,6 +21,8 @@ const online = document.getElementById('online'),
     box5 = document.getElementById('box5'),
 
     simon_startquit_btn = document.getElementById('simon-startquit'),
+
+    curr_score = document.getElementById('curr_score'),
 
     userpassbox = document.getElementById("userpass"),
     username = document.getElementById("user").innerHTML,
@@ -75,6 +77,7 @@ main_sockets(document,
     simon_startquit_btn,
     play_btns,
     chat_btn,
+    curr_score,
     queue_btn,
     exit_btn,
     inputfield,

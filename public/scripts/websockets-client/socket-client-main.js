@@ -12,6 +12,7 @@ export function main_sockets(document,
     simon_startquit_btn,
     play_btns, 
     chat_btn,
+    curr_score,
     queue_btn,
     exit_btn,
     inputfield,
@@ -19,6 +20,11 @@ export function main_sockets(document,
 )  {
 
     //Listen for events
+    socket.on('curr_score', (score)=>{
+        curr_score.innerHTML = `<b>Score: ${score}</b>`;  
+        console.log("CHANGE SCORE");
+    });
+
     socket.on('online', (online_num)=>{
         online.innerHTML = `<b>Online: ${online_num}</b>`;  
     });
@@ -83,13 +89,14 @@ export function main_sockets(document,
         socket.emit('message', text, username);
     }
 
-    simon_sockets(socket,
+    simon_sockets(document, socket,
         addMultipleEventListener,
         gpio_list,
         simon_on,
         simon_speaks,
         simon_startquit_btn,
-        play_btns);
+        play_btns,
+        );
 
 }
 
