@@ -47,36 +47,57 @@ li {
     font-weight: bold;
 }
 
-input {
-    padding: 10px 20px;
-    box-sizing: border-box;
-    background: #eee;
-    border: 0;
-    display: block;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    font-family: Nunito;
-    font-size: 12px;
-}
-
 .button {
-    background-color: var(--coralred);
-    border: none;
     border-radius: 5px;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 25px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    /* display: inline-block; */
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
 }
 
-    .button:hover {
-        background-color: white;
-        color: var(--coralred);
+.button.red {
+    background-color: var(--coralred);
+}
+
+.button.orange {
+    background-color: var(--coralorange);
+}
+
+.button.green {
+    background-color: var(--coralgreen);
+}
+
+.button.grey {
+    background-color: grey;
+}
+
+/* .button.active {
+    top: 4px;
+} */
+
+/* .button.red:active {box-shadow: 0 0 #ff4c4b; background-color: #ff4c4b;} */
+/* .button.green:active {box-shadow: 0 0 #87a86f; background-color: #87a86f;} */
+
+    .btn {
+        position: relative;
+        border: 0;
+        padding: 15px 25px;
+        display: inline-block;
+        text-align: center;
+        color: white;
     }
+    /* .btn:active {
+        top: 4px;	
+    } */
+
+    .rounded {
+        border-radius: 10px;
+    }
+
 
 .btn-3d {
     position: relative;
@@ -295,13 +316,38 @@ input {
 
 .queue-container {
     background-color: var(--coralblue);
-    background-image: url('images/queue_graphic.png');
+    /* background-image: url('images/queue_graphic.png');
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: auto; */
     grid-area: queue;
     border: solid 2px whitesmoke;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
+
+.queue-box {
+    height: 100px;
+    width: 100px;
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.queue-box.bgOrange {
+    background-image: url('images/redarrow.png');
+    background-size: cover;
+}
+
+.queue-box.bgGreen {
+    background-image: url('images/controller.png');
+    background-size: cover;
+}
+
+
 
 .statuses-container {
     background-color: var(--coralgreen);
@@ -341,14 +387,17 @@ input {
     background-color: var(--coralorange);
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     grid-area: playbtn;
     border: solid 2px whitesmoke;
     border-radius: 10px;
 }
 
 .chat-container {
-    background-color: var(--coralorange);
     height: 100%;
+    width: 290px;
+    display: flex;
+    justify-content: center;
     grid-area: chat;
     border: solid 2px whitesmoke;
     border-radius: 10px;
@@ -360,6 +409,7 @@ input {
 
 #chat-text-box {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     background-color: var(--white3);
@@ -369,6 +419,7 @@ input {
     overflow-y: scroll;
     background-color: var(--white2);
     height: 90%;
+    word-wrap: break-word;
 }
 
 #chat-input-con {
@@ -439,7 +490,6 @@ input {
 
 .buttonpad {
     margin-right: 10px;
-    padding: 15px 0px 15px 0px;
 }
 
 .credtext {
