@@ -2,19 +2,20 @@ import { simon_sockets } from './simon.js';
 
 /* Main Client Websockets Events */
 
-var tempname = null;
-
 export function main_sockets(document,
     socket, 
     addMultipleEventListener,
     gpio_list,
+    box_list,
     simon_on,
     simon_speaks,
     simon_startquit_btn,
     play_btns, 
     chat_btn,
     queue_btn,
-    exit_btn
+    exit_btn,
+    inputfield,
+    username
 )  {
 
     //Listen for events
@@ -38,19 +39,25 @@ export function main_sockets(document,
     });
 
     socket.on('queuestatus', (queue) => {
-        tempname = document.getElementById("user").innerHTML;
         let queue_no = undefined;
         console.log(queue_no);
         for (let i = 0; i < queue.length; i++) {
-            if (queue[i] == tempname) {
+            if (queue[i] == username) {
                 queue_no = i;
                 console.log('test');
                 console.log(queue_no);
                 break;
             }
         }
+        //Display queue visually
+        for (let i = 0; i < 5; i++) {
+            if (queue[i] !== undefined)
+                box_list[i].innerHTML = queue[i];
+            else
+                box_list[i].innerHTML = "";
+        }
 
-        //find tempname in the queue, then return the number
+        //find username in the queue, then return the number
         if (queue_no === undefined)
             queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
         else if (queue_no === 0)
@@ -61,21 +68,19 @@ export function main_sockets(document,
 
     queue_btn.onclick = () => {
         console.log("Queue");
-        tempname = document.getElementById("user").innerHTML;
-        socket.emit('enterqueue', tempname);
+        socket.emit('enterqueue', username);
     }
 
     exit_btn.onclick = () => {
         console.log("Exit");
-        tempname = document.getElementById("user").innerHTML;
-        socket.emit('exitqueue', tempname);
+        socket.emit('exitqueue', username);
     }
 
     chat_btn.onclick = () => {
         console.log("Send");
-        const text = document.querySelector('#chat-input').value;
-        tempname = document.getElementById("user").innerHTML;
-        socket.emit('message', text, tempname);
+        const text = inputfield.value;
+        inputfield.value = "";
+        socket.emit('message', text, username);
     }
 
     simon_sockets(socket,
