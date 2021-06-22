@@ -522,6 +522,19 @@ li {
     align-items: center;
 }
 
+/* Profile game history */
+table {
+    border: 1px solid black;
+    margin: 10px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 15px;
+}
+
+
+
 /* Media Query*/
 
 @media (min-width: 768px) {

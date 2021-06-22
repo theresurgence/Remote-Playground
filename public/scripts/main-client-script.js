@@ -3,10 +3,10 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),

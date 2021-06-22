@@ -33,6 +33,22 @@
                 
             </div>
         </section>
+        <table>
+            <tr>
+                <th>No.</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Score</th>
+            </tr>
+            <% for (const r of game_history.iterate()) { %>
+            <TR>
+                <TD><%= r.Id %></TD>
+                <TD><%= r.Start %></TD>
+                <TD><%= r.End %></TD>
+                <TD><%= r.Score %></TD>
+            </TR>
+            <% } %>
+        </table>
 
         
         </div>

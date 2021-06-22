@@ -71,18 +71,18 @@ function getUserbyId(id) {
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     // width: 1920,
-//     // height: 1080,
-//     fps: 10,
-//     encoding: 'JPEG',
-//     quality: 1 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    // width: 1920,
+    // height: 1080,
+    fps: 10,
+    encoding: 'JPEG',
+    quality: 1 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -182,11 +182,18 @@ app.get('/profile', (req, res) => {
     if (!auth) {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
+
+    
+    // db.prepare('.mode html').run();
+    let game_history = db.prepare(`SELECT * FROM ${req.user.name}`);
+    console.log(game_history)
+
     res.render('pages/profile', {
         auth: auth,
         userid: req.user.name,
         usermail: req.user.email,
-        userscore: req.user.score
+        userscore: req.user.score,
+        game_history: game_history, 
     });
     }
 });
