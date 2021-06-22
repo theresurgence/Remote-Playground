@@ -88,7 +88,6 @@ videoStream.acceptConnections(app, {
 
 let db = new sqlite3(path.resolve('./userinfo.db'));                                         
 
-var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 
@@ -100,9 +99,11 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
 const queue = [];
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server), queue, db); 
+const online = 0; //number of online users
+require('./websockets-server/main-sockets')(socket(server), queue, db, online); 
 
 
 
@@ -137,15 +138,18 @@ app.get('/', (req, res) => {
     if (!auth) {
         res.render('pages/index', {
             auth: auth,
-            entries: entries
+            entries: entries,
+            online: online
         });
     } else {
     res.render('pages/index', {
         auth: auth,
         userid: req.user.name,
-        entries: entries
+        entries: entries,
+        online: online
     });
     }
+    console.log(`Global ${online}`);
 });
 
 app.get('/about', (req, res) => {
@@ -194,6 +198,7 @@ app.get('/profile', (req, res) => {
         usermail: req.user.email,
         userscore: req.user.score,
         game_history: game_history, 
+        online: online,
     });
     }
 });
