@@ -292,14 +292,19 @@ li {
     display: grid;
     width: 100%;
     max-height: 84vh;
-     grid-template-columns: 8fr 2fr;
+     grid-template-columns: 10fr 2fr;
      grid-template-rows: 1fr 8fr 1fr; 
      gap: 5px;
      grid-template-areas: 
      "queue status"
      "playground chat"
      "playbtn chat";
-}
+
+     /* grid-template-areas: 
+     "queue queue"
+     "playground playground"
+     "playbtn playbtn"; */
+} 
 
 .notasbigcontainer {
     display: flex;
@@ -393,7 +398,6 @@ li {
 
 .chat-container {
     height: 100%;
-    width: 290px;
     display: flex;
     justify-content: center;
     grid-area: chat;
@@ -418,6 +422,7 @@ li {
     background-color: var(--white2);
     height: 90%;
     word-wrap: break-word;
+    word-break: break-all;
 }
 
 #chat-input-con {
