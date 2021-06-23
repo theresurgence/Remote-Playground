@@ -4,8 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000; 
-const server = app.listen(port, () => console.log(`Server started on port ${port}`));
+const port = process.env.PORT || 4000; 
+// const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
@@ -16,6 +16,24 @@ const flash = require('express-flash');
 const session = require('express-session');   
 const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
+
+/************* HTTPS******************/
+const https = require('https')
+const fs = require('fs');
+
+const server = https.createServer({
+  key: fs.readFileSync('./ssl/key.pem'),
+  cert: fs.readFileSync('./ssl/cert.pem')
+}, app)
+.listen(port, function () {
+  console.log('App started on port 4000! Go to https://localhost:4000/')
+})
+
+
+/************* HTTPS******************/
+
+
+
 
 initializePassport(
     passport, 
@@ -59,9 +77,11 @@ var auth = false;
 // videoStream.acceptConnections(app, {
 //     width: 1280,
 //     height: 720,
-//     fps: 16,
+//     // width: 1920,
+//     // height: 1080,
+//     fps: 10,
 //     encoding: 'JPEG',
-//     quality: 10 //lower is faster
+//     quality: 1 //lower is faster
 // }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -71,10 +91,22 @@ let db = new sqlite3(path.resolve('./userinfo.db'));
 var online = 0; //number of online users
 var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
-const queue = [];
+
 // app.use(session({ secret: 'somevalue' }));
+// use of this????
+app.use(session({
+    secret: 'somevalue',
+    resave: true,
+    saveUninitialized: true
+}));
+
+const queue = [];
 /* import all web sockets required */
-require('./websockets-server/main-sockets')(socket(server), queue); 
+require('./websockets-server/main-sockets')(socket(server), queue, db); 
+
+
+
+
 app.use(express.static(__dirname+'/public')); //render static files like images
 app.set('views', path.join(__dirname, 'public/views')); //sets view engine to ejs
 app.set('view engine', 'ejs'); //sets view engine to ejs
@@ -205,6 +237,9 @@ app.delete('/logout', (req, res) => {
 
 function initUser (name, email, password, score) {
     db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
+
+    //score table
+    db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
 
 

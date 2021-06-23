@@ -378,6 +378,8 @@ li {
     background-color: var(--coralred);
     border: solid 2px whitesmoke;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .play-box {

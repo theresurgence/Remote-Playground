@@ -1,5 +1,5 @@
-node_modules/
 .vs/
 package-lock.json
 pi-install.sh
-node_modules
+node_modules/
+
