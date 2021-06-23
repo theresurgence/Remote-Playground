@@ -82,7 +82,7 @@ app.set('view engine', 'ejs'); //sets view engine to ejs
 app.use(express.urlencoded({ extended: false}));
 app.use(flash());
 app.use(session({
-    secret: fdsbdasifdaisbfdaisfbdasifb,
+    secret: 'fdsbdasifdaisbfdaisfbdasifb',
     resave: false,
     saveUninitialized: false
 }));

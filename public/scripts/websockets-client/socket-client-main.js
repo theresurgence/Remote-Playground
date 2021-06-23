@@ -38,7 +38,7 @@ export function main_sockets(document,
         leaderbox.querySelector('ul').appendChild(ent);
     });
 
-    socket.on('queuestatus', (queue) => {
+    socket.on('queuestatus', (queue, isRegistered) => {
         let queue_no = undefined;
         console.log(queue_no);
         for (let i = 0; i < queue.length; i++) {
@@ -58,12 +58,16 @@ export function main_sockets(document,
         }
 
         //find username in the queue, then return the number
-        if (queue_no === undefined)
+        if (!isRegistered) {
+            queuetext.innerHTML = `<b>Error: Not Registered</b>`;
+        }  else {
+            if (queue_no === undefined)
             queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
-        else if (queue_no === 0)
-            queuetext.innerHTML = `<b>Queue Number: You're In!</b>`;
-        else
-            queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
+            else if (queue_no === 0)
+                queuetext.innerHTML = `<b>Queue Number: You're In!</b>`;
+            else
+                queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
+            }      
     });
 
     queue_btn.onclick = () => {

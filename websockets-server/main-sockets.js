@@ -44,10 +44,15 @@ module.exports = function (io, queue) {
 
         // const db = new sqlite3(path.resolve('./userinfo.db')); 
         let isQueued = false;
+        let isRegistered = true;
 
         socket.on('enterqueue', (tempname) => {
-            if (tempname === "")
+            if (tempname === "") {
                 console.log("Not registered User");
+                isRegistered = false;
+                io.emit('queuestatus', isRegistered);
+            }
+                
             else { 
                 // db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
                 // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
