@@ -1,8 +1,10 @@
-// const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
+const gpio = require('./gpio-toggle'); //import toggle fn from gpio-toggle module
 
+const Gpio = require('onoff').Gpio; //Gpio class
 
-for (i = 0; i < 20; i++)
-    console.log(Math.floor(Math.random() * 4));
+gpio.start_signal();
+// for (i = 0; i < 20; i++)
+//     console.log(Math.floor(Math.random() * 4));
 
 
 

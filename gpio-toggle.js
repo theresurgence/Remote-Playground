@@ -63,6 +63,16 @@ const Gpio = require('onoff').Gpio; //Gpio class
      await blinks();
  }
 
+ function start_signal() {
+     // for (let i = 0; i < 3; i++) {
+         // blink(1);
+         // blink(2);
+         // blink(3);
+         // blink(4);
+     // }
+ }
+
+
 
  module.exports = { 
      LED_1, LED_2, LED_3, LED_0,
@@ -78,7 +88,8 @@ const Gpio = require('onoff').Gpio; //Gpio class
      index_reset,
      index_add,
 
-     simon_info
+     simon_info,
+     start_signal,
  }; 
 
 

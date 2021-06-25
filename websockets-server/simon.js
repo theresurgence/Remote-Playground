@@ -12,7 +12,7 @@ module.exports = {
 } 
 
 async function simon_start(socket, io, database) {
-    socket.on('simon-start', (player_name)=> {
+    socket.on('simon-start', async (player_name)=> {
         db = database;
 
         PLAYER_NAME = player_name.trim();
@@ -30,6 +30,8 @@ async function simon_start(socket, io, database) {
         io.to('simon room').emit('simon-start-player');
 
         simon_on = true;
+
+        await gpio.start_signal();
 
         console.log("SIMON SAYS STARTS")
 
