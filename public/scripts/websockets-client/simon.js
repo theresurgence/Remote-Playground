@@ -11,6 +11,9 @@ export function simon_sockets(document, socket,
     play_btns,
 ) {
 
+    console.log(play_btns)
+    console.log(play_btns[0])
+
     //Catch all accounting for both touch and mouse events to toggle the 4 gpios on or off
     //led is gpio number (0,1,2,3)
     for (let led = 0; led < 4; led++) {  
@@ -73,7 +76,8 @@ export function simon_sockets(document, socket,
     /* events for player room and public room */
 
     socket.on('simon-start-public', ()=>{
-        play_btns.style.display = "none";
+        play_btns[0].style.display = "none";
+        console.log("disappear")
     });
 
     /* NEED TO ADD MORE CCODE */
@@ -83,14 +87,16 @@ export function simon_sockets(document, socket,
     });
 
     socket.on('simon-end-public', ()=>{
-        play_btns.style.display = "flex";
+        play_btns[0].style.display = "flex";
         simon_on = false; 
+        console.log("appear")
     });
 
     /* NEED TO ADD MORE CODE */
     socket.on('simon-end-player', ()=>{
         simon_on = false; 
         simon_startquit_btn.value = "Start";
+        alert("Game Over");
         console.log("CHNAGE BUTTON");
         /// GAME OVER CODE OR SMTH////
     });

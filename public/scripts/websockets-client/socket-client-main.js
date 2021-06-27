@@ -44,9 +44,17 @@ export function main_sockets(document,
         leaderbox.querySelector('ul').appendChild(ent);
     });
 
-    socket.on('queuestatus', (queue, isRegistered) => {
+
+    socket.on('check_register', ()=>{
+        socket.emit('receive_register', username);
+    });
+
+
+
+
+    socket.on('queuestatus', (queue) => {
         let queue_no = undefined;
-        console.log(queue_no);
+        console.log(`Queue Num: ${queue_no}`);
         for (let i = 0; i < queue.length; i++) {
             if (queue[i] == username) {
                 queue_no = i;
@@ -63,17 +71,48 @@ export function main_sockets(document,
                 box_list[i].innerHTML = "";
         }
 
+        ////find username in the queue, then return the number
+        //if (!isRegistered) {
+        //    queuetext.innerHTML = `<b>Please login to play</b>`;
+        //    // alert('Please login to play');
+        //} 
+
+        //else {
+        //    if (queue_no === undefined)
+        //        queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
+        //    else if (queue_no === 0)
+        //        queuetext.innerHTML = `<b>Queue Number: Your turn to play!</b>`;
+        //    else
+        //        queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
+        //}      
+    });
+
+    socket.on('queuetext', (queue, isRegistered, isExit) => {
+        let queue_no = undefined;
+        console.log(`Queue Num: ${queue_no}`);
+        for (let i = 0; i < queue.length; i++) {
+            if (queue[i] == username) {
+                queue_no = i;
+                console.log('test');
+                console.log(queue_no);
+                break;
+            }
+        }
+
         //find username in the queue, then return the number
         if (!isRegistered) {
-            queuetext.innerHTML = `<b>Error: Not Registered</b>`;
-        }  else {
+            if (!isExit)
+                queuetext.innerHTML = `<b>Please login to play</b>`;
+        } 
+
+        else {
             if (queue_no === undefined)
-            queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
+                queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
             else if (queue_no === 0)
-                queuetext.innerHTML = `<b>Queue Number: You're In!</b>`;
+                queuetext.innerHTML = `<b>Queue Number: Your turn to play!</b>`;
             else
                 queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
-            }      
+        }      
     });
 
     queue_btn.onclick = () => {

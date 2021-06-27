@@ -15,6 +15,14 @@ module.exports = function (io, queue, db, online) {
         console.log(online)
         io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
 
+
+        io.emit('check_register');
+        socket.on('receive_register', (username)=> {
+            console.log(`USERNAME: ${username}`);
+            let isRegistered = (username === "") ? false : true;
+            io.emit('queuestatus', queue, isRegistered);
+        });
+
         socket.on('disconnect', ()=> {
             console.log(socket.id, 'disconnected');
             online -= 1;
@@ -41,17 +49,23 @@ module.exports = function (io, queue, db, online) {
                 io.emit('message', `${tempname}: ${message}`, r, g, b);
         });        
 
+
+
+
+
         // const db = new sqlite3(path.resolve('./userinfo.db')); 
-        let isQueued = false;
-        let isRegistered = true;
 
         socket.on('enterqueue', (tempname) => {
+            let isQueued = queue.includes(tempname);
+            console.log(`isQueue: ${isQueued}`);
+            let isRegistered;
+
             if (tempname === "") {
                 console.log("Not registered User");
                 isRegistered = false;
-                io.emit('queuestatus', isRegistered);
             }
                 
+            //isRegistered === true
             else { 
                 // db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
                 // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
@@ -62,32 +76,42 @@ module.exports = function (io, queue, db, online) {
              
                 }      
                 console.log(queue);         
-                io.emit('queuestatus', queue);
+                isRegistered = true;
             }
+
+            io.emit('queuestatus', queue);
+            io.to(socket.id).emit('queuetext', queue, isRegistered, false);
         });
 
         socket.on('exitqueue', (tempname) => {
             if (tempname === "") {
                 console.log("Not registered User");
-                alert("Please sign in or register to play!");
             }
+
+            //IF REGISTERED
             else { 
                 // db.prepare(`DELETE FROM queuestack WHERE name = '${tempname}'`).run();
                 // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
                 // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${tempname}'`).all();
-                let index;           
-                for (let i = 0; i < queue.length; i++) {
-                    if (queue[i] == tempname) {
-                        index = i;
-                        break;
-                    }                        
-                }
+
+                let isQueued = queue.includes(tempname);
+
+                //only run this code if queue
+                //no need to exit queue if not inside
                 if (isQueued) {
+                    let index;           
+                    for (let i = 0; i < queue.length; i++) {
+                        if (queue[i] === tempname) {
+                            index = i;
+                            break;
+                        }                        
+                    }
                     queue.splice(index, 1);
                     isQueued = false;     
+                    console.log(queue); 
+                    io.emit('queuestatus', queue);
+                    io.emit('queuetext', queue, true, true);
                 }
-                console.log(queue); 
-                io.emit('queuestatus', queue);
             }
         })
 

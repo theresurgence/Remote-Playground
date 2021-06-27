@@ -8,6 +8,9 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 /************************************** comment if no RPI *****************************/
 const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
 
+/**********************DEPLOYMENT ********************/
+// const socket = io.connect('https://20.194.44.54:8080', {reconnect: true}); //client establishes websocket connection to server
+
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
     gpio0 = document.getElementById('gpio0'),
@@ -28,7 +31,7 @@ const online = document.getElementById('online'),
     username = document.getElementById("user").innerHTML,
     inputfield = document.getElementById("chat-input"),
     signup = document.getElementById("signuplink"),
-    play_btns = document.getElementById('play-buttons'),
+    play_btns = document.getElementsByClassName('play-buttons'),
     chat_btn = document.getElementById('chatbutton'),
     queue_btn = document.getElementById('queuebutton'),
     exit_btn = document.getElementById('exitbutton'),

@@ -31,7 +31,7 @@ async function simon_start(socket, io, database) {
 
         simon_on = true;
 
-        await gpio.start_signal();
+        // await gpio.start_signal();
 
         console.log("SIMON SAYS STARTS")
 
@@ -94,7 +94,7 @@ function simon_end(socket, io) {
         
     simon_on = false;
     socket.emit('simon-end-player');
-    socket.emit('simon-end-public');
+    io.to('public room').emit('simon-end-public');
 
     socket.leave('simon room');
     socket.join('public room');

@@ -79,9 +79,9 @@ videoStream.acceptConnections(app, {
     height: 720,
     // width: 1920,
     // height: 1080,
-    fps: 10,
+    fps: 25,
     encoding: 'JPEG',
-    quality: 10 //lower is faster
+    quality: 8 //lower is faster
 }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -139,7 +139,7 @@ app.get('/', (req, res) => {
         res.render('pages/index', {
             auth: auth,
             entries: entries,
-            online: online
+            online: online,
         });
     } else {
     res.render('pages/index', {
