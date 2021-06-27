@@ -2,8 +2,9 @@ const gpio = require('../gpio-toggle'); //import gpio functions and variables
 const simon_info  = gpio.simon_info;
 
 var curr_score = 0;
+
 var PLAYER_NAME = '';
-var db;
+
 
 module.exports = {
     simon_start,
@@ -11,9 +12,8 @@ module.exports = {
     socket_simon_end,
 } 
 
-async function simon_start(socket, io, database) {
+async function simon_start(socket, io, db) {
     socket.on('simon-start', async (player_name)=> {
-        db = database;
 
         PLAYER_NAME = player_name.trim();
 
@@ -25,6 +25,7 @@ async function simon_start(socket, io, database) {
 
         socket.leave('public room');
         socket.join('simon room');
+
 
         io.to('public room').emit('simon-start-public');
         io.to('simon room').emit('simon-start-player');
@@ -50,7 +51,8 @@ async function simon_says(socket, io, curr_score) {
     console.log('Player can speak');
 }
 
-function player_says(socket, io) {
+function player_says(socket, io, db) {
+
     socket.on('player-says', async (player_led)=> {
         var hist = simon_info.hist;
         var hist_len = simon_info.hist.length;
@@ -90,8 +92,10 @@ function player_says(socket, io) {
 }
 
 
-function simon_end(socket, io) {
-        
+function simon_end(socket, io, database) {
+
+    const db = database;
+
     simon_on = false;
     socket.emit('simon-end-player');
     io.to('public room').emit('simon-end-public');
@@ -102,7 +106,7 @@ function simon_end(socket, io) {
     gpio.hist_reset();
 
     console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
-    console.log(db);
+    console.log(`DATABASE: ${db}`);
 
     let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
     db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
@@ -121,9 +125,17 @@ function simon_end(socket, io) {
 
     console.log("SIMON END")
     curr_score = 0;
+
+    io.to(socket.id).emit('exitqueue-server');
 }
 
 
-function socket_simon_end(socket, io) {
-    socket.on('simon-end', () => { simon_end(socket,io); });
+function socket_simon_end(socket, io, db) {
+    socket.on('simon-end', (player_name) => { 
+        console.log(`player_name: ${player_name}`)
+        console.log(`PLAYER_NAME: ${PLAYER_NAME}`)
+
+        if (player_name === PLAYER_NAME)
+            console.log("socket ends simon")
+            simon_end(socket,io, db); });
 }

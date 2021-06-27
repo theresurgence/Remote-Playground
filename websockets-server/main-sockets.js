@@ -3,10 +3,32 @@ var simon_on = false;
 const sqlite3 = require('better-sqlite3');
 const path = require('path');
 
+var simon_on = false;
+
+
+var user_socket_pairs =  {
+
+};
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
+
+
 
 module.exports = function (io, queue, db, online) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
+
+        io.to(socket.id).emit('check-register');
+        socket.on('receive-register', (username)=> {
+            console.log(`USERNAME: ${username}`);
+            
+            if (username != '')
+                user_socket_pairs[username]= socket.id;
+            console.log(user_socket_pairs);
+        });
+
         console.log(socket.id, 'connected');
         var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
         socket.join('public room');   //public room 
@@ -16,17 +38,16 @@ module.exports = function (io, queue, db, online) {
         io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
 
 
-        io.emit('check_register');
-        socket.on('receive_register', (username)=> {
-            console.log(`USERNAME: ${username}`);
-            let isRegistered = (username === "") ? false : true;
-            io.emit('queuestatus', queue, isRegistered);
-        });
 
         socket.on('disconnect', ()=> {
             console.log(socket.id, 'disconnected');
             online -= 1;
             io.sockets.emit('online', online);
+
+            let username = getKeyByValue(user_socket_pairs, socket.id);
+            console.log(username);
+            
+            delete user_socket_pairs[username];
         });
 
 
@@ -35,9 +56,9 @@ module.exports = function (io, queue, db, online) {
 
         /* Simon Says Mini Game websockets */
         simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db );
-        simon_sockets.socket_simon_end(socket, io);
-        simon_sockets.player_says(socket, io);
+        simon_sockets.simon_start(socket, io, db);
+        simon_sockets.socket_simon_end(socket, io, db, );
+        simon_sockets.player_says(socket, io, db);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 
@@ -77,6 +98,11 @@ module.exports = function (io, queue, db, online) {
                 }      
                 console.log(queue);         
                 isRegistered = true;
+                if (tempname === queue[0] &&  simon_on === false) {
+                    io.to(socket.id).emit('simon-start-server');
+                    simon_on = true;
+                }
+                
             }
 
             io.emit('queuestatus', queue);
@@ -96,7 +122,7 @@ module.exports = function (io, queue, db, online) {
 
                 let isQueued = queue.includes(tempname);
 
-                //only run this code if queue
+                //only run this code if in queue
                 //no need to exit queue if not inside
                 if (isQueued) {
                     let index;           
@@ -111,9 +137,26 @@ module.exports = function (io, queue, db, online) {
                     console.log(queue); 
                     io.emit('queuestatus', queue);
                     io.emit('queuetext', queue, true, true);
+
+                    if (index == 0) {
+                        //PLAYER quits, move to next in line
+                        io.to(socket.id).emit('simon-end-server');
+                        console.log("Player Quit Simon")
+
+                        //next
+                        let next_player = queue[0];
+                        console.log(`Nextplayer: ${next_player}`);
+
+                        console.log(user_socket_pairs[next_player]);
+                        io.to(user_socket_pairs[next_player]).emit('simon-start-server-next', next_player);
+
+                    }
+                    if (queue.length == 0)
+                        simon_on = false;
                 }
             }
-        })
+        }
+        )
 
     });
 }

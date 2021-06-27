@@ -45,8 +45,8 @@ export function main_sockets(document,
     });
 
 
-    socket.on('check_register', ()=>{
-        socket.emit('receive_register', username);
+    socket.on('check-register', ()=>{
+        socket.emit('receive-register', username);
     });
 
 

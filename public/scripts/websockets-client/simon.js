@@ -42,36 +42,54 @@ export function simon_sockets(document, socket,
                     console.log("TURNING OFF LED");
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
+                    
+                    console.log(`SIMON _ON ${simon_on}`);
 
-                    if (simon_on) {socket.emit(`player-says`, led); } //player's input is taken into account if simon game is in progress
+                    if (simon_on) {
+                        socket.emit(`player-says`, led); 
+                        console.log("SENT PLAYER INPUT")
+                    } //player's input is taken into account if simon game is in progress
                 }
             }
         });
     }
 
 
-    socket.on('simon-is-speaking', ()=>{ simon_speaks = true });
-    socket.on('simon-not-speaking', ()=>{ simon_speaks = false });
+    /**server to call server, need client as middleman**/
 
-    simon_startquit_btn.onclick = () => { 
+    socket.on('simon-start-server', ()=>{ 
         let player_name = document.getElementById("user").innerHTML;
         console.log(`Player name: ${player_name}`);
+        socket.emit('simon-start', player_name); 
+        simon_on = true;
+    });
 
-        //To start game
-        if (simon_startquit_btn.value == "Start") {
+    socket.on('simon-start-server-next', (next_player)=>{ 
+        socket.emit('simon-start', next_player); 
+        console.log(`nexplayer is ${next_player}`);
+        simon_on = true;
+    });
 
-            socket.emit('simon-start', player_name); 
+    socket.on('simon-end-server', ()=>{ 
+        let player_name = document.getElementById("user").innerHTML;
+        console.log(`Player name: ${player_name}`);
+        socket.emit('simon-end', player_name); 
+        simon_on = false;
+    });
 
-            simon_startquit_btn.value = "Quit";
-            simon_on = true;
+    socket.on('exitqueue-server', ()=>{ 
+        let username = document.getElementById("user").innerHTML;
+        socket.emit('exitqueue', username);
+    });
 
-        //To quit a game in progress 
-        } else {
-            simon_on = false;
-            socket.emit('simon-end', player_name); 
-            simon_startquit_btn.value = "Start";
-        }
-    };
+    /**server to call server, need client as middleman**/
+
+
+
+
+
+    socket.on('simon-is-speaking', ()=>{ simon_speaks = true });
+    socket.on('simon-not-speaking', ()=>{ simon_speaks = false });
 
     /* events for player room and public room */
 
@@ -83,7 +101,8 @@ export function simon_sockets(document, socket,
     /* NEED TO ADD MORE CCODE */
     socket.on('simon-start-player', ()=>{
         //////SOME CODE HERE TO TELL PLAYER THE GAME HAS STARTED
-        //
+        simon_on = true;
+        console.log("simon_start_plaeyr")
     });
 
     socket.on('simon-end-public', ()=>{
@@ -96,9 +115,29 @@ export function simon_sockets(document, socket,
     socket.on('simon-end-player', ()=>{
         simon_on = false; 
         simon_startquit_btn.value = "Start";
-        alert("Game Over");
+        // alert("Game Over");
         console.log("CHNAGE BUTTON");
         /// GAME OVER CODE OR SMTH////
     });
 
 }
+    //simon_startquit_btn.onclick = () => { 
+    //    let player_name = document.getElementById("user").innerHTML;
+    //    console.log(`Player name: ${player_name}`);
+
+    //    //To start game
+    //    if (simon_startquit_btn.value == "Start") {
+
+    //        socket.emit('simon-start', player_name); 
+
+    //        simon_startquit_btn.value = "Quit";
+    //        simon_on = true;
+
+    //    //To quit a game in progress 
+    //    } else {
+    //        simon_on = false;
+    //        socket.emit('simon-end', player_name); 
+    //        simon_startquit_btn.value = "Start";
+    //    }
+    //};
+
