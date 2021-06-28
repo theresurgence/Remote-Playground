@@ -1,6 +1,6 @@
 :root {
     --coollime: #c9e265;
-    --coralgreen: #57ff57;
+    --coralgreen: #43aa57;
     --coralblue: #5757ff;
     --coralorange: #ffab57;
     --coralred: #ff5757;
@@ -570,3 +570,10 @@ th, td {
         width: 100%;
     }
 }
+
+
+
+
+/* #para1 { */
+/*     color: purple; */
+/* } */
