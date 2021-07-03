@@ -3,10 +3,10 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-// const socket = io.connect('http://localhost:4000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
 // const socket = io.connect('https://20.194.44.54:8080', {reconnect: true}); //client establishes websocket connection to server
@@ -22,15 +22,15 @@ const online = document.getElementById('online'),
     box3 = document.getElementById('box3'),
     box4 = document.getElementById('box4'),
     box5 = document.getElementById('box5'),
+    idlebtn = document.getElementById('idlebutton'),
 
     simon_startquit_btn = document.getElementById('simon-startquit'),
 
     curr_score = document.getElementById('curr_score'),
 
-    userpassbox = document.getElementById("userpass"),
+
     username = document.getElementById("user").innerHTML,
     inputfield = document.getElementById("chat-input"),
-    signup = document.getElementById("signuplink"),
     play_btns = document.getElementsByClassName('play-buttons'),
     chat_btn = document.getElementById('chatbutton'),
     queue_btn = document.getElementById('queuebutton'),
@@ -55,6 +55,13 @@ const online = document.getElementById('online'),
         chat_btn.click();
       }
     });
+
+    inputfield.addEventListener("keyup", (event) => {
+      if (event.key === "A") {
+        event.preventDefault();
+        idlebtn.click();
+      }
+    })
 
 
 function addMultipleEventListener(element, events, handler) {
