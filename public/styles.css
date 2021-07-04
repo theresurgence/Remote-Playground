@@ -47,6 +47,10 @@ li {
     font-weight: bold;
 }
 
+.dispnone {
+    display: none;
+}
+
 .button {
     border-radius: 5px;
     color: white;
@@ -69,6 +73,14 @@ li {
 
 .button.green {
     background-color: var(--coralgreen);
+}
+
+.button.blue {
+    background-color: var(--coralblue);
+}
+
+.button.purple {
+    background-color: darkslateblue;
 }
 
 .button.grey {
@@ -288,7 +300,7 @@ li {
 
 /*                  CONTENT STYLING              */
 
-.big-container {
+.big-container1 {
     display: grid;
     width: 100%;
     max-height: 84vh;
@@ -305,6 +317,18 @@ li {
      "playground playground"
      "playbtn playbtn"; */
 } 
+
+.big-container2 {
+    display: grid;
+    width: 100%;
+    max-height: 84vh;
+    grid-template-rows: 1fr 8fr 1fr; 
+    row-gap: 5px;
+    grid-template-areas: 
+    "queue"
+    "playground"
+    "playbtn";
+}
 
 .notasbigcontainer {
     display: flex;
@@ -365,13 +389,16 @@ li {
     border-radius: 10px;
 }
 
+.statuses-container.dispnone {
+    display: none;
+}
+
 .leader-text {
     font-size: 16px;
     font-family: 'Courier New', monospace;
     text-align: center;
     text-decoration: underline;
 }
-
 
 .playground-container {
     grid-area: playground;
@@ -380,12 +407,34 @@ li {
     border-radius: 10px;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .play-box {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 45%;
+    height: 90%;
+}
+
+.idle-box {
+    background-color: mediumpurple;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: 90%;
+    margin-top: 18px;
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+    position: relative;
+}
+
+.idlebtn-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
 }
 
 .play-buttons {
@@ -405,6 +454,10 @@ li {
     grid-area: chat;
     border: solid 2px whitesmoke;
     border-radius: 10px;
+}
+
+.chat-container.dispnone {
+    display: none;
 }
 
 #chat-header {

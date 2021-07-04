@@ -9,11 +9,14 @@
 </head>
 
 <body>
+    <audio id="btnsound">
+        <source src="../../images/rollover1.ogg" type="audio/ogg">
+    </audio>
 
         <header id="header">
             <%- include('../partials/header') %>
         </header>
-    <div class="big-container">
+    <div id="big-container" class="big-container1">
 
     <div class="queue-container">
         <div class="queue-box bgGreen"><p id="box1"></p></div>
@@ -29,23 +32,38 @@
         
     </div>
 
-    <div class="statuses-container">
-        <!-- <div id="leader-box"> 
+    <div id="stat" class="statuses-container">
+        <div id="leader-box"> 
             <p class="leader-text"><b>LEADERBOARDS</b></p>    
             <p class="leader-text" style="text-decoration: none;">1.<%= entries[0].name %> - <%=  entries[0].score %></p>        
             <p class="leader-text" style="text-decoration: none;">2.<%= entries[1].name %> - <%=  entries[1].score %></p>  
             <p class="leader-text" style="text-decoration: none;">3.<%= entries[2].name %> - <%=  entries[2].score %></p>  
-        </div> -->
-        <div id="idle-box">
-            <input id="idlebutton" type="button" class="btn-3d purple">
-        </div>
+        </div>        
     </div>        
 
     <div class="playground-container">
-        <!-- <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=400px width=400px></div> -->
+        <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=400px width=400px></div>
         <!-- Comment if no RPI -->
-        <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> 
+        <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div>  -->
+        <div class="idle-box">
+            <h1 id="ticket-count">Tickets: 0</h1>
+            <div class="idlebtn-container">
+            <input id="idlebutton1" type="button" value="hopscotch" class="button purple">
+            <input id="idlebutton2" type="button" value="swing" class="button purple">
+            <input id="idlebutton3" type="button" value="tunnel-slide" class="button purple">
+            </div>
+            <div class="idlebtn-container">
+                <img id="hopscotch" src="../../images/hopscotch.png" height=150px width=150px>
+                <img id="swing" src="../../images/swing.png" height=150px width=150px>
+                <img id="slide" src="../../images/slide.png" height=150px width=150px>
+            </div>
+        </div>
+        <input id="collapsecol" type="button" class="button grey" value=">" style="align-self: center;">
     </div>
+
+    
+        
+    
     
 
     <div class="play-buttons">                  
@@ -59,7 +77,7 @@
     </div>        
 
 
-    <div class="chat-container">
+    <div id="cht" class="chat-container">
          <div id="chat-text-box">
             <div id="text-box">
                 <ul>

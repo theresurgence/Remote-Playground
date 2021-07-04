@@ -22,7 +22,15 @@ const online = document.getElementById('online'),
     box3 = document.getElementById('box3'),
     box4 = document.getElementById('box4'),
     box5 = document.getElementById('box5'),
-    idlebtn = document.getElementById('idlebutton'),
+    idlebtn1 = document.getElementById('idlebutton1'),
+    idlebtn2 = document.getElementById('idlebutton2'),
+    idlebtn3 = document.getElementById('idlebutton3'),
+    collapsecol = document.getElementById('collapsecol'),
+    ticketcount = document.getElementById('ticket-count'),
+    btnpress = document.getElementById('btnsound'),
+    chatcon = document.getElementById('cht'),
+    statcon = document.getElementById('stat'),
+    bigcon = document.getElementById('big-container'),
 
     simon_startquit_btn = document.getElementById('simon-startquit'),
 
@@ -39,6 +47,9 @@ const online = document.getElementById('online'),
 
     //Sticky Navbar
     var sticky = navbar.offsetTop;
+
+    //temp resource for idle game
+    var tickets = 0;
 
     window.onscroll = () => {
       if (window.pageYOffset >= sticky) {
@@ -62,6 +73,63 @@ const online = document.getElementById('online'),
         idlebtn.click();
       }
     })
+
+    //Audio Elements to Buttons
+    gpio0.onclick = () => {
+      btnpress.play();
+    }
+
+    gpio1.onclick = () => {
+      btnpress.play();
+    }
+
+    gpio2.onclick = () => {
+      btnpress.play();
+    }
+
+    gpio3.onclick = () => {
+      btnpress.play();
+    }
+
+    idlebtn1.onclick = () => {
+      btnpress.play();
+      tickets += 1;
+      ticketcount.innerHTML = `Tickets: ${tickets}`;    
+    }
+
+    idlebtn2.onclick = () => {
+      btnpress.play();
+      tickets += 5;
+      ticketcount.innerHTML = `Tickets: ${tickets}`;    
+    }
+
+    idlebtn3.onclick = () => {
+      btnpress.play();
+      tickets += 50;
+      ticketcount.innerHTML = `Tickets: ${tickets}`;    
+    }
+    
+    //ability to collapse 2nd column
+    var isCollapsed = false;
+
+    collapsecol.onclick = () => {
+      if (isCollapsed) {
+        bigcon.classList.remove("big-container2");
+        statcon.classList.remove("dispnone");
+        chatcon.classList.remove("dispnone");
+        bigcon.classList.add("big-container1");
+        collapsecol.value = ">";
+        isCollapsed = false;        
+      }
+      else {
+        bigcon.classList.remove("big-container1");
+        statcon.classList.add("dispnone");
+        chatcon.classList.add("dispnone");
+        bigcon.classList.add("big-container2");
+        collapsecol.value = "<";
+        isCollapsed = true;
+      }
+    }
 
 
 function addMultipleEventListener(element, events, handler) {
