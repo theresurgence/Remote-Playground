@@ -10,19 +10,19 @@
   <title>Leaderboard</title>
 </head>
 
-<body class="bgRed">
+<body class="bgBrown">
     <div class="bigcontainer">       
         <header id="header">
             <%- include('../partials/header') %>
         </header>
 
-        <div class="notasbigcontainer bgGreen smallifycont">
+        <div class="notasbigcontainer bgWhite smallifycont">
 
         <section id="leaderboard" class="pad5percent">
-            <h1 class="leader-text" style="font-size: 36px;">LEADERBOARDS</h1>   
+            <h1 class="headings" style="font-size: 36px;">LEADERBOARDS</h1>   
             <ol>
                 <% for (let i = 0; i < entries.length; i++) { %>
-                    <li class="textshdw" style="font-size: 20px; color: #dddddd"><%= i+1 %>.  <%= entries[i].name %> - <%= entries[i].score %> </li>
+                    <li style="font-size: 20px; font-family: 'Calibri';"><%= i+1 %>.  <%= entries[i].name %> - <%= entries[i].score %> </li>
                 <% } %>
             </ol>                       
         </section>

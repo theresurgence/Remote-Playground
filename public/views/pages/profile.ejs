@@ -12,14 +12,14 @@
   <title><%= userid %>'s Profile</title>
 </head>
 
-<body class="bgBlue">
+<body class="bgBrown">
     <div class="bigcontainer">
         
         <header id="header">
             <%- include('../partials/header') %>
         </header>
 
-        <div class="notasbigcontainer bgOrange smallifycont">
+        <div class="notasbigcontainer bgWhite smallifycont">
 
         <section id="profile" class="pad5percent">
             <div id="profilecontainer1">
@@ -28,11 +28,41 @@
                     <img id="header-img" src="../../images/default_avatar.png" height=100px width=100px style="border-radius: 50%;">
                 </div>
                 <div id="username">
-                    <h1><%= userid %></h1>
+                    <h1 class="headings"><%= userid %></h1>
                 </div>
                 <p>Email: <u><%= usermail %></u></p>
                 <p>PlayScore: <u><%= userscore %></u></p>
-                
+                <p>Achievements:</p>
+                <div class="achievement-container">
+                    <div class="row">
+                        <div class="achievement-border bgWhite"><span class="achievement-text">Text here</span><img id="ach1" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="achievement-border bgBlue"><img id="ach2" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="achievement-border bgRed"><img id="ach3" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="achievement-border bgWhite"><img id="ach4" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
+                        <div class="achievement-border bgBlue"><img id="ach5" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
+                    </div>
+                    <div class="row">
+                        <div class="achievement-border bgRed"><img id="ach6" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
+                        <div class="achievement-border bgWhite"><img id="ach7" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="achievement-border bgBlue"><img id="ach8" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="achievement-border bgRed"><img id="ach9" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="achievement-border bgWhite"><img id="ach10" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                    </div>
+                    <div class="row">
+                        <div class="achievement-border bgWhite"><img id="ach11" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite"><img id="ach12" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite"><img id="ach13" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite"><img id="ach14" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite"><img id="ach15" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                    </div>
+                    <div class="row">
+                        <div class="achievement-border bgWhite greyout"><img id="ach16" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite greyout"><img id="ach17" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite greyout"><img id="ach18" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite greyout"><img id="ach19" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="achievement-border bgWhite greyout"><img id="ach20" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- <table> -->

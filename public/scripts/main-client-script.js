@@ -25,6 +25,9 @@ const online = document.getElementById('online'),
     idlebtn1 = document.getElementById('idlebutton1'),
     idlebtn2 = document.getElementById('idlebutton2'),
     idlebtn3 = document.getElementById('idlebutton3'),
+    bar1 = document.getElementById("bar1"),
+    bar2 = document.getElementById("bar2"),
+    bar3 = document.getElementById("bar3"),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
@@ -74,6 +77,13 @@ const online = document.getElementById('online'),
       }
     })
 
+    //Background Music Toggle
+    var musicbtn = document.getElementById("bgmusicbtn");
+    var bgmusic = document.getElementById("bgmusic");
+
+    musicbtn.onclick = () => {
+      bgmusic.play();
+    }
     //Audio Elements to Buttons
     gpio0.onclick = () => {
       btnpress.play();
@@ -95,18 +105,22 @@ const online = document.getElementById('online'),
       btnpress.play();
       tickets += 1;
       ticketcount.innerHTML = `Tickets: ${tickets}`;    
+      move(bar1);
+      
     }
 
     idlebtn2.onclick = () => {
       btnpress.play();
       tickets += 5;
       ticketcount.innerHTML = `Tickets: ${tickets}`;    
+      move(bar2);
     }
 
     idlebtn3.onclick = () => {
       btnpress.play();
       tickets += 50;
       ticketcount.innerHTML = `Tickets: ${tickets}`;    
+      move(bar3);
     }
     
     //ability to collapse 2nd column
@@ -130,6 +144,58 @@ const online = document.getElementById('online'),
         isCollapsed = true;
       }
     }
+
+    //ModalBox
+    var modal = document.getElementById("infomodal");
+    var infobtn = document.getElementById("modalbtn");
+    var infospan = document.getElementsByClassName("close")[0];
+
+    infobtn.onclick = () => {
+      modal.style.display = "block";
+    }
+
+    infospan.onclick = () => {
+      modal.style.display = "none";
+    }
+
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    //Idle Progress Bar
+    var i = 0;
+
+    async function move(progbar) {
+      if (i == 0) {
+        i = 1;
+      }
+      var width = 1;
+      if (progbar == bar1) {
+        var id = setInterval(frame, 10); //run frame every 10ms
+      }
+      else if (progbar == bar2) {
+        var id = setInterval(frame, 30); //run frame every 30ms
+      }
+      else if (progbar == bar3) {
+        var id = setInterval(frame, 50); //run frame every 50ms
+      }
+      
+      
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+          i = 0;
+          progbar.style.width = 0 + "%";
+        } else {
+          width++;
+          progbar.style.width = width + "%";
+        }
+      }
+    }
+
+
 
 
 function addMultipleEventListener(element, events, handler) {

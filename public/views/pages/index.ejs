@@ -13,6 +13,10 @@
         <source src="../../images/rollover1.ogg" type="audio/ogg">
     </audio>
 
+    <audio loop id="bgmusic">
+        <source src="../../images/elevatormusic.mp3" type="audio/mp3">
+    </audio>
+
         <header id="header">
             <%- include('../partials/header') %>
         </header>
@@ -25,7 +29,7 @@
         <div class="queue-box bgOrange"><p id="box4"></p></div>
         <div class="queue-box bgOrange"><p id="box5"></p></div>
         <div class="queue-info">
-            <p id="queuetext" class="leader-text" style="text-decoration: none; font-size: 18px;"><b>Queue Number: Not in Queue</b></p>
+            <p id="queuetext" class="leader-text textshdw white" style="text-decoration: none; font-size: 18px;"><b>Queue Number: Not in Queue</b></p>
             <input id="queuebutton" type="button" class="button red textshdw" value="QUEUE UP"> 
             <input id="exitbutton" type="button" class="button grey textshdw" style="border-radius: 50%; padding: 15px 15px" value="X">
         </div>
@@ -34,10 +38,10 @@
 
     <div id="stat" class="statuses-container">
         <div id="leader-box"> 
-            <p class="leader-text"><b>LEADERBOARDS</b></p>    
-            <p class="leader-text" style="text-decoration: none;">1.<%= entries[0].name %> - <%=  entries[0].score %></p>        
-            <p class="leader-text" style="text-decoration: none;">2.<%= entries[1].name %> - <%=  entries[1].score %></p>  
-            <p class="leader-text" style="text-decoration: none;">3.<%= entries[2].name %> - <%=  entries[2].score %></p>  
+            <p class="leader-text textshdw white"><b>LEADERBOARDS</b></p>    
+            <p class="leader-text textshdw white" style="text-decoration: none;">1.<%= entries[0].name %> - <%=  entries[0].score %></p>        
+            <p class="leader-text textshdw white" style="text-decoration: none;">2.<%= entries[1].name %> - <%=  entries[1].score %></p>  
+            <p class="leader-text textshdw white" style="text-decoration: none;">3.<%= entries[2].name %> - <%=  entries[2].score %></p>  
         </div>        
     </div>        
 
@@ -46,17 +50,33 @@
         <!-- Comment if no RPI -->
         <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div>  -->
         <div class="idle-box">
-            <h1 id="ticket-count">Tickets: 0</h1>
+            <h1 id="ticket-count" class="textshdw white">Tickets: 0</h1>
             <div class="idlebtn-container">
-            <input id="idlebutton1" type="button" value="hopscotch" class="button purple">
-            <input id="idlebutton2" type="button" value="swing" class="button purple">
-            <input id="idlebutton3" type="button" value="tunnel-slide" class="button purple">
-            </div>
-            <div class="idlebtn-container">
+            <div class="hopscotch resource">
+                <input id="idlebutton1" type="button" value="hopscotch" class="button purple">
                 <img id="hopscotch" src="../../images/hopscotch.png" height=150px width=150px>
-                <img id="swing" src="../../images/swing.png" height=150px width=150px>
-                <img id="slide" src="../../images/slide.png" height=150px width=150px>
+                <div class="progbar-container">
+                    <div id="bar1" class="bar"></div>
+                </div>
             </div>
+
+            <div class="swing resource">
+                <input id="idlebutton2" type="button" value="swing" class="button purple">
+                <img id="swing" src="../../images/swing.png" height=150px width=150px>
+                <div class="progbar-container">
+                    <div id="bar2" class="bar"></div>
+                </div>
+            </div>
+
+            <div class="slide resource">
+                <input id="idlebutton3" type="button" value="tunnel-slide" class="button purple">
+                <img id="slide" src="../../images/slide.png" height=150px width=150px>
+                <div class="progbar-container">
+                    <div id="bar3" class="bar"></div>
+                </div>
+            </div>
+            </div>
+
         </div>
         <input id="collapsecol" type="button" class="button grey" value=">" style="align-self: center;">
     </div>
