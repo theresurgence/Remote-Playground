@@ -539,7 +539,7 @@ li {
     z-index: 2;
 }
 
-.close {
+.close, .closeprofile {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
@@ -547,7 +547,9 @@ li {
 }
 
 .close:hover,
-.close:focus {
+.closeprofile:hover,
+.close:focus,
+.closeprofile:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -558,6 +560,12 @@ li {
 .smallifycont {
     width: 40%;
     margin-left: 28%;
+}
+
+.smallifycont2 {
+    margin-top: 10%;
+    width: 70%;
+    height: 30%;
 }
 
 .textshdw {
@@ -656,6 +664,44 @@ li {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+.profile-pic-main {
+    display: flex;
+    flex-direction: column;
+}
+
+#changedp {
+    align-self: center;
+}
+
+.dp-container {
+    display: flex;
+}
+
+.profileimg {
+    position: relative;
+}
+
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  [type=radio] + img {
+    cursor: pointer;
+  }
+  
+  [type=radio]:checked + img {
+    border: 2px solid #f00;
+    border-radius: 50%;
+  }
+
+.profileimg:hover {
+    height: 150px;
+    width: 150px;
 }
 
 .achievement-container {

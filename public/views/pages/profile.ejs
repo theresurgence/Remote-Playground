@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <script src="/socket.io/socket.io.js"></script>
-  <script defer type="module" src="../../scripts/main-client-script.js"></script>
+  <script defer type="module" src="../../scripts/profile-client-script.js"></script>
 
 
   <title><%= userid %>'s Profile</title>
@@ -23,9 +23,60 @@
 
         <section id="profile" class="pad5percent">
             <div id="profilecontainer1">
+                
+                <div id="profilemodal" class="modal">
+                    <div class="modal-content smallifycont2">
+                        <span class="closeprofile">&times;</span>
+                        <br>
+                            <div class="dp-container">
+                                
+                                <form action="/profile" method="post">
+                                    
+                                    <label for="pic0"> 
+                                        <input type="radio" id="pic0" name="profileimg" value="0"> 
+                                        <img class="profileimg" src="../../images/avatar0.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                   
+                                    <label for="pic1"> 
+                                        <input type="radio" id="pic1" name="profileimg" value="1">
+                                        <img class="profileimg" src="../../images/avatar1.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                    
+                                    <label for="pic2"> 
+                                        <input type="radio" id="pic2" name="profileimg" value="2">
+                                        <img class="profileimg" src="../../images/avatar2.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                    
+                                    <label for="pic3"> 
+                                        <input type="radio" id="pic3" name="profileimg" value="3">
+                                        <img class="profileimg" src="../../images/avatar3.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                    
+                                    <label for="pic4"> 
+                                        <input type="radio" id="pic4" name="profileimg" value="4">
+                                        <img class="profileimg" src="../../images/avatar4.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                    
+                                    <label for="pic5">
+                                        <input type="radio" id="pic5" name="profileimg" value="5">
+                                        <img class="profileimg" src="../../images/avatar5.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
+                                    
+                                    <label for="pic6"> 
+                                        <input type="radio" id="pic6" name="profileimg" value="6">
+                                        <img class="profileimg" src="../../images/avatar6.PNG" height=100px width=100px style="border-radius: 50%;"> 
+                                    </label>
 
-                <div id="profile-pic-main" style="padding-top: 10px;">
-                    <img id="header-img" src="../../images/default_avatar.png" height=100px width=100px style="border-radius: 50%;">
+                                    <input type="submit" class="bgRed" value="Save">
+                                                                   
+                                </form>
+                            </div>  
+                    </div>
+                </div>
+
+                <div class="profile-pic-main" style="padding-top: 10px;">     
+                    <img id="profile-pic" src="../../images/avatar<%= dpindex %>.PNG" height=100px width=100px style="border-radius: 50%;">    
+                    <input id="changedp" type="button" value="change" class="bgRed">
                 </div>
                 <div id="username">
                     <h1 class="headings"><%= userid %></h1>
@@ -65,23 +116,6 @@
                 </div>
             </div>
         </section>
-        <!-- <table> -->
-        <!--     <tr> -->
-        <!--         <th>No.</th> -->
-        <!--         <th>Start</th> -->
-        <!--         <th>End</th> -->
-        <!--         <th>Score</th> -->
-        <!--     </tr> -->
-        <!--     <% for (const r of game_history.iterate()) { %> -->
-        <!--     <TR> -->
-        <!--         <TD><%= r.Id %></TD> -->
-        <!--         <TD><%= r.Start %></TD> -->
-        <!--         <TD><%= r.End %></TD> -->
-        <!--         <TD><%= r.Score %></TD> -->
-        <!--     </TR> -->
-        <!--     <% } %> -->
-        <!-- </table> -->
-
         
         </div>
 

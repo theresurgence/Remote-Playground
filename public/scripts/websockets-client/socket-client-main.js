@@ -29,11 +29,11 @@ export function main_sockets(document,
         online.innerHTML = `<b>Online: ${online_num}</b>`;  
     });
 
-    socket.on('message', (text, r, g, b) => {
+    socket.on('message', (text) => {
         const el = document.createElement('li');
         var textbox = document.getElementById('text-box');
         el.innerHTML = text;
-        el.style.color = `rgb(${r}, ${g}, ${b})`;
+        // el.style.color = `rgb(${r}, ${g}, ${b})`;
         textbox.querySelector('ul').appendChild(el);
     });
 

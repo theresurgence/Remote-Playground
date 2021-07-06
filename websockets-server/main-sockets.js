@@ -30,7 +30,7 @@ module.exports = function (io, queue, db, online) {
         });
 
         console.log(socket.id, 'connected');
-        var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
+        // var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
         socket.join('public room');   //public room 
 
         online += 1;
@@ -65,9 +65,9 @@ module.exports = function (io, queue, db, online) {
         socket.on('message', (message, tempname) => {
             console.log(message);
             if (tempname === "")
-                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`, r, g, b);
+                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
             else
-                io.emit('message', `${tempname}: ${message}`, r, g, b);
+                io.emit('message', `${tempname}: ${message}`);
         });        
 
 

@@ -51,9 +51,6 @@ const online = document.getElementById('online'),
     //Sticky Navbar
     var sticky = navbar.offsetTop;
 
-    //temp resource for idle game
-    var tickets = 0;
-
     window.onscroll = () => {
       if (window.pageYOffset >= sticky) {
         navbar.classList.add("sticky");
@@ -61,7 +58,7 @@ const online = document.getElementById('online'),
         navbar.classList.remove("sticky");
       }
     }
-
+    
     //Use enter key to send chat messages
     inputfield.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
@@ -100,6 +97,9 @@ const online = document.getElementById('online'),
     gpio3.onclick = () => {
       btnpress.play();
     }
+
+    //temp resource for idle game
+    var tickets = 0;
 
     idlebtn1.onclick = () => {
       btnpress.play();
@@ -145,24 +145,26 @@ const online = document.getElementById('online'),
       }
     }
 
-    //ModalBox
-    var modal = document.getElementById("infomodal");
+    //Modal Box
+    var infomodal = document.getElementById("infomodal");
     var infobtn = document.getElementById("modalbtn");
-    var infospan = document.getElementsByClassName("close")[0];
+    var span = document.getElementsByClassName("close")[0];
+    
 
     infobtn.onclick = () => {
-      modal.style.display = "block";
+      infomodal.style.display = "block";
     }
 
-    infospan.onclick = () => {
-      modal.style.display = "none";
+    span.onclick = () => {
+      infomodal.style.display = "none";
     }
 
     window.onclick = (event) => {
-      if (event.target == modal) {
-        modal.style.display = "none";
+      if (event.target == infomodal) {
+        infomodal.style.display = "none";
       }
     }
+
 
     //Idle Progress Bar
     var i = 0;
