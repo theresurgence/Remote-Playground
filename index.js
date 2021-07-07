@@ -227,6 +227,8 @@ app.get('/leaderboard', (req, res) => {
     }
 });
 
+app.post('/', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
+
 app.post('/profile', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
 
 app.post('/signup', async (req, res) => {
