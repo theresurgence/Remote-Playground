@@ -170,10 +170,8 @@ const online = document.getElementById('online'),
     var i = 0;
 
     async function move(progbar) {
-      if (i == 0) {
-        i = 1;
-      }
-      var width = 1;
+      
+      var width = 0;
       if (progbar == bar1) {
         var id = setInterval(frame, 10); //run frame every 10ms
       }
@@ -190,11 +188,14 @@ const online = document.getElementById('online'),
           clearInterval(id);
           i = 0;
           progbar.style.width = 0 + "%";
+          return true;
         } else {
           width++;
           progbar.style.width = width + "%";
+          return false;
         }
       }
+  
     }
 
 

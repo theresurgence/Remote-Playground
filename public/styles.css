@@ -397,7 +397,6 @@ li {
     font-size: 16px;
     font-family: 'Courier New', monospace;
     text-align: center;
-    text-decoration: underline;
 }
 
 .playground-container {
@@ -711,6 +710,10 @@ li {
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
+    border: solid 4px var(--coralred);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10%;
 }
 
 .row {
@@ -726,38 +729,47 @@ li {
     width: 50px;
 }
 
-.achievement-border .achievement-text {
-  visibility: visible;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
+.achievement-tooltip {
+    position: relative;
 }
 
-.achievement-border .achievement-text::after {
+.achievement-tooltip:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left:100%;
+    margin-left: 15px;
+    width:150px;
+    padding:5px;
+    border-radius: 10px;
+    border: solid 4px #414141;
+    background-color: black;
+    color: whitesmoke;
+    text-align: center;
+    z-index: 3;
+    opacity: 0;
+    transition: .3s opacity;
+}
+
+.achievement-tooltip:after {
     content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 100%;
+
+    
+    border: 7.5px solid black;
+    border-color: transparent #414141 transparent transparent;
+    opacity: 0;
+    transition: .3s opacity;
 }
 
-.achievement-border:hover .achievement-text {
-    visibility: visible;
+.achievement-tooltip:hover:before, .achievement-tooltip:hover:after {
     opacity: 1;
 }
+
 
 .recenter1 {
     position: relative;
