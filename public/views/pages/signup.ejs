@@ -10,7 +10,7 @@
   <title>Sign-Up</title>
 </head>
   
-<body class="bgOrange">
+<body class="bgBrown">
     <div class="bigcontainer">
       
 
@@ -18,29 +18,29 @@
           <%- include('../partials/header') %>
         </header>
 
-        <div class="notasbigcontainer bgBlue smallifycont">
+        <div class="notasbigcontainer bgWhite smallifycont">
           <section id="signup"> 
-            <h1 class="textshdw">REGISTER</h1>
-            <p> Fill up the following to create your RemotePlayground account.</p>
+            <h1 class="headings">REGISTER</h1>
+            <p> Fill up the following to create your RemotePlayground account!</p>
             <div id="signupcontainer">
             <form action="/signup" method="post">
               <div class="form-entry">
-              <label class="nav-link textshdw whiten">Email: </label>
+              <label style="color: red">Email: </label>
               <input type="email" name="email" class="inputs" required>
               </div>
               <br>
               <div class="form-entry">
-              <label class="nav-link textshdw whiten">Username: </label>
+              <label style="color: red">Username: </label>
               <input type="text" name="username" class="inputs" required>
               </div>
               <br>
               <div class="form-entry">
-              <label class="nav-link textshdw whiten">Password: </label>
+              <label style="color: red">Password: </label>
               <input type="password" name="password" class="inputs" required>
               </div>
               <br>
               <div class="form-entry">
-              <label class="nav-link textshdw whiten">Confirm Password: </label>
+              <label style="color: red">Confirm Password: </label>
               <input type="password" name="confirm_password" class="inputs" required>
               </div>
               <br>

@@ -30,7 +30,7 @@ module.exports = function (io, queue, db, online) {
         });
 
         console.log(socket.id, 'connected');
-        var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
+        // var r = Math.random() * 255; var g = Math.random() * 255; var b = Math.random() * 255;
         socket.join('public room');   //public room 
 
         online += 1;
@@ -52,22 +52,22 @@ module.exports = function (io, queue, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 
         socket.on('message', (message, tempname) => {
             console.log(message);
             if (tempname === "")
-                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`, r, g, b);
+                io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
             else
-                io.emit('message', `${tempname}: ${message}`, r, g, b);
+                io.emit('message', `${tempname}: ${message}`);
         });        
 
 

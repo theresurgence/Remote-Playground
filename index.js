@@ -4,8 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 4000; 
-// const server = app.listen(port, () => console.log(`Server started on port ${port}`));
+const port = process.env.PORT || 3000; 
+const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
@@ -18,16 +18,16 @@ const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
 
 /************* HTTPS******************/
-const https = require('https')
-const fs = require('fs');
+// const https = require('https')
+// const fs = require('fs');
 
-const server = https.createServer({
-  key: fs.readFileSync('./ssl/key.pem'),
-  cert: fs.readFileSync('./ssl/cert.pem')
-}, app)
-.listen(port, function () {
-  console.log('App started on port 4000! Go to https://localhost:4000/')
-})
+// const server = https.createServer({
+//   key: fs.readFileSync('./ssl/key.pem'),
+//   cert: fs.readFileSync('./ssl/cert.pem')
+// }, app)
+// .listen(port, function () {
+//   console.log('App started on port 4000! Go to https://localhost:4000/')
+// })
 
 
 /************* HTTPS******************/
@@ -146,7 +146,8 @@ app.get('/', (req, res) => {
         auth: auth,
         userid: req.user.name,
         entries: entries,
-        online: online
+        online: online,
+        dpindex: req.user.dpindex,
     });
     }
     console.log(`Global ${online}`);
@@ -161,7 +162,8 @@ app.get('/about', (req, res) => {
     } else {
     res.render('pages/about', {
         auth: auth,
-        userid: req.user.name
+        userid: req.user.name,
+        dpindex: req.user.dpindex,
     });
     }
 });
@@ -175,7 +177,8 @@ app.get('/signup', (req, res) => {
     } else {
         res.render('pages/signup', {
             auth: auth,
-            userid: req.user.name
+            userid: req.user.name,
+            dpindex: req.user.dpindex,
         });
     }
     
@@ -189,19 +192,36 @@ app.get('/profile', (req, res) => {
 
     
     // db.prepare('.mode html').run();
-    let game_history = db.prepare(`SELECT * FROM ${req.user.name}`);
-    console.log(game_history)
+    // let game_history = db.prepare(`SELECT * FROM ${req.user.name}`);
+    // console.log(game_history)
 
     res.render('pages/profile', {
         auth: auth,
         userid: req.user.name,
         usermail: req.user.email,
         userscore: req.user.score,
-        game_history: game_history, 
         online: online,
+        dpindex: req.user.dpindex,
     });
     }
 });
+
+app.post('/profile', async (req, res) => {
+    try {
+        let newindex = req.body.profileimg;
+        let name = req.user.name;
+        console.log(newindex);
+        console.log(req.user.name);
+        let sql = `UPDATE userinfo SET dpindex = ${newindex} WHERE name = '${name}';`;
+        db.prepare(sql).run();
+        res.redirect('/profile');
+        
+    } catch (error) {
+        console.error(error);
+        res.redirect('/');
+    }
+});
+
 
 app.get('/leaderboard', (req, res) => {
     auth = req.isAuthenticated();
@@ -222,7 +242,8 @@ app.get('/leaderboard', (req, res) => {
     res.render('pages/leaderboard', {
         auth: auth,
         userid: req.user.name,
-        entries: entries
+        entries: entries,
+        dpindex: req.user.dpindex,
     });
     }
 });
