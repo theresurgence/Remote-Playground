@@ -79,9 +79,9 @@ videoStream.acceptConnections(app, {
     height: 720,
     // width: 1920,
     // height: 1080,
-    fps: 25,
+    fps: 10,
     encoding: 'JPEG',
-    quality: 8 //lower is faster
+    quality: 1 //lower is faster
 }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/

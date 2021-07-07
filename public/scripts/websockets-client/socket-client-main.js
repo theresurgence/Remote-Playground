@@ -2,7 +2,7 @@ import { simon_sockets } from './simon.js';
 
 /* Main Client Websockets Events */
 
-export function main_sockets(document,
+export function main_sockets(window, document,
     socket, 
     addMultipleEventListener,
     gpio_list,
@@ -16,7 +16,8 @@ export function main_sockets(document,
     queue_btn,
     exit_btn,
     inputfield,
-    username
+    username, 
+
 )  {
 
     //Listen for events
@@ -132,14 +133,14 @@ export function main_sockets(document,
         socket.emit('message', text, username);
     }
 
-    simon_sockets(document, socket,
+    simon_sockets(window, document, socket,
         addMultipleEventListener,
         gpio_list,
         simon_on,
         simon_speaks,
         simon_startquit_btn,
         play_btns,
-        );
+    );
 
 }
 

@@ -1,8 +1,8 @@
 /* Simon Says Client Websocket Events */ 
 
-var clicked_led = [false,false,false,false];
+import { get_input_focus } from '../main-client-script.js';
 
-export function simon_sockets(document, socket, 
+export function simon_sockets(window, document, socket, 
     addMultipleEventListener,
     gpio_list,
     simon_on,
@@ -10,6 +10,12 @@ export function simon_sockets(document, socket,
     simon_startquit_btn,
     play_btns,
 ) {
+
+
+    var clicked_led = [false,false,false,false];
+    var led_keys = ["q", "w", "e", "r"];
+
+
 
     console.log(play_btns)
     console.log(play_btns[0])
@@ -42,7 +48,7 @@ export function simon_sockets(document, socket,
                     console.log("TURNING OFF LED");
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
-                    
+
                     console.log(`SIMON _ON ${simon_on}`);
 
                     if (simon_on) {
@@ -52,6 +58,34 @@ export function simon_sockets(document, socket,
                 }
             }
         });
+
+        window.addEventListener("keydown", (event)=> {
+            // console.log(userpassbox_focus)
+            if (!simon_speaks && event.key === led_keys[led] && !get_input_focus()) {
+                // console.log(input_focus);
+            // if (!simon_speaks && event.key === led_keys[led] && !userpassbox_focus) {
+                socket.emit(`gpio${led}_on`); 
+                clicked_led[0] = true; //flag
+            }
+        }, true);
+
+        window.addEventListener("keyup", (event)=> {
+            if (!simon_speaks && event.key === led_keys[led] && !get_input_focus()) {
+            // if (!simon_speaks && event.key === led_keys[led] && !userpassbox_focus) {
+                socket.emit(`gpio${led}_on`); 
+                console.log("TURNING OFF LED");
+                socket.emit(`gpio${led}_off`);
+                clicked_led[led] = false;
+
+                console.log(`SIMON _ON ${simon_on}`);
+
+                if (simon_on) {
+                    socket.emit(`player-says`, led); 
+                    console.log("SENT PLAYER INPUT")
+                } //player's input is taken into account if simon game is in progress
+            }
+        }, true);
+
     }
 
 
