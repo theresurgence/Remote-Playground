@@ -34,7 +34,7 @@ export function simon_sockets(window, document, socket,
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[led] = true; //flag
                 console.log("DOWN!");
-                event.preventDefault(); //prevents touchstart and mousedown events double counting!
+                // event.preventDefault(); //prevents touchstart and mousedown events double counting!
             }
         });
 

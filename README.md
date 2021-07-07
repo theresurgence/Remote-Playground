@@ -10,7 +10,11 @@
 
 # public/scripts/main-client-script.js 
 - comment the websocket port thing                                              
-~                                                                                              
+
+# public/views/pages/index.ejs
+- camerafeed
+
+
 
 
 
