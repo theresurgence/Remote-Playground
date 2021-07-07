@@ -3,10 +3,10 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('http://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('https://192.168.20.4:4000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://192.168.20.4:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
 // const socket = io.connect('https://20.194.44.54:8080', {reconnect: true}); //client establishes websocket connection to server
@@ -46,7 +46,21 @@ const online = document.getElementById('online'),
     chat_btn = document.getElementById('chatbutton'),
     queue_btn = document.getElementById('queuebutton'),
     exit_btn = document.getElementById('exitbutton'),
-    navbar = document.getElementById('nav-bar');
+    navbar = document.getElementById('nav-bar'),
+    inputs_class = document.getElementsByClassName('inputs');
+
+
+var input_focus = false;
+
+for (let i=0; i < inputs_class.length; i++) {
+    inputs_class[i].addEventListener('focus', function() { input_focus = true; console.log(input_focus) });
+    inputs_class[i].addEventListener('blur', function() { input_focus = false; console.log(input_focus) });
+}
+
+// function addMultipleEventListener(element, events, handler) {
+//   events.forEach(e => element.addEventListener(e, handler))
+// }
+
 
     //Sticky Navbar
     var sticky = navbar.offsetTop;
@@ -214,7 +228,7 @@ const box_list = [box1, box2, box3, box4, box5];
 
 
 //intialize all websockets
-main_sockets(document, 
+main_sockets(window, document, 
     socket,
     addMultipleEventListener,
     gpio_list,
@@ -228,11 +242,10 @@ main_sockets(document,
     queue_btn,
     exit_btn,
     inputfield,
-    username
+    username, 
 );
 
 
-
-// function removeMultipleEventListener(element, events, handler) {
-//   events.forEach(e => element.addEventListener(e, handler))
-// }
+export function get_input_focus() {
+    return input_focus; 
+}

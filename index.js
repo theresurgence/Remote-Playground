@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
-const server = app.listen(port, () => console.log(`Server started on port ${port}`));
+// const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
@@ -18,16 +18,16 @@ const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
 
 /************* HTTPS******************/
-// const https = require('https')
-// const fs = require('fs');
+const https = require('https')
+const fs = require('fs');
 
-// const server = https.createServer({
-//   key: fs.readFileSync('./ssl/key.pem'),
-//   cert: fs.readFileSync('./ssl/cert.pem')
-// }, app)
-// .listen(port, function () {
-//   console.log('App started on port 4000! Go to https://localhost:4000/')
-// })
+const server = https.createServer({
+  key: fs.readFileSync('./ssl/key.pem'),
+  cert: fs.readFileSync('./ssl/cert.pem')
+}, app)
+.listen(port, function () {
+  console.log('App started on port 3000! Go to https://localhost:3000/')
+})
 
 
 /************* HTTPS******************/
@@ -79,9 +79,9 @@ var auth = false;
 //     height: 720,
 //     // width: 1920,
 //     // height: 1080,
-//     fps: 25,
+//     fps: 10,
 //     encoding: 'JPEG',
-//     quality: 8 //lower is faster
+//     quality: 1 //lower is faster
 // }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -249,6 +249,8 @@ app.get('/leaderboard', (req, res) => {
 });
 
 app.post('/', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
+
+app.post('/profile', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/', failureFlash: true }));
 
 app.post('/signup', async (req, res) => {
     try {
