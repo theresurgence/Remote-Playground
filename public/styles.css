@@ -502,7 +502,8 @@ li {
     display: flex;
 }
 #chat-input {
-    width: 74%;
+    height: 90%;
+    width: 100%;
 }
 
 /* ///////////////////////////////
@@ -813,17 +814,6 @@ th, td {
         flex-direction: row;
         justify-content: space-between;
     }
-
-    /* #online-box {    
-        margin-top: 30px;
-        margin-right: 30px;
-        padding-left: 5px;
-        padding-right: 100px;
-    }
-
-    #online-count {
-        order: 3;
-    } */
 }
 
 @media (min-width: 1280px) {
@@ -836,9 +826,3 @@ th, td {
     }
 }
 
-
-
-
-/* #para1 { */
-/*     color: purple; */
-/* } */
