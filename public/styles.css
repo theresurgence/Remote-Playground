@@ -415,6 +415,20 @@ li {
     align-items: center;
     width: 45%;
     height: 90%;
+    /* position: relative; */
+}
+
+#videoStream {
+    width: 640px;
+    height: 720px;
+    margin-top: 18px;
+    object-fit: cover;
+    object-position:  0;
+
+    border: solid 2px whitesmoke;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
 }
 
 .idle-box {
