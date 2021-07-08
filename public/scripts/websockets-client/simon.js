@@ -1,6 +1,6 @@
 /* Simon Says Client Websocket Events */ 
 
-import { get_input_focus } from '../main-client-script.js';
+import { input_focus, btnpress } from '../main-client-script.js';
 
 export function simon_sockets(window, document, socket, 
     addMultipleEventListener,
@@ -34,6 +34,7 @@ export function simon_sockets(window, document, socket,
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[led] = true; //flag
                 console.log("DOWN!");
+                btnpress.play();
                 // event.preventDefault(); //prevents touchstart and mousedown events double counting!
             }
         });
@@ -61,16 +62,22 @@ export function simon_sockets(window, document, socket,
 
         window.addEventListener("keydown", (event)=> {
             // console.log(userpassbox_focus)
-            if (!simon_speaks && event.key === led_keys[led] && !get_input_focus()) {
-                // console.log(input_focus);
-            // if (!simon_speaks && event.key === led_keys[led] && !userpassbox_focus) {
+            if (!simon_speaks && event.key === led_keys[led] && !input_focus) {
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[0] = true; //flag
+                // var current = document.getElementsByClassName("active_led");
+                // current[i].className = current[i].className.replace(" active", "");
+                if (!gpio_list[led].className.includes("active_led")) {
+                    gpio_list[led].className += " active_led";
+                    btnpress.play();
+                }
+                console.log(gpio_list[led].className);
             }
+
         }, true);
 
         window.addEventListener("keyup", (event)=> {
-            if (!simon_speaks && event.key === led_keys[led] && !get_input_focus()) {
+            if (!simon_speaks && event.key === led_keys[led] && !input_focus) {
             // if (!simon_speaks && event.key === led_keys[led] && !userpassbox_focus) {
                 socket.emit(`gpio${led}_on`); 
                 console.log("TURNING OFF LED");
@@ -78,6 +85,9 @@ export function simon_sockets(window, document, socket,
                 clicked_led[led] = false;
 
                 console.log(`SIMON _ON ${simon_on}`);
+
+                if (gpio_list[led].className.includes(" active_led"))
+                    gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
 
                 if (simon_on) {
                     socket.emit(`player-says`, led); 

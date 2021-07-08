@@ -130,7 +130,11 @@ li {
 .btn-3d.yellow:hover {background-color: #F0D264;}
 .btn-3d.cyan:hover   {background-color: #82D1E3;}
 
-.btn-3d:active {
+/*active_led class only when keyboard shortcut pressed down */
+/* takes into account both keyboard press and mouse click actions
+ * to toggle CSS states of the 3d buttons */
+.btn-3d:active,
+.active_led.btn-3d {
 	top: 9px;
 }
 
@@ -142,7 +146,8 @@ li {
         0 8px 0 1px rgba(0,0,0,0.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.red:active {
+.btn-3d.red:active,  
+.active_led.btn-3d.red {
 	box-shadow: 0 0 0 1px #c63702 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -156,7 +161,8 @@ li {
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.blue:active {
+.btn-3d.blue:active,
+.active_led.btn-3d.blue {
 	box-shadow: 0 0 0 1px #6191C2 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -170,7 +176,8 @@ li {
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.green:active {
+.btn-3d.green:active,
+.active_led.btn-3d.green{
 	box-shadow: 0 0 0 1px #82c8a0 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -184,7 +191,8 @@ li {
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.purple:active {
+.btn-3d.purple:active,
+.active_led.btn-3d.purple{
 	box-shadow: 0 0 0 1px #cb99c5 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -198,7 +206,8 @@ li {
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.cyan:active {
+.btn-3d.cyan:active,
+.active_led.btn-3d.cyan{
 	box-shadow: 0 0 0 1px #7fccde inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
@@ -212,7 +221,8 @@ li {
 				0 8px 0 1px rgba(0,0,0,.4),
 				0 8px 8px 1px rgba(0,0,0,0.5);
 }
-.btn-3d.yellow:active {
+.btn-3d.yellow:active,
+.active_led.btn-3d.yellow {
 	box-shadow: 0 0 0 1px #F0D264 inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
