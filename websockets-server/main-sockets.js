@@ -20,6 +20,8 @@ module.exports = function (io, queue, db, online) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
 
+        console.log(socket);
+
         io.to(socket.id).emit('check-register');
         socket.on('receive-register', (username)=> {
             console.log(`USERNAME: ${username}`);
@@ -39,8 +41,8 @@ module.exports = function (io, queue, db, online) {
 
 
 
-        socket.on('disconnect', ()=> {
-            console.log(socket.id, 'disconnected');
+        socket.on('disconnect', (reason)=> {
+            console.log(socket.id, 'disconnected:', reason);
             online -= 1;
             io.sockets.emit('online', online);
 
@@ -52,13 +54,13 @@ module.exports = function (io, queue, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 
