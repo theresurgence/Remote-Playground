@@ -416,7 +416,8 @@ li {
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    position: relative;
+    align-items: center;
+    max-height: 55vh;
 }
 
 .play-box {
@@ -424,22 +425,19 @@ li {
     justify-content: center;
     align-items: center;
     width: 45%;
+    min-width: 350px;
     height: 90%;
-    /* position: relative; */
 }
 
 #videoStream {
-    width: 640px;
-    height: 720px;
-    margin: 10% 10%;
+    width: 100%;
+    height: 100%;
+    margin-left: 10%;
     object-fit: cover;
-    object-position:  0;
-
+    object-position: 0;
     border: solid 2px whitesmoke;
     border-radius: 10px;
-    position: relative;
-    position: left;
-    display: flex;
+
 }
 
 .idle-box {
@@ -448,12 +446,14 @@ li {
     flex-direction: column;
     align-items: center;
     width: 45%;
+    min-width: 500px;
     height: 90%;
-    /* margin-top: 18px; */
-    margin: 2% 8%;
+    min-height: 300px;
+    margin-left: 3%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     border: solid 2px whitesmoke;
     border-radius: 10px;
-    position: relative;
 }
 
 .idlebtn-container {
@@ -529,6 +529,7 @@ li {
 }
 #chat-input {
     width: 74%;
+    height: 90%;
 }
 
 /* ///////////////////////////////
