@@ -50,6 +50,9 @@ const online = document.getElementById('online'),
     inputs_class = document.getElementsByClassName('inputs');
 
 
+
+
+
 var input_focus = false;
 
 for (let i=0; i < inputs_class.length; i++) {
@@ -94,22 +97,6 @@ for (let i=0; i < inputs_class.length; i++) {
 
     musicbtn.onclick = () => {
       bgmusic.play();
-    }
-    //Audio Elements to Buttons
-    gpio0.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio1.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio2.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio3.onclick = () => {
-      btnpress.play();
     }
 
     //temp resource for idle game
@@ -246,6 +233,4 @@ main_sockets(window, document,
 );
 
 
-export function get_input_focus() {
-    return input_focus; 
-}
+export { input_focus, btnpress } ;

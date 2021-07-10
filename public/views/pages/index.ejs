@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script defer src="../../../socket.io/socket.io.js"></script>
     <script defer type="module" src="../../scripts/main-client-script.js"></script>
@@ -46,9 +47,13 @@
     </div>        
 
     <div class="playground-container">
-        <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=400px width=400px></div>
+        <!-- <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=400px width=400px></div> -->
+        <!-- Temporary 1280x720 pic of the leds. CSS crops it --> 
+        <div class="play-box"><img id="videoStream" src="../../images/leds.jpg" ></div>
+
         <!-- Comment if no RPI -->
-        <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg"></div> --> 
+        <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg" ></div> -->
+
         <div class="idle-box">
             <h1 id="ticket-count" class="textshdw white">Tickets: 0</h1>
             <div class="idlebtn-container">
