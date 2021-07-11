@@ -1,24 +1,22 @@
 /* Simon Says Client Websocket Events */ 
 
-import { input_focus, btnpress } from '../main-client-script.js';
 
-export function simon_sockets(window, document, socket, 
+import { 
+    input_focus, btnpress, 
     addMultipleEventListener,
-    gpio_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns,
-) {
+    gpio_list, simon_startquit_btn,
+    play_btns, socket 
+} from '../main-client-script.js';
 
+var simon_on = false;
+var curr_player = ""; //flag for simon_on also
+var simon_speaks = false;
+
+export function simon_sockets() {
 
     var clicked_led = [false,false,false,false];
     var led_keys = ["q", "w", "e", "r"];
 
-
-
-    console.log(play_btns)
-    console.log(play_btns[0])
 
     //Catch all accounting for both touch and mouse events to toggle the 4 gpios on or off
     //led is gpio number (0,1,2,3)
@@ -33,7 +31,6 @@ export function simon_sockets(window, document, socket,
                 //gpio0_on (0,1,2,3))
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[led] = true; //flag
-                console.log("DOWN!");
                 btnpress.play();
                 // event.preventDefault(); //prevents touchstart and mousedown events double counting!
             }
@@ -42,7 +39,6 @@ export function simon_sockets(window, document, socket,
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
 
             if (!simon_speaks) {
-
                 //only triggered when button has been
                 //clicked before
                 if (clicked_led[led]) {
@@ -50,9 +46,9 @@ export function simon_sockets(window, document, socket,
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
 
-                    console.log(`SIMON _ON ${simon_on}`);
+                    console.log(`SIMON _ON ${curr_player}`);
 
-                    if (simon_on) {
+                    if (curr_player) {
                         socket.emit(`player-says`, led); 
                         console.log("SENT PLAYER INPUT")
                     } //player's input is taken into account if simon game is in progress
@@ -84,12 +80,12 @@ export function simon_sockets(window, document, socket,
                 socket.emit(`gpio${led}_off`);
                 clicked_led[led] = false;
 
-                console.log(`SIMON _ON ${simon_on}`);
+                console.log(`SIMON _ON ${curr_player}`);
 
                 if (gpio_list[led].className.includes(" active_led"))
                     gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
 
-                if (simon_on) {
+                if (curr_player) {
                     socket.emit(`player-says`, led); 
                     console.log("SENT PLAYER INPUT")
                 } //player's input is taken into account if simon game is in progress
@@ -98,6 +94,10 @@ export function simon_sockets(window, document, socket,
 
     }
 
+    socket.on('simon-on-check', (queue_0)=>{ 
+        curr_player = queue_0;
+        play_btns[0].style.opacity= (curr_player) ? 0.3 : 1;
+    });
 
     /**server to call server, need client as middleman**/
 
@@ -138,7 +138,7 @@ export function simon_sockets(window, document, socket,
     /* events for player room and public room */
 
     socket.on('simon-start-public', ()=>{
-        play_btns[0].style.display = "none";
+        play_btns[0].style.opacity= 0.3;
         console.log("disappear")
     });
 

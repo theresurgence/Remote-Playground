@@ -2,26 +2,20 @@ import { simon_sockets } from './simon.js';
 
 /* Main Client Websockets Events */
 
-export function main_sockets(window, document,
+export function main_sockets(
+    document,
     socket, 
-    addMultipleEventListener,
-    gpio_list,
     box_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns, 
     chat_btn,
     curr_score,
     queue_btn,
     exit_btn,
     inputfield,
     username, 
-
 )  {
 
     //Listen for events
-    socket.on('curr_score', (score)=>{
+    socket.on('curr-score', (score)=>{
         curr_score.innerHTML = `<b>Score: ${score}</b>`;  
         console.log("CHANGE SCORE");
     });
@@ -105,15 +99,7 @@ export function main_sockets(window, document,
         socket.emit('message', text, username);
     }
 
-    simon_sockets(window, document, socket,
-        addMultipleEventListener,
-        gpio_list,
-        simon_on,
-        simon_speaks,
-        simon_startquit_btn,
-        play_btns,
-    );
-
+    simon_sockets();
 }
 
 

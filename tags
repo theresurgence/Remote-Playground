@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	0.0.0	//
+#changedp	public/styles.css	/^#changedp {$/;"	i
 #chat-container	public/styles.css	/^    #chat-container {$/;"	i
 #chat-header	public/styles.css	/^#chat-header {$/;"	i
 #chat-input	public/styles.css	/^#chat-input {$/;"	i
@@ -24,64 +25,114 @@
 #statuses-container	public/styles.css	/^    #statuses-container {$/;"	i
 #text-box	public/styles.css	/^#text-box {$/;"	i
 #userpass	public/styles.css	/^#userpass {$/;"	i
+#videoStream	public/styles.css	/^#videoStream {$/;"	i
++ img	public/styles.css	/^  [type=radio] + img {$/;"	s
+.achievement-border	public/styles.css	/^.achievement-border {$/;"	c
+.achievement-container	public/styles.css	/^.achievement-container {$/;"	c
+.achievement-tooltip	public/styles.css	/^.achievement-tooltip {$/;"	c
+.achievement-tooltip:after	public/styles.css	/^.achievement-tooltip:after {$/;"	c
+.achievement-tooltip:before	public/styles.css	/^.achievement-tooltip:before {$/;"	c
+.achievement-tooltip:hover:after	public/styles.css	/^.achievement-tooltip:hover:before, .achievement-tooltip:hover:after {$/;"	c
+.achievement-tooltip:hover:before	public/styles.css	/^.achievement-tooltip:hover:before, .achievement-tooltip:hover:after {$/;"	c
+.active_led.btn-3d	public/styles.css	/^.active_led.btn-3d {$/;"	c
+.active_led.btn-3d.blue	public/styles.css	/^.active_led.btn-3d.blue {$/;"	c
+.active_led.btn-3d.cyan	public/styles.css	/^.active_led.btn-3d.cyan{$/;"	c
+.active_led.btn-3d.green	public/styles.css	/^.active_led.btn-3d.green{$/;"	c
+.active_led.btn-3d.purple	public/styles.css	/^.active_led.btn-3d.purple{$/;"	c
+.active_led.btn-3d.red	public/styles.css	/^.active_led.btn-3d.red {$/;"	c
+.active_led.btn-3d.yellow	public/styles.css	/^.active_led.btn-3d.yellow {$/;"	c
+.bar	public/styles.css	/^.bar {$/;"	c
 .bgBlue	public/styles.css	/^.bgBlue {$/;"	c
+.bgBrown	public/styles.css	/^.bgBrown {$/;"	c
 .bgGreen	public/styles.css	/^.bgGreen {$/;"	c
 .bgOrange	public/styles.css	/^.bgOrange {$/;"	c
 .bgRed	public/styles.css	/^.bgRed {$/;"	c
-.big-container	public/styles.css	/^.big-container {$/;"	c
+.bgWhite	public/styles.css	/^.bgWhite {$/;"	c
+.big-container1	public/styles.css	/^.big-container1 {$/;"	c
+.big-container2	public/styles.css	/^.big-container2 {$/;"	c
 .btn	public/styles.css	/^    .btn {$/;"	c
 .btn-3d	public/styles.css	/^.btn-3d {$/;"	c
 .btn-3d.blue	public/styles.css	/^.btn-3d.blue {$/;"	c
-.btn-3d.blue:active	public/styles.css	/^.btn-3d.blue:active {$/;"	c
+.btn-3d.blue:active	public/styles.css	/^.btn-3d.blue:active,$/;"	c
 .btn-3d.blue:hover	public/styles.css	/^.btn-3d.blue:hover   {background-color: #699DD1;}$/;"	c
 .btn-3d.cyan	public/styles.css	/^.btn-3d.cyan {$/;"	c
-.btn-3d.cyan:active	public/styles.css	/^.btn-3d.cyan:active {$/;"	c
+.btn-3d.cyan:active	public/styles.css	/^.btn-3d.cyan:active,$/;"	c
 .btn-3d.cyan:hover	public/styles.css	/^.btn-3d.cyan:hover   {background-color: #82D1E3;}$/;"	c
 .btn-3d.green	public/styles.css	/^.btn-3d.green {$/;"	c
-.btn-3d.green:active	public/styles.css	/^.btn-3d.green:active {$/;"	c
+.btn-3d.green:active	public/styles.css	/^.btn-3d.green:active,$/;"	c
 .btn-3d.green:hover	public/styles.css	/^.btn-3d.green:hover  {background-color: #80C49D;}$/;"	c
 .btn-3d.purple	public/styles.css	/^.btn-3d.purple {$/;"	c
-.btn-3d.purple:active	public/styles.css	/^.btn-3d.purple:active {$/;"	c
+.btn-3d.purple:active	public/styles.css	/^.btn-3d.purple:active,$/;"	c
 .btn-3d.purple:hover	public/styles.css	/^.btn-3d.purple:hover {background-color: #D19ECB;}$/;"	c
 .btn-3d.red	public/styles.css	/^.btn-3d.red {$/;"	c
-.btn-3d.red:active	public/styles.css	/^.btn-3d.red:active {$/;"	c
+.btn-3d.red:active	public/styles.css	/^.btn-3d.red:active,  $/;"	c
 .btn-3d.red:hover	public/styles.css	/^.btn-3d.red:hover    {background-color: #e74c3c;}$/;"	c
 .btn-3d.yellow	public/styles.css	/^.btn-3d.yellow {$/;"	c
-.btn-3d.yellow:active	public/styles.css	/^.btn-3d.yellow:active {$/;"	c
+.btn-3d.yellow:active	public/styles.css	/^.btn-3d.yellow:active,$/;"	c
 .btn-3d.yellow:hover	public/styles.css	/^.btn-3d.yellow:hover {background-color: #F0D264;}$/;"	c
-.btn-3d:active	public/styles.css	/^.btn-3d:active {$/;"	c
+.btn-3d:active	public/styles.css	/^.btn-3d:active,$/;"	c
 .button	public/styles.css	/^.button {$/;"	c
+.button.blue	public/styles.css	/^.button.blue {$/;"	c
 .button.green	public/styles.css	/^.button.green {$/;"	c
 .button.grey	public/styles.css	/^.button.grey {$/;"	c
 .button.orange	public/styles.css	/^.button.orange {$/;"	c
+.button.purple	public/styles.css	/^.button.purple {$/;"	c
 .button.red	public/styles.css	/^.button.red {$/;"	c
 .buttonpad	public/styles.css	/^.buttonpad {$/;"	c
 .chat-container	public/styles.css	/^.chat-container {$/;"	c
+.chat-container.dispnone	public/styles.css	/^.chat-container.dispnone {$/;"	c
+.close	public/styles.css	/^.close, .closeprofile {$/;"	c
+.close:focus	public/styles.css	/^.close:focus,$/;"	c
+.close:hover	public/styles.css	/^.close:hover,$/;"	c
+.closeprofile	public/styles.css	/^.close, .closeprofile {$/;"	c
+.closeprofile:focus	public/styles.css	/^.closeprofile:focus {$/;"	c
+.closeprofile:hover	public/styles.css	/^.closeprofile:hover,$/;"	c
 .content-centre	public/styles.css	/^.content-centre {$/;"	c
 .credtext	public/styles.css	/^.credtext {$/;"	c
+.dispnone	public/styles.css	/^.dispnone {$/;"	c
+.dp-container	public/styles.css	/^.dp-container {$/;"	c
 .form-entry	public/styles.css	/^.form-entry {$/;"	c
+.greyout	public/styles.css	/^.greyout {$/;"	c
+.greyscale	public/styles.css	/^.greyscale {$/;"	c
+.headings	public/styles.css	/^.headings {$/;"	c
+.idle-box	public/styles.css	/^.idle-box {$/;"	c
+.idlebtn-container	public/styles.css	/^.idlebtn-container {$/;"	c
 .inputs	public/styles.css	/^.inputs {$/;"	c
 .label	public/styles.css	/^.label {$/;"	c
 .leader-text	public/styles.css	/^.leader-text {$/;"	c
+.modal	public/styles.css	/^.modal {$/;"	c
+.modal-content	public/styles.css	/^.modal-content {$/;"	c
 .nav-link	public/styles.css	/^.nav-link {$/;"	c
 .notasbigcontainer	public/styles.css	/^.notasbigcontainer {$/;"	c
 .pad5percent	public/styles.css	/^.pad5percent {$/;"	c
 .play-box	public/styles.css	/^.play-box {$/;"	c
 .play-buttons	public/styles.css	/^.play-buttons {$/;"	c
 .playground-container	public/styles.css	/^.playground-container {$/;"	c
+.profile-pic-main	public/styles.css	/^.profile-pic-main {$/;"	c
+.profileimg	public/styles.css	/^.profileimg {$/;"	c
+.profileimg:hover	public/styles.css	/^.profileimg:hover {$/;"	c
+.progbar-container	public/styles.css	/^.progbar-container {$/;"	c
 .queue-box	public/styles.css	/^.queue-box {$/;"	c
 .queue-box.bgGreen	public/styles.css	/^.queue-box.bgGreen {$/;"	c
 .queue-box.bgOrange	public/styles.css	/^.queue-box.bgOrange {$/;"	c
 .queue-container	public/styles.css	/^.queue-container {$/;"	c
+.recenter1	public/styles.css	/^.recenter1 {$/;"	c
+.recenter2	public/styles.css	/^.recenter2 {$/;"	c
+.resource	public/styles.css	/^.resource {$/;"	c
 .rounded	public/styles.css	/^    .rounded {$/;"	c
+.row	public/styles.css	/^.row {$/;"	c
 .smallifycont	public/styles.css	/^.smallifycont {$/;"	c
+.smallifycont2	public/styles.css	/^.smallifycont2 {$/;"	c
 .statuses-container	public/styles.css	/^.statuses-container {$/;"	c
+.statuses-container.dispnone	public/styles.css	/^.statuses-container.dispnone {$/;"	c
 .sticky	public/styles.css	/^.sticky {$/;"	c
 .textL	public/styles.css	/^.textL {$/;"	c
 .textR	public/styles.css	/^.textR {$/;"	c
 .textctr	public/styles.css	/^.textctr {$/;"	c
 .textshdw	public/styles.css	/^.textshdw {$/;"	c
+.white	public/styles.css	/^.white {$/;"	c
 .whiten	public/styles.css	/^.whiten {$/;"	c
+:checked + img	public/styles.css	/^  [type=radio]:checked + img {$/;"	s
 :root	public/styles.css	/^:root {$/;"	s
 @mapbox/node-pre-gyp	package-lock.json	/^        "@mapbox\/node-pre-gyp": "^1.0.0",$/;"	s	object:dependencies.bcrypt.requires
 @mapbox/node-pre-gyp	package-lock.json	/^    "@mapbox\/node-pre-gyp": {$/;"	o	object:dependencies
@@ -245,6 +296,9 @@ balanced-match	package-lock.json	/^            "balanced-match": "^1.0.0",$/;"	s
 balanced-match	package-lock.json	/^        "balanced-match": "^1.0.0",$/;"	s	object:dependencies.brace-expansion.requires
 balanced-match	package-lock.json	/^        "balanced-match": {$/;"	o	object:dependencies.npm.dependencies
 balanced-match	package-lock.json	/^    "balanced-match": {$/;"	o	object:dependencies
+bar1	public/scripts/main-client-script.js	/^    bar1 = document.getElementById("bar1"),$/;"	C
+bar2	public/scripts/main-client-script.js	/^    bar2 = document.getElementById("bar2"),$/;"	C
+bar3	public/scripts/main-client-script.js	/^    bar3 = document.getElementById("bar3"),$/;"	C
 base64-arraybuffer	package-lock.json	/^        "base64-arraybuffer": "0.1.4"$/;"	s	object:dependencies.engine.io-parser.requires
 base64-arraybuffer	package-lock.json	/^        "base64-arraybuffer": "0.1.4",$/;"	s	object:dependencies.engine.io-client.requires
 base64-arraybuffer	package-lock.json	/^    "base64-arraybuffer": {$/;"	o	object:dependencies
@@ -263,6 +317,9 @@ bcrypt-pbkdf	package-lock.json	/^        "bcrypt-pbkdf": {$/;"	o	object:dependen
 bcrypt-pbkdf	package-lock.json	/^    "bcrypt-pbkdf": {$/;"	o	object:dependencies
 better-sqlite3	package-lock.json	/^    "better-sqlite3": {$/;"	o	object:dependencies
 better-sqlite3	package.json	/^    "better-sqlite3": "^7.4.1",$/;"	s	object:dependencies
+bgmusic	public/scripts/main-client-script.js	/^    var bgmusic = document.getElementById("bgmusic");$/;"	v
+bgmusic	public/scripts/profile-client-script.js	/^ var bgmusic = document.getElementById("bgmusic");$/;"	v
+bigcon	public/scripts/main-client-script.js	/^    bigcon = document.getElementById('big-container'),$/;"	C
 bignumber.js	package-lock.json	/^        "bignumber.js": "9.0.0",$/;"	s	object:dependencies.mysql.requires
 bignumber.js	package-lock.json	/^    "bignumber.js": {$/;"	o	object:dependencies
 bin-links	package-lock.json	/^            "bin-links": "^1.1.2",$/;"	s	object:dependencies.npm.dependencies.libcipm.requires
@@ -308,6 +365,7 @@ brace-expansion	package-lock.json	/^        "brace-expansion": {$/;"	o	object:de
 brace-expansion	package-lock.json	/^    "brace-expansion": {$/;"	o	object:dependencies
 braces	package-lock.json	/^        "braces": "~3.0.2",$/;"	s	object:dependencies.chokidar.requires
 braces	package-lock.json	/^    "braces": {$/;"	o	object:dependencies
+btnpress	public/scripts/main-client-script.js	/^    btnpress = document.getElementById('btnsound'),$/;"	C
 buffer	package-lock.json	/^        "buffer": "^5.5.0",$/;"	s	object:dependencies.bl.requires
 buffer	package-lock.json	/^    "buffer": {$/;"	o	object:dependencies
 buffer-from	package-lock.json	/^            "buffer-from": "^1.0.0",$/;"	s	object:dependencies.npm.dependencies.concat-stream.requires
@@ -784,7 +842,9 @@ chalk	package-lock.json	/^        "chalk": {$/;"	o	object:dependencies.boxen.dep
 chalk	package-lock.json	/^        "chalk": {$/;"	o	object:dependencies.npm.dependencies
 chalk	package-lock.json	/^        "chalk": {$/;"	o	object:dependencies.update-notifier.dependencies
 chalk	package-lock.json	/^    "chalk": {$/;"	o	object:dependencies
+changedp	public/scripts/profile-client-script.js	/^ var changedp = document.getElementById("changedp");$/;"	v
 chat_btn	public/scripts/main-client-script.js	/^    chat_btn = document.getElementById('chatbutton'),$/;"	C
+chatcon	public/scripts/main-client-script.js	/^    chatcon = document.getElementById('cht'),$/;"	C
 chokidar	package-lock.json	/^        "chokidar": "^3.2.2",$/;"	s	object:dependencies.nodemon.requires
 chokidar	package-lock.json	/^    "chokidar": {$/;"	o	object:dependencies
 chownr	package-lock.json	/^            "chownr": "^1.1.1",$/;"	s	object:dependencies.npm.dependencies.cacache.requires
@@ -831,6 +891,7 @@ code-point-at	package-lock.json	/^                "code-point-at": "^1.0.0",$/;"
 code-point-at	package-lock.json	/^        "code-point-at": "^1.0.0",$/;"	s	object:dependencies.string-width.requires
 code-point-at	package-lock.json	/^        "code-point-at": {$/;"	o	object:dependencies.npm.dependencies
 code-point-at	package-lock.json	/^    "code-point-at": {$/;"	o	object:dependencies
+collapsecol	public/scripts/main-client-script.js	/^    collapsecol = document.getElementById('collapsecol'),$/;"	C
 color-convert	package-lock.json	/^            "color-convert": "^1.9.0"$/;"	s	object:dependencies.npm.dependencies.ansi-styles.requires
 color-convert	package-lock.json	/^            "color-convert": "^2.0.1"$/;"	s	object:dependencies.boxen.dependencies.ansi-styles.requires
 color-convert	package-lock.json	/^            "color-convert": "^2.0.1"$/;"	s	object:dependencies.update-notifier.dependencies.ansi-styles.requires
@@ -925,6 +986,7 @@ crypto-random-string	package-lock.json	/^            "crypto-random-string": "^1
 crypto-random-string	package-lock.json	/^        "crypto-random-string": "^2.0.0"$/;"	s	object:dependencies.unique-string.requires
 crypto-random-string	package-lock.json	/^        "crypto-random-string": {$/;"	o	object:dependencies.npm.dependencies
 crypto-random-string	package-lock.json	/^    "crypto-random-string": {$/;"	o	object:dependencies
+curr_player	public/scripts/websockets-client/simon.js	/^var curr_player = ""; \/\/flag for simon_on also$/;"	v
 curr_score	public/scripts/main-client-script.js	/^    curr_score = document.getElementById('curr_score'),$/;"	C
 curr_score	websockets-server/simon.js	/^var curr_score = 0;$/;"	v
 cyclist	package-lock.json	/^            "cyclist": "~0.2.2",$/;"	s	object:dependencies.npm.dependencies.parallel-transform.requires
@@ -1211,6 +1273,13 @@ dotenv	package-lock.json	/^            "dotenv": "^5.0.1",$/;"	s	object:dependen
 dotenv	package-lock.json	/^        "dotenv": {$/;"	o	object:dependencies.npm.dependencies
 dotenv	package-lock.json	/^    "dotenv": {$/;"	o	object:dependencies
 dotenv	package.json	/^    "dotenv": "^10.0.0",$/;"	s	object:dependencies
+dp0	public/scripts/profile-client-script.js	/^ var dp0 = document.getElementsByClassName("profileimg")[0];$/;"	v
+dp1	public/scripts/profile-client-script.js	/^ var dp1 = document.getElementsByClassName("profileimg")[1];$/;"	v
+dp2	public/scripts/profile-client-script.js	/^ var dp2 = document.getElementsByClassName("profileimg")[2];$/;"	v
+dp3	public/scripts/profile-client-script.js	/^ var dp3 = document.getElementsByClassName("profileimg")[3];$/;"	v
+dp4	public/scripts/profile-client-script.js	/^ var dp4 = document.getElementsByClassName("profileimg")[4];$/;"	v
+dp5	public/scripts/profile-client-script.js	/^ var dp5 = document.getElementsByClassName("profileimg")[5];$/;"	v
+dp6	public/scripts/profile-client-script.js	/^ var dp6 = document.getElementsByClassName("profileimg")[6];$/;"	v
 duplexer3	package-lock.json	/^            "duplexer3": "^0.1.4",$/;"	s	object:dependencies.npm.dependencies.got.requires
 duplexer3	package-lock.json	/^        "duplexer3": "^0.1.4",$/;"	s	object:dependencies.got.requires
 duplexer3	package-lock.json	/^        "duplexer3": {$/;"	o	object:dependencies.npm.dependencies
@@ -1373,6 +1442,7 @@ form-data	package-lock.json	/^        "form-data": {$/;"	o	object:dependencies.n
 form-data	package-lock.json	/^    "form-data": {$/;"	o	object:dependencies
 forwarded	package-lock.json	/^        "forwarded": "0.2.0",$/;"	s	object:dependencies.proxy-addr.requires
 forwarded	package-lock.json	/^    "forwarded": {$/;"	o	object:dependencies
+frame	public/scripts/main-client-script.js	/^      function frame() {$/;"	f	function:move
 fresh	package-lock.json	/^        "fresh": "0.5.2",$/;"	s	object:dependencies.express.requires
 fresh	package-lock.json	/^        "fresh": "0.5.2",$/;"	s	object:dependencies.send.requires
 fresh	package-lock.json	/^    "fresh": {$/;"	o	object:dependencies
@@ -1563,12 +1633,16 @@ https-proxy-agent	package-lock.json	/^        "https-proxy-agent": {$/;"	o	objec
 https-proxy-agent	package-lock.json	/^    "https-proxy-agent": {$/;"	o	object:dependencies
 humanize-ms	package-lock.json	/^            "humanize-ms": "^1.2.1"$/;"	s	object:dependencies.npm.dependencies.agentkeepalive.requires
 humanize-ms	package-lock.json	/^        "humanize-ms": {$/;"	o	object:dependencies.npm.dependencies
+i	public/scripts/main-client-script.js	/^    var i = 0;$/;"	v
 iconv-lite	package-lock.json	/^            "iconv-lite": "~0.4.13"$/;"	s	object:dependencies.npm.dependencies.encoding.requires
 iconv-lite	package-lock.json	/^        "iconv-lite": "0.4.24",$/;"	s	object:dependencies.body-parser.requires
 iconv-lite	package-lock.json	/^        "iconv-lite": "0.4.24",$/;"	s	object:dependencies.raw-body.requires
 iconv-lite	package-lock.json	/^        "iconv-lite": "^0.4.4",$/;"	s	object:dependencies.needle.requires
 iconv-lite	package-lock.json	/^        "iconv-lite": {$/;"	o	object:dependencies.npm.dependencies
 iconv-lite	package-lock.json	/^    "iconv-lite": {$/;"	o	object:dependencies
+idlebtn1	public/scripts/main-client-script.js	/^    idlebtn1 = document.getElementById('idlebutton1'),$/;"	C
+idlebtn2	public/scripts/main-client-script.js	/^    idlebtn2 = document.getElementById('idlebutton2'),$/;"	C
+idlebtn3	public/scripts/main-client-script.js	/^    idlebtn3 = document.getElementById('idlebutton3'),$/;"	C
 ieee754	package-lock.json	/^        "ieee754": "^1.1.13"$/;"	s	object:dependencies.buffer.requires
 ieee754	package-lock.json	/^    "ieee754": {$/;"	o	object:dependencies
 iferr	package-lock.json	/^            "iferr": "^0.1.5",$/;"	s	object:dependencies.npm.dependencies.copy-concurrently.requires
@@ -1610,6 +1684,8 @@ inflight	package-lock.json	/^        "inflight": "^1.0.4",$/;"	s	object:dependen
 inflight	package-lock.json	/^        "inflight": "~1.0.6",$/;"	s	object:dependencies.npm.requires
 inflight	package-lock.json	/^        "inflight": {$/;"	o	object:dependencies.npm.dependencies
 inflight	package-lock.json	/^    "inflight": {$/;"	o	object:dependencies
+infobtn	public/scripts/main-client-script.js	/^    var infobtn = document.getElementById("modalbtn");$/;"	v
+infomodal	public/scripts/main-client-script.js	/^    var infomodal = document.getElementById("infomodal");$/;"	v
 inherits	package-lock.json	/^                "inherits": "~2.0.1",$/;"	s	object:dependencies.npm.dependencies.sorted-union-stream.dependencies.from2.requires
 inherits	package-lock.json	/^                "inherits": "~2.0.1",$/;"	s	object:dependencies.npm.dependencies.sorted-union-stream.dependencies.readable-stream.requires
 inherits	package-lock.json	/^                "inherits": "~2.0.3",$/;"	s	object:dependencies.npm.dependencies.are-we-there-yet.dependencies.readable-stream.requires
@@ -2140,6 +2216,7 @@ is-typedarray	package-lock.json	/^        "is-typedarray": {$/;"	o	object:depend
 is-typedarray	package-lock.json	/^    "is-typedarray": {$/;"	o	object:dependencies
 is-yarn-global	package-lock.json	/^        "is-yarn-global": "^0.3.0",$/;"	s	object:dependencies.update-notifier.requires
 is-yarn-global	package-lock.json	/^    "is-yarn-global": {$/;"	o	object:dependencies
+isCollapsed	public/scripts/main-client-script.js	/^    var isCollapsed = false;$/;"	v
 isarray	package-lock.json	/^                "isarray": "0.0.1",$/;"	s	object:dependencies.npm.dependencies.sorted-union-stream.dependencies.readable-stream.requires
 isarray	package-lock.json	/^                "isarray": "~1.0.0",$/;"	s	object:dependencies.npm.dependencies.are-we-there-yet.dependencies.readable-stream.requires
 isarray	package-lock.json	/^                "isarray": "~1.0.0",$/;"	s	object:dependencies.npm.dependencies.concat-stream.dependencies.readable-stream.requires
@@ -2197,6 +2274,7 @@ jsprim	package-lock.json	/^    "jsprim": {$/;"	o	object:dependencies
 keyv	package-lock.json	/^        "keyv": "^3.0.0",$/;"	s	object:dependencies.cacheable-request.requires
 keyv	package-lock.json	/^    "keyv": {$/;"	o	object:dependencies
 keywords	package.json	/^  "keywords": [],$/;"	a
+label	public/styles.css	/^label {$/;"	s
 latest-version	package-lock.json	/^            "latest-version": "^3.0.0",$/;"	s	object:dependencies.npm.dependencies.update-notifier.requires
 latest-version	package-lock.json	/^        "latest-version": "^5.0.0",$/;"	s	object:dependencies.update-notifier.requires
 latest-version	package-lock.json	/^        "latest-version": {$/;"	o	object:dependencies.npm.dependencies
@@ -2290,7 +2368,7 @@ lru-cache	package-lock.json	/^        "lru-cache": "^6.0.0"$/;"	s	object:depende
 lru-cache	package-lock.json	/^        "lru-cache": {$/;"	o	object:dependencies.npm.dependencies
 lru-cache	package-lock.json	/^    "lru-cache": {$/;"	o	object:dependencies
 main	package.json	/^  "main": "index.js",$/;"	s
-main_sockets	public/scripts/websockets-client/socket-client-main.js	/^export function main_sockets(window, document,$/;"	f
+main_sockets	public/scripts/websockets-client/socket-client-main.js	/^export function main_sockets($/;"	f
 make-dir	package-lock.json	/^            "make-dir": "^1.0.0",$/;"	s	object:dependencies.npm.dependencies.configstore.requires
 make-dir	package-lock.json	/^        "make-dir": "^3.0.0",$/;"	s	object:dependencies.configstore.requires
 make-dir	package-lock.json	/^        "make-dir": "^3.1.0",$/;"	s	object:dependencies.@mapbox/node-pre-gyp.requires
@@ -2402,6 +2480,7 @@ mkdirp	package-lock.json	/^    "mkdirp": {$/;"	o	object:dependencies
 mkdirp-classic	package-lock.json	/^        "mkdirp-classic": "^0.5.2",$/;"	s	object:dependencies.tar-fs.requires
 mkdirp-classic	package-lock.json	/^        "mkdirp-classic": "^0.5.3",$/;"	s	object:dependencies.prebuild-install.requires
 mkdirp-classic	package-lock.json	/^    "mkdirp-classic": {$/;"	o	object:dependencies
+move	public/scripts/main-client-script.js	/^    async function move(progbar) {$/;"	f
 move-concurrently	package-lock.json	/^            "move-concurrently": "^1.0.1",$/;"	s	object:dependencies.npm.dependencies.cacache.requires
 move-concurrently	package-lock.json	/^        "move-concurrently": "^1.0.1",$/;"	s	object:dependencies.npm.requires
 move-concurrently	package-lock.json	/^        "move-concurrently": {$/;"	o	object:dependencies.npm.dependencies
@@ -2429,6 +2508,7 @@ ms	package-lock.json	/^        "ms": {$/;"	o	object:dependencies.npm.dependencie
 ms	package-lock.json	/^        "ms": {$/;"	o	object:dependencies.send.dependencies
 ms	package-lock.json	/^        "ms": {$/;"	o	object:dependencies.undefsafe.dependencies
 ms	package-lock.json	/^    "ms": {$/;"	o	object:dependencies
+musicbtn	public/scripts/profile-client-script.js	/^ var musicbtn = document.getElementById("bgmusicbtn");$/;"	v
 mute-stream	package-lock.json	/^            "mute-stream": "~0.0.4"$/;"	s	object:dependencies.npm.dependencies.read.requires
 mute-stream	package-lock.json	/^        "mute-stream": {$/;"	o	object:dependencies.npm.dependencies
 mysql	package-lock.json	/^    "mysql": {$/;"	o	object:dependencies
@@ -2439,6 +2519,7 @@ nan	package-lock.json	/^    "nan": {$/;"	o	object:dependencies
 napi-build-utils	package-lock.json	/^        "napi-build-utils": "^1.0.1",$/;"	s	object:dependencies.prebuild-install.requires
 napi-build-utils	package-lock.json	/^    "napi-build-utils": {$/;"	o	object:dependencies
 navbar	public/scripts/main-client-script.js	/^    navbar = document.getElementById('nav-bar'),$/;"	C
+navbar	public/scripts/profile-client-script.js	/^  var navbar = document.getElementById('nav-bar');$/;"	v
 needle	package-lock.json	/^            "needle": "^2.2.1",$/;"	s	object:dependencies.sqlite3.dependencies.node-pre-gyp.requires
 needle	package-lock.json	/^    "needle": {$/;"	o	object:dependencies
 negotiator	package-lock.json	/^        "negotiator": "0.6.2"$/;"	s	object:dependencies.accepts.requires
@@ -2757,7 +2838,7 @@ pify	package-lock.json	/^            "pify": "^3.0.0"$/;"	s	object:dependencies.
 pify	package-lock.json	/^        "pify": {$/;"	o	object:dependencies.npm.dependencies
 play_btns	public/scripts/main-client-script.js	/^    play_btns = document.getElementsByClassName('play-buttons'),$/;"	C
 player_says	websockets-server/simon.js	/^function player_says(socket, io, db) {$/;"	f
-port	index.js	/^const port = process.env.PORT || 4000; $/;"	C
+port	index.js	/^const port = process.env.PORT || 3000; $/;"	C
 prebuild-install	package-lock.json	/^        "prebuild-install": "^6.0.1",$/;"	s	object:dependencies.better-sqlite3.requires
 prebuild-install	package-lock.json	/^    "prebuild-install": {$/;"	o	object:dependencies
 prepend-http	package-lock.json	/^            "prepend-http": "^1.0.1"$/;"	s	object:dependencies.npm.dependencies.url-parse-lax.requires
@@ -2776,6 +2857,9 @@ process-nextick-args	package-lock.json	/^                "process-nextick-args":
 process-nextick-args	package-lock.json	/^        "process-nextick-args": "~2.0.0",$/;"	s	object:dependencies.readable-stream.requires
 process-nextick-args	package-lock.json	/^        "process-nextick-args": {$/;"	o	object:dependencies.npm.dependencies
 process-nextick-args	package-lock.json	/^    "process-nextick-args": {$/;"	o	object:dependencies
+profilemodal	public/scripts/profile-client-script.js	/^ var profilemodal = document.getElementById("profilemodal");$/;"	v
+profilepic	public/scripts/profile-client-script.js	/^ var profilepic = document.getElementById("profile-pic");$/;"	v
+profilepicheader	public/scripts/profile-client-script.js	/^ var profilepicheader = document.getElementById("profile-pic-header");$/;"	v
 promise-inflight	package-lock.json	/^            "promise-inflight": "^1.0.1",$/;"	s	object:dependencies.npm.dependencies.cacache.requires
 promise-inflight	package-lock.json	/^            "promise-inflight": "^1.0.1",$/;"	s	object:dependencies.npm.dependencies.pacote.requires
 promise-inflight	package-lock.json	/^        "promise-inflight": "~1.0.1",$/;"	s	object:dependencies.npm.requires
@@ -2802,6 +2886,7 @@ psl	package-lock.json	/^    "psl": {$/;"	o	object:dependencies
 pstree.remy	package-lock.json	/^        "pstree.remy": "^1.1.7",$/;"	s	object:dependencies.nodemon.requires
 pstree.remy	package-lock.json	/^    "pstree.remy": {$/;"	o	object:dependencies
 public/scripts/main-client-script.js	README.md	/^# public\/scripts\/main-client-script.js $/;"	c
+public/views/pages/index.ejs	README.md	/^# public\/views\/pages\/index.ejs$/;"	c
 pump	package-lock.json	/^            "pump": "^2.0.0"$/;"	s	object:dependencies.npm.dependencies.pumpify.requires
 pump	package-lock.json	/^            "pump": "^3.0.0"$/;"	s	object:dependencies.cacheable-request.dependencies.get-stream.requires
 pump	package-lock.json	/^            "pump": "^3.0.0"$/;"	s	object:dependencies.npm.dependencies.get-stream.requires
@@ -2838,6 +2923,9 @@ queue	index.js	/^const queue = [];$/;"	C
 queue_btn	public/scripts/main-client-script.js	/^    queue_btn = document.getElementById('queuebutton'),$/;"	C
 qw	package-lock.json	/^        "qw": "~1.0.1",$/;"	s	object:dependencies.npm.requires
 qw	package-lock.json	/^        "qw": {$/;"	o	object:dependencies.npm.dependencies
+radio	public/styles.css	/^  [type=radio] + img {$/;"	s
+radio	public/styles.css	/^  [type=radio]:checked + img {$/;"	s
+radio	public/styles.css	/^[type=radio] { $/;"	s
 random-bytes	package-lock.json	/^        "random-bytes": "~1.0.0"$/;"	s	object:dependencies.uid-safe.requires
 random-bytes	package-lock.json	/^    "random-bytes": {$/;"	o	object:dependencies
 range-parser	package-lock.json	/^        "range-parser": "~1.2.1",$/;"	s	object:dependencies.express.requires
@@ -3892,18 +3980,16 @@ signal-exit	package-lock.json	/^        "signal-exit": "^3.0.0",$/;"	s	object:de
 signal-exit	package-lock.json	/^        "signal-exit": "^3.0.2",$/;"	s	object:dependencies.write-file-atomic.requires
 signal-exit	package-lock.json	/^        "signal-exit": {$/;"	o	object:dependencies.npm.dependencies
 signal-exit	package-lock.json	/^    "signal-exit": {$/;"	o	object:dependencies
-signup	public/scripts/main-client-script.js	/^    signup = document.getElementById("signuplink"),$/;"	C
 simon_blinks	gpio-toggle.js	/^ async function simon_blinks() {$/;"	f
-simon_end	websockets-server/simon.js	/^function simon_end(socket, io, database) {$/;"	f
+simon_end	websockets-server/simon.js	/^function simon_end(socket, io, db) {$/;"	f
 simon_info	gpio-toggle.js	/^ var simon_info = { index: 0 , hist: []}; \/\/to be exported to other modules$/;"	c
 simon_info	websockets-server/simon.js	/^const simon_info  = gpio.simon_info;$/;"	C
 simon_on	index.js	/^var simon_on = false; $/;"	v
-simon_on	public/scripts/main-client-script.js	/^var simon_on = false; $/;"	v
+simon_on	public/scripts/websockets-client/simon.js	/^var simon_on = false;$/;"	v
 simon_on	websockets-server/main-sockets.js	/^var simon_on = false; $/;"	v
-simon_on	websockets-server/main-sockets.js	/^var simon_on = false;$/;"	v
-simon_says	websockets-server/simon.js	/^async function simon_says(socket, io, curr_score) {$/;"	f
-simon_sockets	public/scripts/websockets-client/simon.js	/^export function simon_sockets(window, document, socket, $/;"	f
-simon_speaks	public/scripts/main-client-script.js	/^var simon_speaks = false;$/;"	v
+simon_says	websockets-server/simon.js	/^async function simon_says(socket, io) {$/;"	f
+simon_sockets	public/scripts/websockets-client/simon.js	/^export function simon_sockets() {$/;"	f
+simon_speaks	public/scripts/websockets-client/simon.js	/^var simon_speaks = false;$/;"	v
 simon_start	websockets-server/simon.js	/^async function simon_start(socket, io, db) {$/;"	f
 simon_startquit_btn	public/scripts/main-client-script.js	/^    simon_startquit_btn = document.getElementById('simon-startquit'),$/;"	C
 simple-concat	package-lock.json	/^        "simple-concat": "^1.0.0"$/;"	s	object:dependencies.simple-get.requires
@@ -3919,7 +4005,7 @@ slide	package-lock.json	/^        "slide": {$/;"	o	object:dependencies.npm.depen
 smart-buffer	package-lock.json	/^            "smart-buffer": "^4.1.0"$/;"	s	object:dependencies.npm.dependencies.socks.requires
 smart-buffer	package-lock.json	/^        "smart-buffer": {$/;"	o	object:dependencies.npm.dependencies
 socket	index.js	/^const socket = require('socket.io');       \/\/import socket server    $/;"	C
-socket	public/scripts/main-client-script.js	/^const socket = io.connect('https:\/\/192.168.20.4:4000', {reconnect: true}); \/\/client establis/;"	C
+socket	public/scripts/main-client-script.js	/^const socket = io.connect('https:\/\/192.168.20.4:3000', {reconnect: true}); \/\/client establis/;"	C
 socket.io	package-lock.json	/^    "socket.io": {$/;"	o	object:dependencies
 socket.io	package.json	/^    "socket.io": "^4.1.2",$/;"	s	object:dependencies
 socket.io-adapter	package-lock.json	/^        "socket.io-adapter": "~2.3.0",$/;"	s	object:dependencies.socket.io.requires
@@ -3938,6 +4024,8 @@ sorted-object	package-lock.json	/^        "sorted-object": "~2.0.1",$/;"	s	objec
 sorted-object	package-lock.json	/^        "sorted-object": {$/;"	o	object:dependencies.npm.dependencies
 sorted-union-stream	package-lock.json	/^        "sorted-union-stream": "~2.1.3",$/;"	s	object:dependencies.npm.requires
 sorted-union-stream	package-lock.json	/^        "sorted-union-stream": {$/;"	o	object:dependencies.npm.dependencies
+span	public/scripts/main-client-script.js	/^    var span = document.getElementsByClassName("close")[0];$/;"	v
+span	public/scripts/profile-client-script.js	/^ var span = document.getElementsByClassName("closeprofile")[0];$/;"	v
 spdx-correct	package-lock.json	/^            "spdx-correct": "^3.0.0",$/;"	s	object:dependencies.npm.dependencies.validate-npm-package-license.requires
 spdx-correct	package-lock.json	/^        "spdx-correct": {$/;"	o	object:dependencies.npm.dependencies
 spdx-exceptions	package-lock.json	/^            "spdx-exceptions": "^2.1.0",$/;"	s	object:dependencies.npm.dependencies.spdx-expression-parse.requires
@@ -3972,12 +4060,14 @@ ssri	package-lock.json	/^        "ssri": "^6.0.2",$/;"	s	object:dependencies.npm
 ssri	package-lock.json	/^        "ssri": {$/;"	o	object:dependencies.npm.dependencies
 start	package.json	/^    "start": "node index.js"$/;"	s	object:scripts
 start_signal	gpio-toggle.js	/^ function start_signal() {$/;"	f
+statcon	public/scripts/main-client-script.js	/^    statcon = document.getElementById('stat'),$/;"	C
 statuses	package-lock.json	/^        "statuses": ">= 1.5.0 < 2",$/;"	s	object:dependencies.http-errors.requires
 statuses	package-lock.json	/^        "statuses": "~1.5.0"$/;"	s	object:dependencies.send.requires
 statuses	package-lock.json	/^        "statuses": "~1.5.0",$/;"	s	object:dependencies.express.requires
 statuses	package-lock.json	/^        "statuses": "~1.5.0",$/;"	s	object:dependencies.finalhandler.requires
 statuses	package-lock.json	/^    "statuses": {$/;"	o	object:dependencies
 sticky	public/scripts/main-client-script.js	/^    var sticky = navbar.offsetTop;$/;"	v
+sticky	public/scripts/profile-client-script.js	/^  var sticky = navbar.offsetTop;$/;"	v
 stream-each	package-lock.json	/^            "stream-each": "^1.1.0",$/;"	s	object:dependencies.npm.dependencies.mississippi.requires
 stream-each	package-lock.json	/^        "stream-each": {$/;"	o	object:dependencies.npm.dependencies
 stream-iterate	package-lock.json	/^            "stream-iterate": "^1.1.0"$/;"	s	object:dependencies.npm.dependencies.sorted-union-stream.requires
@@ -4110,6 +4200,8 @@ through	package-lock.json	/^            "through": ">=2.2.7 <3"$/;"	s	object:dep
 through	package-lock.json	/^        "through": {$/;"	o	object:dependencies.npm.dependencies
 through2	package-lock.json	/^            "through2": "^2.0.0"$/;"	s	object:dependencies.npm.dependencies.mississippi.requires
 through2	package-lock.json	/^        "through2": {$/;"	o	object:dependencies.npm.dependencies
+ticketcount	public/scripts/main-client-script.js	/^    ticketcount = document.getElementById('ticket-count'),$/;"	C
+tickets	public/scripts/main-client-script.js	/^    var tickets = 0;$/;"	v
 timed-out	package-lock.json	/^            "timed-out": "^4.0.0",$/;"	s	object:dependencies.npm.dependencies.got.requires
 timed-out	package-lock.json	/^        "timed-out": {$/;"	o	object:dependencies.npm.dependencies
 tiny-relative-date	package-lock.json	/^        "tiny-relative-date": "^1.3.0",$/;"	s	object:dependencies.npm.requires
@@ -4138,6 +4230,9 @@ tweetnacl	package-lock.json	/^        "tweetnacl": "^0.14.3"$/;"	s	object:depend
 tweetnacl	package-lock.json	/^        "tweetnacl": "~0.14.0"$/;"	s	object:dependencies.sshpk.requires
 tweetnacl	package-lock.json	/^        "tweetnacl": {$/;"	o	object:dependencies.npm.dependencies
 tweetnacl	package-lock.json	/^    "tweetnacl": {$/;"	o	object:dependencies
+type	public/styles.css	/^  [type=radio] + img {$/;"	s
+type	public/styles.css	/^  [type=radio]:checked + img {$/;"	s
+type	public/styles.css	/^[type=radio] { $/;"	s
 type-fest	package-lock.json	/^        "type-fest": "^0.8.1",$/;"	s	object:dependencies.boxen.requires
 type-fest	package-lock.json	/^    "type-fest": {$/;"	o	object:dependencies
 type-is	package-lock.json	/^        "type-is": "~1.6.17"$/;"	s	object:dependencies.body-parser.requires
@@ -4187,9 +4282,8 @@ url-parse-lax	package-lock.json	/^            "url-parse-lax": "^1.0.0"$/;"	s	ob
 url-parse-lax	package-lock.json	/^        "url-parse-lax": "^3.0.0"$/;"	s	object:dependencies.got.requires
 url-parse-lax	package-lock.json	/^        "url-parse-lax": {$/;"	o	object:dependencies.npm.dependencies
 url-parse-lax	package-lock.json	/^    "url-parse-lax": {$/;"	o	object:dependencies
-user_socket_pairs	websockets-server/main-sockets.js	/^var user_socket_pairs =  {$/;"	v
+user_socket_pairs	websockets-server/main-sockets.js	/^var user_socket_pairs= { };$/;"	v
 username	public/scripts/main-client-script.js	/^    username = document.getElementById("user").innerHTML,$/;"	C
-userpassbox	public/scripts/main-client-script.js	/^    userpassbox = document.getElementById("userpass"),$/;"	C
 util-deprecate	package-lock.json	/^                "util-deprecate": "~1.0.1"$/;"	s	object:dependencies.npm.dependencies.are-we-there-yet.dependencies.readable-stream.requires
 util-deprecate	package-lock.json	/^                "util-deprecate": "~1.0.1"$/;"	s	object:dependencies.npm.dependencies.concat-stream.dependencies.readable-stream.requires
 util-deprecate	package-lock.json	/^                "util-deprecate": "~1.0.1"$/;"	s	object:dependencies.npm.dependencies.duplexify.dependencies.readable-stream.requires

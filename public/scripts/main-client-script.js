@@ -60,10 +60,6 @@ for (let i=0; i < inputs_class.length; i++) {
     inputs_class[i].addEventListener('blur', function() { input_focus = false; console.log(input_focus) });
 }
 
-// function addMultipleEventListener(element, events, handler) {
-//   events.forEach(e => element.addEventListener(e, handler))
-// }
-
 
     //Sticky Navbar
     var sticky = navbar.offsetTop;
@@ -200,30 +196,23 @@ for (let i=0; i < inputs_class.length; i++) {
     }
 
 
-
-
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
 }
 
 
 /* Simon Says flags */
-var simon_on = false; 
-var simon_speaks = false;
+// var simon_on = false; 
+// var simon_speaks = false;
 const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 const box_list = [box1, box2, box3, box4, box5];
 
 
 //intialize all websockets
-main_sockets(window, document, 
-    socket,
-    addMultipleEventListener,
-    gpio_list,
+main_sockets(
+    document,
+    socket, 
     box_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns,
     chat_btn,
     curr_score,
     queue_btn,
@@ -233,4 +222,9 @@ main_sockets(window, document,
 );
 
 
-export { input_focus, btnpress } ;
+export { 
+    input_focus, btnpress, 
+    addMultipleEventListener,
+    gpio_list, simon_startquit_btn,
+    play_btns, socket 
+} ;

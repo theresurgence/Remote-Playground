@@ -21,7 +21,7 @@ async function simon_start(socket, io, db) {
 
         db.prepare(`INSERT INTO ${player_name} (Start) VALUES (DateTime('now'))`).run();
 
-        io.sockets.emit('curr_score', curr_score); 
+        io.sockets.emit('curr-score', curr_score); 
 
         socket.leave('public room');
         socket.join('simon room');
@@ -30,7 +30,6 @@ async function simon_start(socket, io, db) {
         io.to('public room').emit('simon-start-public');
         io.to('simon room').emit('simon-start-player');
 
-        simon_on = true;
 
         // await gpio.start_signal();
 
@@ -92,11 +91,8 @@ function player_says(socket, io, db) {
 }
 
 
-function simon_end(socket, io, database) {
+function simon_end(socket, io, db) {
 
-    const db = database;
-
-    simon_on = false;
     socket.emit('simon-end-player');
     io.to('public room').emit('simon-end-public');
 

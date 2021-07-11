@@ -3,9 +3,7 @@ var simon_on = false;
 const sqlite3 = require('better-sqlite3');
 const path = require('path');
 
-var user_socket_pairs =  {
-
-};
+var user_socket_pairs= { };
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
@@ -31,7 +29,7 @@ module.exports = function (io, queue, db, online) {
             console.log(user_socket_pairs);
 
             io.emit('queuestatus', queue); //check for queue status upon connection
-            io.emit('queuetext', queue, is_loggedin, false);
+            io.to(socket.id).emit('queuetext', queue, is_loggedin, false);
         });
 
         console.log(socket.id, 'connected');
@@ -39,6 +37,8 @@ module.exports = function (io, queue, db, online) {
 
         online += 1;
         io.sockets.emit('online', online); //server sends to all connected websockets the updated online number
+
+        io.to(socket.id).emit('simon-on-check', queue[0]); //send curr_player if have
 
         // var r = btw_range(200,255) ; var g = btw_range(200,255); var b = btw_range(200,255);
 
@@ -127,7 +127,7 @@ module.exports = function (io, queue, db, online) {
                     console.log(queue); 
 
                     io.emit('queuestatus', queue); //update queuestatus for all clients
-                    io.emit('queuetext', queue, true, true);
+                    io.to(socket.id).emit('queuetext', queue, true, true);
 
                     if (index == 0) {
                         //PLAYER quits, move to next in line
