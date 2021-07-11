@@ -278,3 +278,4 @@ function initUser (name, email, password, score) {
 }
 
 
+

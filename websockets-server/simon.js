@@ -41,7 +41,7 @@ async function simon_start(socket, io, db) {
 
 }
 
-async function simon_says(socket, io, curr_score) {
+async function simon_says(socket, io) {
     io.to('simon room').emit('simon-is-speaking');  //to true
     await gpio.simon_blinks();
 
@@ -75,7 +75,7 @@ function player_says(socket, io, db) {
                 curr_score += 1;
                 console.log(`\nCurr Score: ${curr_score}\n`);
                 io.sockets.emit('curr_score', curr_score); 
-                await simon_says(socket, io, curr_score);
+                await simon_says(socket, io);
             }
         }
 
