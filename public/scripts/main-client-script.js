@@ -104,23 +104,17 @@ for (let i=0; i < inputs_class.length; i++) {
 
     idlebtn1.onclick = () => {
       btnpress.play();
-      tickets += 1;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
       move(bar1);
       
     }
 
     idlebtn2.onclick = () => {
       btnpress.play();
-      tickets += 5;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
       move(bar2);
     }
 
     idlebtn3.onclick = () => {
-      btnpress.play();
-      tickets += 50;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
+      btnpress.play(); 
       move(bar3);
     }
     
@@ -169,26 +163,57 @@ for (let i=0; i < inputs_class.length; i++) {
 
     //Idle Progress Bar
     var i = 0;
+    var isMoveHop = false, isMoveSwing = false, isMoveSlide = false;
 
-    async function move(progbar) {
-      
+    function move(progbar) {
+        
       var width = 0;
+      
       if (progbar == bar1) {
+        if (!isMoveHop) {
+        isMoveHop = true;
         var id = setInterval(frame, 10); //run frame every 10ms
+        } else return;
       }
+
       else if (progbar == bar2) {
-        var id = setInterval(frame, 30); //run frame every 30ms
+        if (!isMoveSwing) {
+          isMoveSwing = true;
+          var id = setInterval(frame, 30); //run frame every 30ms
+        } else return;
       }
+
       else if (progbar == bar3) {
-        var id = setInterval(frame, 50); //run frame every 50ms
+        if (!isMoveSlide) {
+          isMoveSlide = true;
+          var id = setInterval(frame, 50); //run frame every 50ms
+        } else return;        
       }
+
+    
+    
       
       
       function frame() {
         if (width >= 100) {
+          if (progbar == bar1) {
+            tickets += 1; isMoveHop = false;
+          }       
+
+          else if (progbar == bar2) {
+            tickets += 5; isMoveSwing = false;
+          }
+            
+          else if (progbar == bar3) {
+            tickets += 50; isMoveSlide = false;
+          } 
+            
+          ticketcount.innerHTML = `Tickets: ${tickets}`;    
           clearInterval(id);
           i = 0;
+          
           progbar.style.width = 0 + "%";
+        
           return true;
         } else {
           width++;

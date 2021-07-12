@@ -20,8 +20,6 @@ module.exports = function (io, queue, db, online) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
 
-        console.log(socket);
-
         io.to(socket.id).emit('check-register');
         socket.on('receive-register', (username)=> {
             console.log(`USERNAME: ${username}`);

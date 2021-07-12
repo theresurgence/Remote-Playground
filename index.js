@@ -2,6 +2,9 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 
+module.exports = {
+
+}
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
@@ -28,8 +31,6 @@ const server = https.createServer({
 .listen(port, function () {
   console.log('App started on port 3000! Go to https://localhost:3000/')
 })
-
-
 /************* HTTPS******************/
 
 
@@ -126,7 +127,7 @@ app.use(methodOverride('_method'));
 
 
 app.get('/', (req, res) => {
-
+    console.log(res.statusCode);
     auth = req.isAuthenticated();
     function topthree () {
         let sql = 'SELECT name, score FROM userinfo ORDER BY score DESC LIMIT 3';
@@ -189,11 +190,6 @@ app.get('/profile', (req, res) => {
     if (!auth) {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
-
-    
-    // db.prepare('.mode html').run();
-    // let game_history = db.prepare(`SELECT * FROM ${req.user.name}`);
-    // console.log(game_history)
 
     res.render('pages/profile', {
         auth: auth,
