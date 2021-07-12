@@ -4,14 +4,18 @@ const sqlite3 = require('better-sqlite3');
 const path = require('path');
 
 var user_socket_pairs= { };
+const queue = [];
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
+module.exports = {
+    main_sockets, 
+    queue,
+}
 
-
-module.exports = function (io, queue, db, online) {
+function main_sockets(io, db, online) {
 
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
 
@@ -28,8 +32,8 @@ module.exports = function (io, queue, db, online) {
             } 
             console.log(user_socket_pairs);
 
-            io.emit('queuestatus', queue); //check for queue status upon connection
-            io.to(socket.id).emit('queuetext', queue, is_loggedin, false);
+            io.emit('queuestatus', queue); //refresh queue status for all clients
+            io.to(socket.id).emit('queuetext', queue, is_loggedin, false); //{isExit == false} //refresh only for the 1 client
         });
 
         console.log(socket.id, 'connected');
@@ -77,25 +81,19 @@ module.exports = function (io, queue, db, online) {
 
         // const db = new sqlite3(path.resolve('./userinfo.db')); 
 
-        socket.on('enterqueue', (tempname) => {
-            let isQueued = queue.includes(tempname);
+        socket.on('enterqueue', (username) => {
+            let isQueued = queue.includes(username);
+            let is_loggedin = false;
             console.log(`isQueue: ${isQueued}`);
-            let is_loggedin;
 
-            if (tempname === "") {
-                console.log("Not registered User");
-                is_loggedin = false;
-            }
-            else {  //is_loggedin == TRUE
-                if (!isQueued) {
-                    queue.push(tempname);
-                    isQueued = true;
-                }      
-                console.log(queue);         
+            if (username !== "") {
                 is_loggedin = true;
 
+                if (!isQueued) { queue.push(username); }      
+                console.log(queue);         
+
                 //start game if player is only one in queue
-                if (tempname === queue[0] &&  simon_on === false) {
+                if (username === queue[0] &&  simon_on === false) {
                     io.to(socket.id).emit('simon-start-server');
                     simon_on = true;
                 }
@@ -103,21 +101,21 @@ module.exports = function (io, queue, db, online) {
             }
             io.emit('queuestatus', queue);
             io.to(socket.id).emit('queuetext', queue, is_loggedin, false);
-            // db.prepare(`INSERT INTO queuestack (name) VALUES ('${tempname}');`).run();
+            // db.prepare(`INSERT INTO queuestack (name) VALUES ('${username}');`).run();
             // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
-            // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${tempname}'`).all();
+            // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
         });
 
-        socket.on('exitqueue', (tempname) => {
+        socket.on('exitqueue', (username) => {
             //IF REGISTERED
-            if (tempname !== "") {
-                let isQueued = queue.includes(tempname);
+            if (username !== "") {
+                let isQueued = queue.includes(username);
                 
                 //no need to exit queue if not inside
                 if (isQueued) {
                     let index;           
                     for (let i = 0; i < queue.length; i++) {
-                        if (queue[i] === tempname) {
+                        if (queue[i] === username) {
                             index = i;
                             break;
                         }                        
@@ -144,9 +142,9 @@ module.exports = function (io, queue, db, online) {
                     }
                     if (queue.length == 0)
                         simon_on = false;
-                // db.prepare(`DELETE FROM queuestack WHERE name = '${tempname}'`).run();
+                // db.prepare(`DELETE FROM queuestack WHERE name = '${username}'`).run();
                 // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
-                // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${tempname}'`).all();
+                // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
                 }
             }
         }

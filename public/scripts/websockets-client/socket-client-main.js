@@ -40,9 +40,7 @@ export function main_sockets(
     });
 
 
-    socket.on('check-login', ()=>{
-        socket.emit('checked-login', username);
-    });
+    socket.on('check-login', ()=>{ socket.emit('checked-login', username); });
 
     socket.on('queuestatus', (queue) => {
         let queue_no = undefined;

@@ -100,11 +100,11 @@ app.use(session({
 }));
 
 
-const queue = [];
 /* import all web sockets required */
 const online = 0; //number of online users
-require('./websockets-server/main-sockets')(socket(server), queue, db, online); 
+const { main_sockets } = require('./websockets-server/main-sockets');
 
+main_sockets(socket(server), db, online); 
 
 
 

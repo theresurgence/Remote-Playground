@@ -1,4 +1,5 @@
 const gpio = require('../gpio-toggle'); //import gpio functions and variables
+const { queue } = require('./main-sockets');
 const simon_info  = gpio.simon_info;
 
 var curr_score = 0;
@@ -19,7 +20,7 @@ async function simon_start(socket, io, db) {
 
         console.log(player_name);
 
-        db.prepare(`INSERT INTO ${player_name} (Start) VALUES (DateTime('now'))`).run();
+        // db.prepare(`INSERT INTO ${player_name} (Start) VALUES (DateTime('now'))`).run();
 
         io.sockets.emit('curr-score', curr_score); 
 
@@ -27,10 +28,11 @@ async function simon_start(socket, io, db) {
         socket.join('simon room');
 
 
+        io.to('public room').emit('simon-on-check', queue[0]); //send curr_player if have
         io.to('public room').emit('simon-start-public');
         io.to('simon room').emit('simon-start-player');
-
-
+        
+        simon_on = true;
         // await gpio.start_signal();
 
         console.log("SIMON SAYS STARTS")
@@ -98,24 +100,25 @@ function simon_end(socket, io, db) {
 
     socket.leave('simon room');
     socket.join('public room');
+    io.to('public room').emit('simon-on-check', queue[0]); //send curr_player if have
 
     gpio.hist_reset();
 
     console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
     console.log(`DATABASE: ${db}`);
 
-    let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
-    db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
+    // let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
+    // db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
 
 
-    let hiscore = db.prepare(`SELECT Score FROM userinfo WHERE name='${PLAYER_NAME}'`).get().score;
-    console.log(hiscore)
+    // let hiscore = db.prepare(`SELECT Score FROM userinfo WHERE name='${PLAYER_NAME}'`).get().score;
+    // console.log(hiscore)
 
-    if (hiscore < curr_score) {
-        db.prepare(`UPDATE userinfo SET Score='${curr_score}' WHERE name='${PLAYER_NAME}'`).run();
-    }
+    // if (hiscore < curr_score) {
+        // db.prepare(`UPDATE userinfo SET Score='${curr_score}' WHERE name='${PLAYER_NAME}'`).run();
+    // }
     
-    console.log(latest_Start.Start)
+    // console.log(latest_Start.Start)
 
     console.log("update db with End time and Score");
 
@@ -128,7 +131,6 @@ function simon_end(socket, io, db) {
 
 function socket_simon_end(socket, io, db) {
     socket.on('simon-end', (player_name) => { 
-        console.log(`player_name: ${player_name}`)
         console.log(`PLAYER_NAME: ${PLAYER_NAME}`)
 
         if (player_name === PLAYER_NAME)
