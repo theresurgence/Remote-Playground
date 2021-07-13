@@ -53,11 +53,10 @@ const online = document.getElementById('online'),
 
 
 
-var input_focus = false;
-
+var isInputFocused = false;
 for (let i=0; i < inputs_class.length; i++) {
-    inputs_class[i].addEventListener('focus', function() { input_focus = true; console.log(input_focus) });
-    inputs_class[i].addEventListener('blur', function() { input_focus = false; console.log(input_focus) });
+    inputs_class[i].addEventListener('focus', function() { isInputFocused = true; console.log(`Input: ${isInputFocused}`) });
+    inputs_class[i].addEventListener('blur', function() { isInputFocused = false; console.log(`Input ${isInputFocused}`) });
 }
 
 
@@ -77,6 +76,8 @@ for (let i=0; i < inputs_class.length; i++) {
       if (event.key === "Enter") {
         event.preventDefault();
         chat_btn.click();
+
+
       }
     });
 
@@ -223,7 +224,7 @@ main_sockets(
 
 
 export { 
-    input_focus, btnpress, 
+    isInputFocused, btnpress, 
     addMultipleEventListener,
     gpio_list, simon_startquit_btn,
     play_btns, socket 

@@ -43,10 +43,11 @@ async function simon_start(socket, io, db) {
 }
 
 async function simon_says(socket, io) {
-    io.to('simon room').emit('simon-is-speaking');  //to true
+    // io.to('simon room').emit('simon-is-speaking');  //to true
+    io.emit('simon-is-speaking');  //to true
     await gpio.simon_blinks();
 
-    io.to('simon room').emit('simon-not-speaking');  //to false
+    io.emit('simon-not-speaking');  //to false
 
     gpio.index_reset(); //reset hist_index
     console.log('Player can speak');
@@ -75,7 +76,7 @@ function player_says(socket, io, db) {
 
                 curr_score += 1;
                 console.log(`\nCurr Score: ${curr_score}\n`);
-                io.sockets.emit('curr_score', curr_score); 
+                io.sockets.emit('curr-score', curr_score); 
                 await simon_says(socket, io);
             }
         }
@@ -125,6 +126,7 @@ function simon_end(socket, io, db) {
     console.log("SIMON END")
     curr_score = 0;
 
+    io.emit('simon-on-check', queue[0]);
     io.to(socket.id).emit('exitqueue-server');
 }
 

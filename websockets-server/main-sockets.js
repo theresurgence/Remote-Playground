@@ -125,6 +125,7 @@ function main_sockets(io, db, online) {
                     console.log(queue); 
 
                     io.emit('queuestatus', queue); //update queuestatus for all clients
+                    io.to('public room').emit('queuetext', queue, true, true);
                     io.to(socket.id).emit('queuetext', queue, true, true);
 
                     if (index == 0) {
