@@ -31,11 +31,15 @@ const online = document.getElementById('online'),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
+
+    btnpress0 = document.getElementById('led0_sound'),
+    btnpress1 = document.getElementById('led1_sound'),
+    btnpress2 = document.getElementById('led2_sound'),
+    btnpress3 = document.getElementById('led3_sound'),
+
     chatcon = document.getElementById('cht'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
-
-    simon_startquit_btn = document.getElementById('simon-startquit'),
 
     curr_score = document.getElementById('curr_score'),
 
@@ -224,8 +228,13 @@ main_sockets(
 
 
 export { 
-    isInputFocused, btnpress, 
+    isInputFocused, 
+    btnpress, 
+    btnpress0, 
+    btnpress1, 
+    btnpress2, 
+    btnpress3, 
     addMultipleEventListener,
-    gpio_list, simon_startquit_btn,
+    gpio_list,
     play_btns, socket 
 } ;

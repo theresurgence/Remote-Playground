@@ -64,7 +64,6 @@ function player_says(socket, io, db) {
         console.log(`User says: ${player_led}   Simon says: ${hist[index]}`);
         console.log(`Index: ${index}  Hist_len = ${hist_len}`);
 
-        // if (player_led == hist[gpio.hist_index]) { //correct
         if (player_led == hist[simon_info.index]) { //correct
             console.log('this led is correct')
 
@@ -82,13 +81,9 @@ function player_says(socket, io, db) {
         }
 
         else{  //player is wrong
-
-            console.log("FAIL***************************");
-            console.log(PLAYER_NAME);
-
+            console.log(`***********************${PLAYER_NAME} FAILS *******************************`);
             simon_end(socket,io, db);
         } 
-
         console.log();
     });
 }
@@ -105,8 +100,14 @@ function simon_end(socket, io, db) {
 
     gpio.hist_reset();
 
-    console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
-    console.log(`DATABASE: ${db}`);
+    console.log("SIMON END")
+    curr_score = 0;
+
+    io.emit('simon-on-check', queue[0]);
+    io.to(socket.id).emit('exitqueue-server');
+
+    // console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
+    // console.log(`DATABASE: ${db}`);
 
     // let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
     // db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
@@ -121,13 +122,8 @@ function simon_end(socket, io, db) {
     
     // console.log(latest_Start.Start)
 
-    console.log("update db with End time and Score");
+    // console.log("update db with End time and Score");
 
-    console.log("SIMON END")
-    curr_score = 0;
-
-    io.emit('simon-on-check', queue[0]);
-    io.to(socket.id).emit('exitqueue-server');
 }
 
 

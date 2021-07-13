@@ -2,9 +2,14 @@
 
 
 import { 
-    isInputFocused, btnpress, 
+    isInputFocused, 
+    btnpress, 
+    btnpress0, 
+    btnpress1, 
+    btnpress2, 
+    btnpress3, 
     addMultipleEventListener,
-    gpio_list, simon_startquit_btn,
+    gpio_list, 
     play_btns, socket 
 } from '../main-client-script.js';
 
@@ -31,7 +36,13 @@ export function simon_sockets() {
                 socket.emit(`gpio${led}_on`); 
                 clicked_led[led] = true; 
             }
-            btnpress.play();
+
+            switch(led) {
+                case 0: btnpress0.play(); break;
+                case 1: btnpress1.play(); break;
+                case 2: btnpress2.play(); break;
+                case 3: btnpress3.play(); break;
+            }
             // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
@@ -66,7 +77,13 @@ export function simon_sockets() {
                 // current[i].className = current[i].className.replace(" active", "");
                 if (!gpio_list[led].className.includes("active_led")) {
                     gpio_list[led].className += " active_led";
-                    btnpress.play();
+                    switch(led) {
+                        case 0: btnpress0.play(); console.log("0 play"); break;
+                        case 1: btnpress1.play(); console.log("1 play"); break;
+                        case 2: btnpress2.play(); console.log("2 play"); break;
+                        case 3: btnpress3.play(); console.log("3 play"); break;
+                    }
+                    // btnpress.play();
                 }
             }
 
@@ -82,12 +99,21 @@ export function simon_sockets() {
                     clicked_led[led] = false;
                 }
 
-                if (gpio_list[led].className.includes(" active_led"))
+                if (gpio_list[led].className.includes(" active_led")) {
                     gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
+
+                    switch(led) {
+                        case 0: btnpress0.pause(); btnpress0.currentTime = 0; break;
+                        case 1: btnpress1.pause(); btnpress1.currentTime = 0; break;
+                        case 2: btnpress2.pause(); btnpress2.currentTime = 0; break;
+                        case 3: btnpress3.pause(); btnpress3.currentTime = 0; break;
+                    }
+                }
 
                 if (curr_player === username) {
                     socket.emit(`player-says`, led); 
                 } //player's input is taken into account if simon game is in progress
+
             }
             console.log(`Curr Player: ${curr_player}`);
         }, true);
@@ -96,7 +122,9 @@ export function simon_sockets() {
 
     socket.on('simon-on-check', (queue_0)=>{ 
         curr_player = queue_0;
-        play_btns[0].style.opacity= (curr_player) ? 0.5 : 1;
+        play_btns[0].style.opacity = (curr_player) ? 0.5 : 1; //no curr_player, then opaque
+        if (curr_player === username)
+            play_btns[0].style.opacity =  1;
     });
 
     /**server to call server, need client as middleman**/
@@ -110,7 +138,7 @@ export function simon_sockets() {
 
     socket.on('simon-start-server-next', (next_player)=>{ 
         socket.emit('simon-start', next_player); 
-        console.log(`nexplayer is ${next_player}`);
+        console.log(`nextplayer is ${next_player}`);
         simon_on = true;
     });
 
@@ -156,29 +184,8 @@ export function simon_sockets() {
     /* NEED TO ADD MORE CODE */
     socket.on('simon-end-player', ()=>{
         simon_on = false; 
-        // simon_startquit_btn.value = "Start";
-        console.log("CHNAGE BUTTON");
         /// GAME OVER CODE OR SMTH////
     });
 
 }
-    //simon_startquit_btn.onclick = () => { 
-    //    let curr_player = document.getElementById("user").innerHTML;
-    //    console.log(`Player name: ${curr_player}`);
-
-    //    //To start game
-    //    if (simon_startquit_btn.value == "Start") {
-
-    //        socket.emit('simon-start', curr_player); 
-
-    //        simon_startquit_btn.value = "Quit";
-    //        simon_on = true;
-
-    //    //To quit a game in progress 
-    //    } else {
-    //        simon_on = false;
-    //        socket.emit('simon-end', curr_player); 
-    //        simon_startquit_btn.value = "Start";
-    //    }
-    //};
 
