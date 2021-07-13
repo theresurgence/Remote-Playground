@@ -2,9 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 
-module.exports = {
-
-}
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
@@ -273,4 +270,7 @@ function initUser (name, email, password, score) {
     db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
 
+module.exports = {
+    server
+}
 

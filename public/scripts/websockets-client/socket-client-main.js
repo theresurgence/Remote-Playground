@@ -17,7 +17,8 @@ export function main_sockets(window, document,
     exit_btn,
     inputfield,
     username, 
-
+    cashout_btn,
+    ticketcount
 )  {
 
     //Listen for events
@@ -131,6 +132,105 @@ export function main_sockets(window, document,
         const text = inputfield.value;
         inputfield.value = "";
         socket.emit('message', text, username);
+    }
+
+    //temp resource for idle game
+    var tickets = 0;
+    var i = 0;
+    var isMoveHop = false, isMoveSwing = false, isMoveSlide = false;
+    const idlebtn1 = document.getElementById('idlebutton1'),
+    idlebtn2 = document.getElementById('idlebutton2'),
+    idlebtn3 = document.getElementById('idlebutton3'),
+    bar1 = document.getElementById("bar1"),
+    bar2 = document.getElementById("bar2"),
+    bar3 = document.getElementById("bar3"),
+    btnpress = document.getElementById('btnsound')
+
+
+    cashout_btn.onclick = () => {
+        btnpress.play();
+        console.log("test");
+        console.log("bling bling");
+        let text = ticketcount.innerHTML;
+        let regex = /[0-9]+/;
+        var array = text.match(regex);
+        const currTickets = parseInt(array[0]);
+        socket.emit('cashout', currTickets, username);     
+        tickets = 0;
+        ticketcount.innerHTML = `Tickets: ${tickets}`;  
+    }
+    
+    idlebtn1.onclick = () => {
+        btnpress.play();
+        move(bar1);    
+    }
+
+    idlebtn2.onclick = () => {
+        btnpress.play();
+        move(bar2);
+    }
+
+    idlebtn3.onclick = () => {
+        btnpress.play(); 
+        move(bar3);
+    }
+
+    //Idle Progress Bar
+   
+    
+    function move(progbar) {
+        
+        var width = 0;
+
+        if (progbar == bar1) {
+        if (!isMoveHop) {
+        isMoveHop = true;
+        var id = setInterval(frame, 10); //run frame every 10ms
+        } else return;
+        }
+
+        else if (progbar == bar2) {
+        if (!isMoveSwing) {
+            isMoveSwing = true;
+            var id = setInterval(frame, 30); //run frame every 30ms
+        } else return;
+        }
+
+        else if (progbar == bar3) {
+        if (!isMoveSlide) {
+            isMoveSlide = true;
+            var id = setInterval(frame, 50); //run frame every 50ms
+        } else return;        
+        }
+    
+        function frame() {
+        if (width >= 100) {
+            if (progbar == bar1) {
+            tickets += 1; isMoveHop = false;
+            }       
+
+            else if (progbar == bar2) {
+            tickets += 5; isMoveSwing = false;
+            }
+            
+            else if (progbar == bar3) {
+            tickets += 50; isMoveSlide = false;
+            } 
+            
+            ticketcount.innerHTML = `Tickets: ${tickets}`;    
+            clearInterval(id);
+            i = 0;
+            
+            progbar.style.width = 0 + "%";
+        
+            return true;
+        } else {
+            width++;
+            progbar.style.width = width + "%";
+            return false;
+        }
+        }
+    
     }
 
     simon_sockets(window, document, socket,

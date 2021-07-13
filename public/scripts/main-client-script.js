@@ -22,19 +22,13 @@ const online = document.getElementById('online'),
     box3 = document.getElementById('box3'),
     box4 = document.getElementById('box4'),
     box5 = document.getElementById('box5'),
-    idlebtn1 = document.getElementById('idlebutton1'),
-    idlebtn2 = document.getElementById('idlebutton2'),
-    idlebtn3 = document.getElementById('idlebutton3'),
-    bar1 = document.getElementById("bar1"),
-    bar2 = document.getElementById("bar2"),
-    bar3 = document.getElementById("bar3"),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
     chatcon = document.getElementById('cht'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
-
+    cashout_btn = document.getElementById('cashout'),
     simon_startquit_btn = document.getElementById('simon-startquit'),
 
     curr_score = document.getElementById('curr_score'),
@@ -99,25 +93,6 @@ for (let i=0; i < inputs_class.length; i++) {
       bgmusic.play();
     }
 
-    //temp resource for idle game
-    var tickets = 0;
-
-    idlebtn1.onclick = () => {
-      btnpress.play();
-      move(bar1);
-      
-    }
-
-    idlebtn2.onclick = () => {
-      btnpress.play();
-      move(bar2);
-    }
-
-    idlebtn3.onclick = () => {
-      btnpress.play(); 
-      move(bar3);
-    }
-    
     //ability to collapse 2nd column
     var isCollapsed = false;
 
@@ -158,74 +133,7 @@ for (let i=0; i < inputs_class.length; i++) {
       if (event.target == infomodal) {
         infomodal.style.display = "none";
       }
-    }
-
-
-    //Idle Progress Bar
-    var i = 0;
-    var isMoveHop = false, isMoveSwing = false, isMoveSlide = false;
-
-    function move(progbar) {
-        
-      var width = 0;
-      
-      if (progbar == bar1) {
-        if (!isMoveHop) {
-        isMoveHop = true;
-        var id = setInterval(frame, 10); //run frame every 10ms
-        } else return;
-      }
-
-      else if (progbar == bar2) {
-        if (!isMoveSwing) {
-          isMoveSwing = true;
-          var id = setInterval(frame, 30); //run frame every 30ms
-        } else return;
-      }
-
-      else if (progbar == bar3) {
-        if (!isMoveSlide) {
-          isMoveSlide = true;
-          var id = setInterval(frame, 50); //run frame every 50ms
-        } else return;        
-      }
-
-    
-    
-      
-      
-      function frame() {
-        if (width >= 100) {
-          if (progbar == bar1) {
-            tickets += 1; isMoveHop = false;
-          }       
-
-          else if (progbar == bar2) {
-            tickets += 5; isMoveSwing = false;
-          }
-            
-          else if (progbar == bar3) {
-            tickets += 50; isMoveSlide = false;
-          } 
-            
-          ticketcount.innerHTML = `Tickets: ${tickets}`;    
-          clearInterval(id);
-          i = 0;
-          
-          progbar.style.width = 0 + "%";
-        
-          return true;
-        } else {
-          width++;
-          progbar.style.width = width + "%";
-          return false;
-        }
-      }
-  
-    }
-
-
-
+    }   
 
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
@@ -255,6 +163,8 @@ main_sockets(window, document,
     exit_btn,
     inputfield,
     username, 
+    cashout_btn,
+    ticketcount
 );
 
 

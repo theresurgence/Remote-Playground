@@ -13,7 +13,7 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
-
+const db = new sqlite3(path.resolve('./userinfo.db')); 
 
 
 module.exports = function (io, queue, db, online) {
@@ -68,13 +68,7 @@ module.exports = function (io, queue, db, online) {
                 io.emit('message', `Guest${socket.id.substr(0,3)}: ${message}`);
             else
                 io.emit('message', `${tempname}: ${message}`);
-        });        
-
-
-
-
-
-        // const db = new sqlite3(path.resolve('./userinfo.db')); 
+        });             
 
         socket.on('enterqueue', (tempname) => {
             let isQueued = queue.includes(tempname);
@@ -158,6 +152,16 @@ module.exports = function (io, queue, db, online) {
         }
         )
 
+        socket.on('cashout', (currTicket, username) => {
+            console.log('bing bong');
+            let sqlselect = `SELECT score FROM userinfo WHERE name = '${username}'`;
+            let scoreobj = db.prepare(sqlselect).all();
+            let newscore = scoreobj[0].score + currTicket;
+            let sqlupdate = `UPDATE userinfo SET score = ${newscore} WHERE name = '${username}'`;      
+            db.prepare(sqlupdate).run();
+        })
     });
+
+    
 }
 
