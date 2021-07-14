@@ -86,9 +86,6 @@ export function simon_sockets() {
                     // btnpress.play();
                 }
             }
-
-            //temp test//
-            document.getElementById("curr_player").innerHTML = curr_player;
         }, true);
 
         window.addEventListener("keyup", (event)=> {
