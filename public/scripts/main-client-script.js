@@ -31,11 +31,15 @@ const online = document.getElementById('online'),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
+
+    btnpress0 = document.getElementById('led0_sound'),
+    btnpress1 = document.getElementById('led1_sound'),
+    btnpress2 = document.getElementById('led2_sound'),
+    btnpress3 = document.getElementById('led3_sound'),
+
     chatcon = document.getElementById('cht'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
-
-    simon_startquit_btn = document.getElementById('simon-startquit'),
 
     curr_score = document.getElementById('curr_score'),
 
@@ -50,16 +54,14 @@ const online = document.getElementById('online'),
     inputs_class = document.getElementsByClassName('inputs');
 
 
-var input_focus = false;
 
+
+
+var isInputFocused = false;
 for (let i=0; i < inputs_class.length; i++) {
-    inputs_class[i].addEventListener('focus', function() { input_focus = true; console.log(input_focus) });
-    inputs_class[i].addEventListener('blur', function() { input_focus = false; console.log(input_focus) });
+    inputs_class[i].addEventListener('focus', function() { isInputFocused = true; console.log(`Input: ${isInputFocused}`) });
+    inputs_class[i].addEventListener('blur', function() { isInputFocused = false; console.log(`Input ${isInputFocused}`) });
 }
-
-// function addMultipleEventListener(element, events, handler) {
-//   events.forEach(e => element.addEventListener(e, handler))
-// }
 
 
     //Sticky Navbar
@@ -78,6 +80,8 @@ for (let i=0; i < inputs_class.length; i++) {
       if (event.key === "Enter") {
         event.preventDefault();
         chat_btn.click();
+
+
       }
     });
 
@@ -94,22 +98,6 @@ for (let i=0; i < inputs_class.length; i++) {
 
     musicbtn.onclick = () => {
       bgmusic.play();
-    }
-    //Audio Elements to Buttons
-    gpio0.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio1.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio2.onclick = () => {
-      btnpress.play();
-    }
-
-    gpio3.onclick = () => {
-      btnpress.play();
     }
 
     //temp resource for idle game
@@ -213,30 +201,23 @@ for (let i=0; i < inputs_class.length; i++) {
     }
 
 
-
-
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
 }
 
 
 /* Simon Says flags */
-var simon_on = false; 
-var simon_speaks = false;
+// var simon_on = false; 
+// var simon_speaks = false;
 const gpio_list = [gpio0, gpio1, gpio2, gpio3];
 const box_list = [box1, box2, box3, box4, box5];
 
 
 //intialize all websockets
-main_sockets(window, document, 
-    socket,
-    addMultipleEventListener,
-    gpio_list,
+main_sockets(
+    document,
+    socket, 
     box_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns,
     chat_btn,
     curr_score,
     queue_btn,
@@ -246,6 +227,14 @@ main_sockets(window, document,
 );
 
 
-export function get_input_focus() {
-    return input_focus; 
-}
+export { 
+    isInputFocused, 
+    btnpress, 
+    btnpress0, 
+    btnpress1, 
+    btnpress2, 
+    btnpress3, 
+    addMultipleEventListener,
+    gpio_list,
+    play_btns, socket 
+} ;

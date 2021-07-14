@@ -2,26 +2,20 @@ import { simon_sockets } from './simon.js';
 
 /* Main Client Websockets Events */
 
-export function main_sockets(window, document,
+export function main_sockets(
+    document,
     socket, 
-    addMultipleEventListener,
-    gpio_list,
     box_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns, 
     chat_btn,
     curr_score,
     queue_btn,
     exit_btn,
     inputfield,
     username, 
-
 )  {
 
     //Listen for events
-    socket.on('curr_score', (score)=>{
+    socket.on('curr-score', (score)=>{
         curr_score.innerHTML = `<b>Score: ${score}</b>`;  
         console.log("CHANGE SCORE");
     });
@@ -46,18 +40,12 @@ export function main_sockets(window, document,
     });
 
 
-    socket.on('check-register', ()=>{
-        socket.emit('receive-register', username);
-    });
-
-
-
+    socket.on('check-login', ()=>{ socket.emit('checked-login', username); });
 
     socket.on('queuestatus', (queue) => {
         let queue_no = undefined;
-        console.log(`Queue Num: ${queue_no}`);
         for (let i = 0; i < queue.length; i++) {
-            if (queue[i] == username) {
+            if (queue[i] === username) {
                 queue_no = i;
                 console.log('test');
                 console.log(queue_no);
@@ -71,61 +59,37 @@ export function main_sockets(window, document,
             else
                 box_list[i].innerHTML = "";
         }
-
-        ////find username in the queue, then return the number
-        //if (!isRegistered) {
-        //    queuetext.innerHTML = `<b>Please login to play</b>`;
-        //    // alert('Please login to play');
-        //} 
-
-        //else {
-        //    if (queue_no === undefined)
-        //        queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
-        //    else if (queue_no === 0)
-        //        queuetext.innerHTML = `<b>Queue Number: Your turn to play!</b>`;
-        //    else
-        //        queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
-        //}      
     });
 
+    //Notification Message regarding player's queue status
     socket.on('queuetext', (queue, isRegistered, isExit) => {
         let queue_no = undefined;
         console.log(`Queue Num: ${queue_no}`);
         for (let i = 0; i < queue.length; i++) {
             if (queue[i] == username) {
                 queue_no = i;
-                console.log('test');
-                console.log(queue_no);
                 break;
             }
         }
-
         //find username in the queue, then return the number
         if (!isRegistered) {
-            if (!isExit)
-                queuetext.innerHTML = `<b>Please login to play</b>`;
+            if (!isExit) queuetext.innerHTML = `<b>Please login to play</b>`;
         } 
 
         else {
             if (queue_no === undefined)
-                queuetext.innerHTML = `<b>Queue Number: Not in Queue</b>`;
+                queuetext.innerHTML = `<b>Not in Queue</b>`;
             else if (queue_no === 0)
-                queuetext.innerHTML = `<b>Queue Number: Your turn to play!</b>`;
+                queuetext.innerHTML = `<b>Your turn to play!</b>`;
             else
                 queuetext.innerHTML = `<b>Queue Number: ${queue_no}</b>`;
         }      
     });
 
-    queue_btn.onclick = () => {
-        console.log("Queue");
-        socket.emit('enterqueue', username);
-    }
+    queue_btn.onclick = () =>  socket.emit('enterqueue', username);
+    exit_btn.onclick = () =>  socket.emit('exitqueue', username); 
 
-    exit_btn.onclick = () => {
-        console.log("Exit");
-        socket.emit('exitqueue', username);
-    }
-
+    //Send message to chat
     chat_btn.onclick = () => {
         console.log("Send");
         const text = inputfield.value;
@@ -133,15 +97,7 @@ export function main_sockets(window, document,
         socket.emit('message', text, username);
     }
 
-    simon_sockets(window, document, socket,
-        addMultipleEventListener,
-        gpio_list,
-        simon_on,
-        simon_speaks,
-        simon_startquit_btn,
-        play_btns,
-    );
-
+    simon_sockets();
 }
 
 

@@ -81,7 +81,7 @@ var auth = false;
 //     // height: 1080,
 //     fps: 10,
 //     encoding: 'JPEG',
-//     quality: 1 //lower is faster
+//     quality: 10 //lower is faster
 // }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
@@ -100,11 +100,11 @@ app.use(session({
 }));
 
 
-const queue = [];
 /* import all web sockets required */
 const online = 0; //number of online users
-require('./websockets-server/main-sockets')(socket(server), queue, db, online); 
+const { main_sockets } = require('./websockets-server/main-sockets');
 
+main_sockets(socket(server), db, online); 
 
 
 
@@ -276,5 +276,6 @@ function initUser (name, email, password, score) {
     //score table
     db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
+
 
 
