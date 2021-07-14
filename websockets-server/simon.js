@@ -9,6 +9,7 @@ var PLAYER_NAME = '';
 
 module.exports = {
     simon_start,
+    simon_end,
     player_says,
     socket_simon_end,
 } 
@@ -82,7 +83,8 @@ function player_says(socket, io, db) {
 
         else{  //player is wrong
             console.log(`***********************${PLAYER_NAME} FAILS *******************************`);
-            simon_end(socket,io, db);
+            io.to(socket.id).emit('exitqueue-server');
+            // simon_end(socket,io, db);
         } 
         console.log();
     });
@@ -91,16 +93,16 @@ function player_says(socket, io, db) {
 
 function simon_end(socket, io, db) {
 
+    //merge these 2 tgt?
     socket.emit('simon-end-player');
     io.to('public room').emit('simon-end-public');
 
     socket.leave('simon room');
     socket.join('public room');
-    io.to('public room').emit('simon-on-check', queue[0]); //send curr_player if have
 
     gpio.hist_reset();
 
-    console.log("SIMON END")
+    console.log("SIMON END Function")
     curr_score = 0;
 
     io.emit('simon-on-check', queue[0]);

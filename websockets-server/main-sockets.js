@@ -2,6 +2,7 @@ var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
 var simon_on = false; 
 const sqlite3 = require('better-sqlite3');
 const path = require('path');
+const {isBuffer} = require('util');
 
 var user_socket_pairs= { };
 const queue = [];
@@ -60,13 +61,13 @@ function main_sockets(io, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 
@@ -106,13 +107,10 @@ function main_sockets(io, db, online) {
             // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
         });
 
-        socket.on('exitqueue', (username) => {
-            //IF REGISTERED
+        socket.on('exitqueue', async (username) => {
+            //IF loggedin
             if (username !== "") {
-                let isQueued = queue.includes(username);
-                
-                //no need to exit queue if not inside
-                if (isQueued) {
+                if (queue.includes(username)) {
                     let index;           
                     for (let i = 0; i < queue.length; i++) {
                         if (queue[i] === username) {
@@ -121,28 +119,28 @@ function main_sockets(io, db, online) {
                         }                        
                     }
                     queue.splice(index, 1); //remove from queue array
-                    isQueued = false;     
-                    console.log(queue); 
+                    console.log(`Queue after exit: ${queue}`); 
 
                     io.emit('queuestatus', queue); //update queuestatus for all clients
                     io.to('public room').emit('queuetext', queue, true, true);
                     io.to(socket.id).emit('queuetext', queue, true, true);
 
                     if (index == 0) {
+                        
                         //PLAYER quits, move to next in line
-                        io.to(socket.id).emit('simon-end-server');
-                        console.log("Player Quits Simon")
+                        await simon_sockets.simon_end(socket, io, db);
+                        console.log("SIMON FULLY END")
 
+                        /////////////////////////////////////////////////////////////////////////////////////////
                         //next
                         let next_player = queue[0];
-                        console.log(`Nextplayer: ${next_player}`);
-
-                        console.log(user_socket_pairs[next_player]);
+                        console.log(`Nextplayer: ${next_player}\n`);
                         io.to(user_socket_pairs[next_player]).emit('simon-start-server-next', next_player);
 
                     }
                     if (queue.length == 0)
                         simon_on = false;
+
                 // db.prepare(`DELETE FROM queuestack WHERE name = '${username}'`).run();
                 // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
                 // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
@@ -152,5 +150,8 @@ function main_sockets(io, db, online) {
         )
 
     });
+
+    
+
 }
 

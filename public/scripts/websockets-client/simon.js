@@ -122,9 +122,10 @@ export function simon_sockets() {
 
     socket.on('simon-on-check', (queue_0)=>{ 
         curr_player = queue_0;
-        play_btns[0].style.opacity = (curr_player) ? 0.5 : 1; //no curr_player, then opaque
-        if (curr_player === username)
+        if (!curr_player || curr_player === username)
             play_btns[0].style.opacity =  1;
+        else
+            play_btns[0].style.opacity =  0.5;
     });
 
     /**server to call server, need client as middleman**/
@@ -142,15 +143,13 @@ export function simon_sockets() {
         simon_on = true;
     });
 
-    socket.on('simon-end-server', ()=>{ 
-        console.log(`Player name: ${curr_player}`);
-        socket.emit('simon-end', curr_player); 
-        simon_on = false;
-    });
+    // socket.on('simon-end-server', ()=>{ 
+    //     console.log(`Player name: ${curr_player}`);
+    //     socket.emit('simon-end', curr_player); 
+    //     simon_on = false;
+    // });
 
-    socket.on('exitqueue-server', ()=>{ 
-        socket.emit('exitqueue', username);
-    });
+    socket.on('exitqueue-server', ()=>{ socket.emit('exitqueue', username); });
 
     /**server to call server, need client as middleman**/
 
@@ -175,17 +174,8 @@ export function simon_sockets() {
         console.log("simon_start_plaeyr")
     });
 
-    socket.on('simon-end-public', ()=>{
-        play_btns[0].style.display = "flex";
-        simon_on = false; 
-        console.log("appear")
-    });
-
-    /* NEED TO ADD MORE CODE */
-    socket.on('simon-end-player', ()=>{
-        simon_on = false; 
-        /// GAME OVER CODE OR SMTH////
-    });
+    socket.on('simon-end-public', ()=>{ simon_on = false; });
+    socket.on('simon-end-player', ()=>{ simon_on = false; });
 
 }
 
