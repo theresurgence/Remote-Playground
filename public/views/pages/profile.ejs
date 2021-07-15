@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<id>
+<head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <script src="/socket.io/socket.io.js"></script>
   <script defer type="module" src="../../scripts/profile-client-script.js"></script>
-
-
   <title><%= userid %>'s Profile</title>
 </head>
 
-<body class="bgBrown">
+<body class="noticeboard">
     <div class="bigcontainer">
         
         <header id="header">
@@ -85,33 +83,65 @@
                 <p>PlayScore: <u><%= userscore %></u></p>
                 <p>Achievements:</p>
                 <div class="achievement-container">
+
                     <div class="row">
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Get Hoppin' (Unlock Hopschotch)"><img id="ach1" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
-                        <div class="achievement-border bgBlue achievement-tooltip" data-text="Hop 50 (Hop 50 Times)"><img id="ach2" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
-                        <div class="achievement-border bgRed achievement-tooltip" data-text="Thunder Calf (Hop 500 Times)"><img id="ach3" class="recenter1" src = "../../images/hopscotch.png" height=90px width=90px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Swing and a Hit (Unlock Swing)"><img id="ach4" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
-                        <div class="achievement-border bgBlue achievement-tooltip" data-text="Swing 50 (Swing 50 Times)"><img id="ach5" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach1) {%> greyout <%}%> achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach1) {%> Get Hoppin' (Unlock Hopschotch) <% } else { %> ??? <% } %>">
+                            <img id="ach1" class="recenter1 <% if (!isAchieve[0].ach1) {%> greyscale <%}%>" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach2) {%> greyout <%}%>achievement-border bgBlue achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach2) {%> Hop 50 (Hop 50 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach2" class="recenter1 <% if (!isAchieve[0].ach2) {%> greyscale <%}%>" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach3) {%> greyout <%}%>achievement-border bgRed achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach3) {%> Thunder Calf (Hop 500 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach3" class="recenter1 <% if (!isAchieve[0].ach3) {%> greyscale <%}%>" src = "../../images/hopscotch.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach4) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach4) {%> Swing and a Hit (Unlock Swing) <% } else { %> ??? <% } %>">
+                            <img id="ach4" class="recenter1 <% if (!isAchieve[0].ach4) {%> greyscale <%}%>" src = "../../images/swing.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach5) {%> greyout <%}%>achievement-border bgBlue achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach5) {%> Swing 50 (Swing 50 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach5" class="recenter1 <% if (!isAchieve[0].ach5) {%> greyscale <%}%>" src = "../../images/swing.png" height=90px width=90px></div>
                     </div>
+
                     <div class="row">
-                        <div class="achievement-border bgRed achievement-tooltip" data-text="The Pendulum (Swing 500 Times)"><img id="ach6" class="recenter1" src = "../../images/swing.png" height=90px width=90px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Slip n Slide (Unlock Slide)"><img id="ach7" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
-                        <div class="achievement-border bgBlue achievement-tooltip" data-text="Slide 50 (Slide 50 Times)"><img id="ach8" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
-                        <div class="achievement-border bgRed achievement-tooltip" data-text="Mr Smooth Cheeks (Slide 500 Times)"><img id="ach9" class="recenter2" src = "../../images/slide.png" height=70px width=70px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Playground Connoisseur (Unlock Hopscotch, Swing and Slide)"><img id="ach10" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach6) {%> greyout <%}%>achievement-border bgRed achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach6) {%> The Pendulum (Swing 500 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach6" class="recenter1 <% if (!isAchieve[0].ach6) {%> greyscale <%}%>" src = "../../images/swing.png" height=90px width=90px></div>
+                        <div class="<% if (!isAchieve[0].ach7) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach7) {%> Slip n Slide (Unlock Slide) <% } else { %> ??? <% } %>">
+                            <img id="ach7" class="recenter2 <% if (!isAchieve[0].ach7) {%> greyscale <%}%>" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="<% if (!isAchieve[0].ach8) {%> greyout <%}%>achievement-border bgBlue achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach8) {%> Slide 50 (Slide 50 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach8" class="recenter2 <% if (!isAchieve[0].ach8) {%> greyscale <%}%>" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="<% if (!isAchieve[0].ach9) {%> greyout <%}%>achievement-border bgRed achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach9) {%> Mr Smooth Cheeks (Slide 500 Times) <% } else { %> ??? <% } %>">
+                            <img id="ach9" class="recenter2 <% if (!isAchieve[0].ach9) {%> greyscale <%}%>" src = "../../images/slide.png" height=70px width=70px></div>
+                        <div class="<% if (!isAchieve[0].ach10) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach10) {%> Playground Connoisseur (Unlock Hopscotch, Swing and Slide) <% } else { %> ??? <% } %>">
+                            <img id="ach10" class="recenter1 <% if (!isAchieve[0].ach10) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
                     </div>
+
                     <div class="row">
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Who's Simon? (Play Simon Says for the first time)"><img id="ach11" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Simon's BFF (Play Simon Says 10 times)"><img id="ach12" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="No Simon, I Say (Achieve a score of 20 in Simon Says)"><img id="ach13" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Hey Guys (Send first message in Live Chat)"><img id="ach14" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite achievement-tooltip" data-text="Get a life, please (Send 100 messages in Live Chat)"><img id="ach15" class="recenter1" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach11) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach11) {%> Who's Simon? (Play Simon Says for the first time) <% } else { %> ??? <% } %>">
+                            <img id="ach11" class="recenter1 <% if (!isAchieve[0].ach11) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach12) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach12) {%> Simon's BFF (Play Simon Says 10 times) <% } else { %> ??? <% } %>">
+                            <img id="ach12" class="recenter1 <% if (!isAchieve[0].ach12) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach13) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach13) {%> No Simon, I Say (Achieve a score of 20 in Simon Says) <% } else { %> ??? <% } %>">
+                            <img id="ach13" class="recenter1 <% if (!isAchieve[0].ach13) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach14) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach14) {%> Hey Guys (Send first message in Live Chat) <% } else { %> ??? <% } %>">
+                            <img id="ach14" class="recenter1 <% if (!isAchieve[0].ach14) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+                        <div class="<% if (!isAchieve[0].ach15) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach15) {%> Get a life, please (Send 100 messages in Live Chat) <% } else { %> ??? <% } %>">
+                            <img id="ach15" class="recenter1 <% if (!isAchieve[0].ach15) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
                     </div>
-                    <div class="row">
-                        <div class="achievement-border bgWhite greyout achievement-tooltip"><img id="ach16" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite greyout achievement-tooltip"><img id="ach17" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite greyout achievement-tooltip"><img id="ach18" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite greyout achievement-tooltip"><img id="ach19" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
-                        <div class="achievement-border bgWhite greyout achievement-tooltip"><img id="ach20" class="recenter1 greyscale" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
+
+                    <div class="row singular">
+                        <div class="<% if (!isAchieve[0].ach16) {%> greyout <%}%>achievement-border bgWhite achievement-tooltip" 
+                            data-text="<% if (isAchieve[0].ach16) {%> Infinity Playground Gauntlet (Unlock all achievements) <% } else { %> ??? <% } %>">
+                            <img id="ach16" class="recenter1 <% if (!isAchieve[0].ach16) {%> greyscale <%}%>" src = "../../images/rmt_plygrd_logo_no_txt.png" height=85px width=85px></div>
                     </div>
                 </div>
             </div>

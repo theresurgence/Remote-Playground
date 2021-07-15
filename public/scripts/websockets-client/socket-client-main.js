@@ -144,11 +144,12 @@ export function main_sockets(window, document,
     bar1 = document.getElementById("bar1"),
     bar2 = document.getElementById("bar2"),
     bar3 = document.getElementById("bar3"),
-    btnpress = document.getElementById('btnsound')
+    btnpress = document.getElementById('btnsound'),
+    bling = document.getElementById('blingsound')
 
 
     cashout_btn.onclick = () => {
-        btnpress.play();
+        bling.play();
         console.log("test");
         console.log("bling bling");
         let text = ticketcount.innerHTML;

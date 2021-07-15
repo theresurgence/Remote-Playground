@@ -188,6 +188,10 @@ app.get('/profile', (req, res) => {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
 
+    let sql = "SELECT * FROM userachievements";
+
+    let isAchieve = db.prepare(sql).all();
+
     res.render('pages/profile', {
         auth: auth,
         userid: req.user.name,
@@ -195,9 +199,12 @@ app.get('/profile', (req, res) => {
         userscore: req.user.score,
         online: online,
         dpindex: req.user.dpindex,
+        isAchieve: isAchieve
     });
     }
 });
+
+app.get('/profile/')
 
 app.post('/profile', async (req, res) => {
     try {

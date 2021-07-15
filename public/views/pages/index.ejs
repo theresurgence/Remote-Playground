@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script defer src="../../../socket.io/socket.io.js"></script>
@@ -14,6 +15,10 @@
         <source src="../../images/rollover1.ogg" type="audio/ogg">
     </audio>
 
+    <audio id="blingsound">
+        <source src="../../images/bling.mp3" type="audio/mp3">
+    </audio>
+
     <audio loop id="bgmusic">
         <source src="../../images/elevatormusic.mp3" type="audio/mp3">
     </audio>
@@ -24,14 +29,14 @@
     <div id="big-container" class="big-container1">
 
     <div class="queue-container">
-        <div class="queue-box bgGreen"><p class="textshdw white" style="font-size: 22px;" id="box1"></p></div>
-        <div class="queue-box bgOrange "><p class="textshdw white" style="font-size: 22px;" id="box2"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box3"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
+        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box1"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box2"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box3"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
         <div class="queue-info">
             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"><b>Queue Number: Not in Queue</b></p>
-            <input id="queuebutton" type="button" class="button red textshdw" value="QUEUE UP"> 
+            <input id="queuebutton" type="button" class="button orange textshdw" value="QUEUE UP"> 
             <input id="exitbutton" type="button" class="button grey textshdw" style="border-radius: 50%; padding: 15px 15px" value="X">
         </div>
         
@@ -84,7 +89,7 @@
             </div>
 
         </div>
-        <input id="collapsecol" type="button" class="button grey" value=">" style="align-self: center;">
+        <input id="collapsecol" type="button" class="smallbtn" value=">" style="background-color: dimgrey;">
     </div>
 
     
@@ -96,8 +101,8 @@
         <!-- <input id="simon-startquit" type="button" class="button red leds" value="Start"> -->
         <input id="gpio0" type="button" class="btn-3d red leds"> 
         <input id="gpio1" type="button" class="btn-3d green leds">
-        <input id="gpio2" type="button" class="btn-3d blue leds">
-        <input id="gpio3" type="button" class="btn-3d yellow leds">               
+        <input id="gpio2" type="button" class="btn-3d red leds">
+        <input id="gpio3" type="button" class="btn-3d green leds">               
 
         <p id="curr_score"><b>Score: 0 </b></p>
     </div>        
