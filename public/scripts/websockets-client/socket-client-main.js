@@ -135,7 +135,10 @@ export function main_sockets(window, document,
     }
 
     //temp resource for idle game
-    var tickets = 0;
+    var tickets = 0, hopResCount = 0, swingResCount = 0, slideResCount = 0, prestigeMultiplier = 1;
+    const hopStartCost = 4, swingStartCost = 60, slideStartCost = 8640;
+    const hopBaseIncome = 1.67, swingBaseIncome = 60, slideBaseIncome = 4320;
+    const hopBaseMultiplier = 1.07, swingBaseMultiplier = 1.15,  slideBaseMultiplier = 1.13;
     var i = 0;
     var isMoveHop = false, isMoveSwing = false, isMoveSlide = false;
     const idlebtn1 = document.getElementById('idlebutton1'),
@@ -144,21 +147,47 @@ export function main_sockets(window, document,
     bar1 = document.getElementById("bar1"),
     bar2 = document.getElementById("bar2"),
     bar3 = document.getElementById("bar3"),
+    addbtn1 = document.getElementById("addbutton1"),
+    addbtn2 = document.getElementById("addbutton2"),
+    addbtn3 = document.getElementById("addbutton3"),
     btnpress = document.getElementById('btnsound'),
-    bling = document.getElementById('blingsound')
+    bling = document.getElementById('blingsound'),
+    rescount1 = document.getElementById("res-display-1"),
+    rescount2 = document.getElementById("res-display-2"),
+    rescount3 = document.getElementById("res-display-3"),
+    cost1 = document.getElementById("cost1"),
+    cost2 = document.getElementById("cost2"),
+    cost3 = document.getElementById("cost3"),
+    income1 = document.getElementById("income1"),
+    income2 = document.getElementById("income2"),
+    income3 = document.getElementById("income3"),
+    expand = document.getElementById("expand")
 
+    expand.onclick = () => {
+        tickets = 0;
+        prestigeMultiplier *= 5;
+        ticketcount.innerHTML = `Tickets: ${tickets}`;  
+        hopResCount = 0; swingResCount = 0; slideResCount = 0;
+        rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = "0";
+        income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+        rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
+        income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
+        rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
+        income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
+    }
 
     cashout_btn.onclick = () => {
-        bling.play();
-        console.log("test");
-        console.log("bling bling");
-        let text = ticketcount.innerHTML;
-        let regex = /[0-9]+/;
-        var array = text.match(regex);
-        const currTickets = parseInt(array[0]);
-        socket.emit('cashout', currTickets, username);     
-        tickets = 0;
-        ticketcount.innerHTML = `Tickets: ${tickets}`;  
+        if (username != "") {
+            bling.play();
+            let text = ticketcount.innerHTML;
+            let regex = /[0-9]+/;
+            var array = text.match(regex);
+            const currTickets = parseInt(array[0]);
+            socket.emit('cashout', currTickets, username);     
+            tickets = 0;
+            ticketcount.innerHTML = `Tickets: ${tickets}`;  
+        }
+        
     }
     
     idlebtn1.onclick = () => {
@@ -176,9 +205,64 @@ export function main_sockets(window, document,
         move(bar3);
     }
 
+    addbtn1.onclick = () => {
+        let hopCurrCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount-1)));
+        let hopNextCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount)));
+        if (hopResCount == 0) {
+            hopResCount += 1;
+            hopCurrCost = hopStartCost;
+            rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
+            income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+        }
+            
+        if (tickets >= hopCurrCost) {
+            hopResCount += 1; 
+            rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
+            income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+            tickets -= hopCurrCost;
+            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+        }    
+    }
+
+    addbtn2.onclick = () => {
+        let swingCurrCost = twoDp(swingStartCost * (swingBaseMultiplier ** swingResCount));
+        let swingNextCost = twoDp(swingStartCost * (swingBaseMultiplier ** (swingResCount+1)));
+        if (tickets >= swingCurrCost) {
+            swingResCount += 1;
+            rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
+            income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
+            tickets -= swingCurrCost;      
+            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+        }     
+    }
+
+    addbtn3.onclick = () => {       
+        let slideCurrCost = twoDp(slideStartCost * (slideBaseMultiplier ** slideResCount));
+        let slideNextCost = twoDp(slideStartCost * (slideBaseMultiplier ** (slideResCount+1)));
+        if (tickets >= slideCurrCost) {
+            slideResCount += 1;
+            rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
+            income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
+            tickets -= slideCurrCost;
+            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+        }       
+    }
+
+    //Helper function to round and display 2 decimal places
+
+    function twoDp(num) {
+        return Number.parseFloat(num).toFixed(2);
+    }
+
+    //Updates Display Information for Idle Game
+
+    // function dispResInfo(resCountObj, resCount,costObj, nextCost) {
+    //     rescount.
+    // }
+
+
     //Idle Progress Bar
-   
-    
+     
     function move(progbar) {
         
         var width = 0;
@@ -207,18 +291,17 @@ export function main_sockets(window, document,
         function frame() {
         if (width >= 100) {
             if (progbar == bar1) {
-            tickets += 1; isMoveHop = false;
+            tickets += (hopBaseIncome * hopResCount * prestigeMultiplier); isMoveHop = false;
             }       
 
             else if (progbar == bar2) {
-            tickets += 5; isMoveSwing = false;
+            tickets += (swingBaseIncome * swingResCount * prestigeMultiplier); isMoveSwing = false;
             }
             
             else if (progbar == bar3) {
-            tickets += 50; isMoveSlide = false;
+            tickets += (slideBaseIncome * slideResCount * prestigeMultiplier); isMoveSlide = false;
             } 
-            
-            ticketcount.innerHTML = `Tickets: ${tickets}`;    
+            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`;    
             clearInterval(id);
             i = 0;
             

@@ -495,23 +495,70 @@ li {
 
 .idlebtn-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     width: 90%;
 }
 
 .progbar-container {
     display: flex;
-    width: 50%;
+    width: 100%;
     background-color: grey;
 }
 
-.resource {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.ticket-display {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    border-radius: 10px;
 }
 
-.bar {
+.resource {
+    display: grid;   
+    grid-template-columns: 1fr 3fr 2fr 1fr;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    place-items: center;
+}
+
+.resource-count {
+    background-color: coral;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
+.icon {
+    /* grid-column: 0 1; */
+    background-color: gold;
+    border-radius: 10px;
+    border: solid 3px darkslateblue;
+    margin-right: 5px;
+}
+
+.icon:active {
+    background-color: white;
+}
+
+.containerbar {
+    display: flex;
+    flex-direction: column;
+    /* grid-column: 1 2; */
+}
+
+.containerinfo {
+    /* grid-column: 2 3; */
+    display: flex;
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.progbar {
     display: block;
     width: 1%;
     height: 30px;

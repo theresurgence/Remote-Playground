@@ -123,6 +123,7 @@ for (let i=0; i < inputs_class.length; i++) {
 
     infobtn.onclick = () => {
       infomodal.style.display = "block";
+      notification();
     }
 
     span.onclick = () => {
