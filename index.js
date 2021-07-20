@@ -132,6 +132,8 @@ app.get('/', (req, res) => {
     }
 
     let entries = topthree();
+    let sql2 = "SELECT * FROM userachievements";
+    let isAchieve = db.prepare(sql2).all();
 
     if (!auth) {
         res.render('pages/index', {
@@ -146,6 +148,7 @@ app.get('/', (req, res) => {
         entries: entries,
         online: online,
         dpindex: req.user.dpindex,
+        isAchieve: isAchieve
     });
     }
     console.log(`Global ${online}`);
@@ -203,8 +206,6 @@ app.get('/profile', (req, res) => {
     });
     }
 });
-
-app.get('/profile/')
 
 app.post('/profile', async (req, res) => {
     try {

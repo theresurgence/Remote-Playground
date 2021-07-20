@@ -153,12 +153,54 @@ module.exports = function (io, queue, db, online) {
         )
 
         socket.on('cashout', (currTicket, username) => {
-            console.log('bing bong');
             let sqlselect = `SELECT score FROM userinfo WHERE name = '${username}'`;
             let scoreobj = db.prepare(sqlselect).all();
             let newscore = scoreobj[0].score + currTicket;
             let sqlupdate = `UPDATE userinfo SET score = ${newscore} WHERE name = '${username}'`;      
             db.prepare(sqlupdate).run();
+        })
+
+        socket.on('achievement', (count, type, username) => {
+            let useridobj = db.prepare(`SELECT id FROM userinfo WHERE name = '${username}'`).all();
+            let userid = useridobj[0].id;
+            if (type == 'hop') {
+                switch (count) {
+                    case 1:
+                        db.prepare(`UPDATE userachievements SET ach1 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 50:
+                        db.prepare(`UPDATE userachievements SET ach2 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 200:
+                        db.prepare(`UPDATE userachievements SET ach3 = 1 WHERE id = ${userid}`).run();
+                        break;
+                }
+            } else if (type == 'swing') {
+                switch (count) {
+                    case 1:
+                        db.prepare(`UPDATE userachievements SET ach4 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 50:
+                        db.prepare(`UPDATE userachievements SET ach5 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 200:
+                        db.prepare(`UPDATE userachievements SET ach6 = 1 WHERE id = ${userid}`).run();
+                        break;
+                }
+
+            } else if (type == "slide") {
+                switch (count) {
+                    case 1:
+                        db.prepare(`UPDATE userachievements SET ach7 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 50:
+                        db.prepare(`UPDATE userachievements SET ach8 = 1 WHERE id = ${userid}`).run();
+                        break;
+                    case 200:
+                        db.prepare(`UPDATE userachievements SET ach9 = 1 WHERE id = ${userid}`).run();
+                        break;
+                }
+            }
         })
     });
 

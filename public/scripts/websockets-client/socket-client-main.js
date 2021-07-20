@@ -18,7 +18,8 @@ export function main_sockets(window, document,
     inputfield,
     username, 
     cashout_btn,
-    ticketcount
+    ticketcount,
+    testbtn
 )  {
 
     //Listen for events
@@ -50,9 +51,6 @@ export function main_sockets(window, document,
     socket.on('check-register', ()=>{
         socket.emit('receive-register', username);
     });
-
-
-
 
     socket.on('queuestatus', (queue) => {
         let queue_no = undefined;
@@ -134,7 +132,53 @@ export function main_sockets(window, document,
         socket.emit('message', text, username);
     }
 
-    //temp resource for idle game
+    //Notification Test
+
+    function notification(count, type) {
+        console.log('yo' + count + type);
+        console.log(count == 1);
+        if (type == 'hop') {
+            if (count == 1 && achievements.ach1 != 1) {
+                alertify.notify("Get Hoppin' (Unlock Hopscotch)", 'success', 3);  
+            } else if (count == 50 && achievements.ach2 != 1) {
+                alertify.notify("Hop 50 (Own 50 Hopscotches)", 'success', 3);
+            } else if (count == 200 && achievements.ach3 != 1) {
+                alertify.notify("Thunder Calf (Own 200 Hopscotches)", 'success', 3);
+            } 
+            socket.emit('achievement', count, 'hop', username);
+        } else if (type == 'swing') {
+            if (count == 1 && achievements.ach4 != 1) {
+                alertify.notify("Swing and a Hit (Unlock Swing)", 'success', 3);  
+            } else if (count == 50 && achievements.ach5 != 1) {
+                alertify.notify("Swing 50 (Swing 50 Times)", 'success', 3);
+            } else if (count == 200 && achievements.ach6 != 1) {
+                alertify.notify("The Pendulum (Swing 500 Times)", 'success', 3);
+            } 
+            socket.emit('achievement', count, 'swing', username);
+        } else if (type == 'slide') {
+            if (count == 1 && achievements.ach7 != 1) {
+                alertify.notify("Slip n Slide (Unlock Slide)", 'success', 3);  
+            } else if (count == 50 && achievements.ach8 != 1) {
+                alertify.notify("Slide 50 (Slide 50 Times)", 'success', 3);
+            } else if (count == 200 && achievements.ach9 != 1) {
+                alertify.notify("Mr Smooth (Slide 500 Times)", 'success', 3);
+            } 
+            socket.emit('achievement', count, 'slide', username);
+        }
+        
+    }    
+    
+    //test test 
+    testbtn = document.getElementById("testbutton");
+    
+
+    testbtn.onclick = () => {
+        alertify.message("fuck you");
+    }
+
+    // Variables/Objects for idle game
+    const achievementsJson = document.getElementById("achievements").innerHTML;
+    const achievements = JSON.parse(achievementsJson);
     var tickets = 0, hopResCount = 0, swingResCount = 0, slideResCount = 0, prestigeMultiplier = 1;
     const hopStartCost = 4, swingStartCost = 60, slideStartCost = 8640;
     const hopBaseIncome = 1.67, swingBaseIncome = 60, slideBaseIncome = 4320;
@@ -160,21 +204,21 @@ export function main_sockets(window, document,
     cost3 = document.getElementById("cost3"),
     income1 = document.getElementById("income1"),
     income2 = document.getElementById("income2"),
-    income3 = document.getElementById("income3"),
-    expand = document.getElementById("expand")
+    income3 = document.getElementById("income3")
+    
 
-    expand.onclick = () => {
-        tickets = 0;
-        prestigeMultiplier *= 5;
-        ticketcount.innerHTML = `Tickets: ${tickets}`;  
-        hopResCount = 0; swingResCount = 0; slideResCount = 0;
-        rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = "0";
-        income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
-        rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
-        income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
-        rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
-        income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
-    }
+    // expand.onclick = () => {
+    //     tickets = 0;
+    //     prestigeMultiplier *= 5;
+    //     ticketcount.innerHTML = `Tickets: ${tickets}`;  
+    //     hopResCount = 0; swingResCount = 0; slideResCount = 0;
+    //     rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = "0";
+    //     income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+    //     rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
+    //     income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
+    //     rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
+    //     income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
+    // }
 
     cashout_btn.onclick = () => {
         if (username != "") {
@@ -208,11 +252,13 @@ export function main_sockets(window, document,
     addbtn1.onclick = () => {
         let hopCurrCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount-1)));
         let hopNextCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount)));
+        
         if (hopResCount == 0) {
             hopResCount += 1;
             hopCurrCost = hopStartCost;
             rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
             income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+            notification(hopResCount, 'hop');
         }
             
         if (tickets >= hopCurrCost) {
@@ -220,7 +266,9 @@ export function main_sockets(window, document,
             rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
             income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
             tickets -= hopCurrCost;
-            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`;      
+            notification(hopResCount, 'hop');   
+            // dispResInfo(rescount1, hopResCount, cost1, hopCurrCost, hopNextCost, income1, hopBaseIncome);
         }    
     }
 
@@ -233,6 +281,7 @@ export function main_sockets(window, document,
             income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
             tickets -= swingCurrCost;      
             ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+            notification(swingResCount, 'swing');
         }     
     }
 
@@ -245,6 +294,7 @@ export function main_sockets(window, document,
             income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
             tickets -= slideCurrCost;
             ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+            notification(slideResCount, 'slide');
         }       
     }
 
@@ -254,11 +304,21 @@ export function main_sockets(window, document,
         return Number.parseFloat(num).toFixed(2);
     }
 
-    //Updates Display Information for Idle Game
+    function nextIncome(baseIncome, count) {
+        return twoDp(baseIncome * count * prestigeMultiplier);
+    }
 
-    // function dispResInfo(resCountObj, resCount,costObj, nextCost) {
-    //     rescount.
-    // }
+    // Updates Display Information for Idle Game (TO-DO: Make each resource an object so that I can pass by ref)
+
+    function dispResInfo(resCountObj, resCount,costObj, currCost, nextCost, incomeObj, baseIncome) {
+        resCount += 1;
+        console.log(resCount);
+        resCountObj.innerHTML = `${resCount}`;
+        costObj.innerHTML = `${nextCost}`;
+        incomeObj.innerHTML = `${nextIncome(baseIncome, resCount)}`;
+        tickets -= currCost;
+        ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`;
+    }
 
 
     //Idle Progress Bar

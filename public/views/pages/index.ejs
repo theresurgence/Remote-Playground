@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <script defer src="../../../socket.io/socket.io.js"></script>
-    <script defer type="module" src="../../scripts/main-client-script.js"></script>
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script defer type="module" src="../../scripts/main-client-script.js"></script>  
     <title>Remote Playground</title>
 </head>
 
@@ -45,13 +45,6 @@
         </div>      
     </div>
 
-    <script type="text/javascript">
-        let testbtn = document.getElementById("testbutton").addEventListener("click", notification);
-        function notification() {
-            alertify.notify("Get Hoppin' (Unlock Hopscotch)", 'success', 3, function(){ console.log("works"); });  
-        }        
-    </script>
-
     <div id="stat" class="statuses-container">
         <div id="leader-box"> 
             <p class="leader-text textshdw white" style="text-decoration: underline;"><b>LEADERBOARDS</b></p>    
@@ -72,10 +65,10 @@
         <div class="idle-box">
             <div><h1 id="ticket-count" class="textshdw white">Tickets: 0</h1></div>
 
-            <div style="display: flex; justify-content: space-between;"> 
-            <input id="expand" type="button" value="EXPAND" class="button green textshdw">
-            <input id="cashout" type="button" value="CASH OUT" class="button gold textshdw">
-            </div>
+            
+            <!-- <input id="expand" type="button" value="EXPAND" class="button green textshdw"> -->
+            <input id="cashout" type="button" value="CASH OUT" class="button green textshdw">
+         
             
 
             <div class="idlebtn-container">
@@ -131,13 +124,22 @@
                     </div>
                 </div>
 
+                <div class="achievements">
+                    
+                    <div id="achievements" style="display: none;"><% if (auth) { %> <%= JSON.stringify(isAchieve[0]) %> <% } %></div>
+                    
+                    
+                </div>
+
             </div>
 
         </div>
         <input id="collapsecol" type="button" class="smallbtn" value=">" style="background-color: dimgrey;">
     </div>
 
-    
+    <script defer type="text/javascript">
+        
+    </script>
         
     
     

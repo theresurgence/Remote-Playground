@@ -566,7 +566,7 @@ li {
 }
 
 .play-buttons {
-    background-color: dimgray;
+    background-color: bisque;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
