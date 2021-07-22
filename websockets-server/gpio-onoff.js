@@ -1,8 +1,8 @@
-gpio = require('../gpio-toggle');
+const gpio = require('../gpio-toggle');
 
 module.exports = function (socket) {
 
-    socket.on('gpio0_on', ()=> { gpio.LED_ctl(gpio.LED_0,1); console.log("0 on");});
+    socket.on('gpio0_on', ()=> { console.log(gpio.LED_0);  gpio.LED_ctl(gpio.LED_0,1); console.log("0 on");});
     socket.on('gpio0_off', ()=> { gpio.LED_ctl(gpio.LED_0,0); console.log("0 off");});
 
     socket.on('gpio1_on', ()=> { gpio.LED_ctl(gpio.LED_1,1); console.log("1 on");});

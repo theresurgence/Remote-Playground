@@ -4,15 +4,15 @@
 const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
-const LED_0 = new Gpio(26, 'out'),   //simon says LEDS
-       LED_1 = new Gpio(22, 'out'),
-       LED_2 = new Gpio(27, 'out'),
-       LED_3 = new Gpio(19, 'out'),
+const  LED_4 = new Gpio(26, 'out'),   //simon says LEDS
+       LED_5 = new Gpio(22, 'out'),
+       LED_6 = new Gpio(27, 'out'),
+       LED_7 = new Gpio(19, 'out'),
 
-       LED_4 = new Gpio(14, 'out'),  //Public playground LEDs
-       LED_5 = new Gpio(16, 'out'),
-       LED_6 = new Gpio(20, 'out'),
-       LED_7 = new Gpio(21, 'out');
+       LED_0 = new Gpio(14, 'out'),  //Public playground LEDs
+       LED_1 = new Gpio(16, 'out'),
+       LED_2 = new Gpio(20, 'out'),
+       LED_3 = new Gpio(21, 'out');
 
 //26 22 27 19
 //14 16 20 21
@@ -54,7 +54,7 @@ const LED_0 = new Gpio(26, 'out'),   //simon says LEDS
  };
 
  async function blinks() {
-     let random_led = Math.floor(Math.random() * 4); //random number from 0-3 (incl)
+     let random_led = Math.floor(Math.random() * 4) + 4; //random number from 0-3 (incl)
      simon_info.hist.push(random_led);
      console.log(simon_info.hist);
 
@@ -84,7 +84,8 @@ const LED_0 = new Gpio(26, 'out'),   //simon says LEDS
 
 
  module.exports = { 
-     LED_1, LED_2, LED_3, LED_0,
+     LED_0, LED_1, LED_2, LED_3,
+     LED_4, LED_5, LED_6, LED_7,
      LED_ctl,
      blink,
      fast_blink,

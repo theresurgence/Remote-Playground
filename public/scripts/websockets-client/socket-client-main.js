@@ -3,6 +3,7 @@ import { simon_sockets } from './simon.js';
 import { 
     isCamPublic,
     btn_pubsimon,
+    toggle_flag,
 } from '../main-client-script.js';
 
 // import {queue} from '../../../websockets-server/main-sockets.js';
@@ -97,6 +98,9 @@ export function main_sockets(
         socket.emit('enterqueue', username);
         if (username && isCamPublic) {
             btn_pubsimon.click(); //switch to Playground view 
+            console.log(`isCamPublic: ${isCamPublic}`);
+            toggle_flag(isCamPublic);
+            console.log(`isCamPublic: ${isCamPublic}`);
         }
     }
 

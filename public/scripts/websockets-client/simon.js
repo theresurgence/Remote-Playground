@@ -22,20 +22,30 @@ var simon_speaks = false;
 export function simon_sockets() {
 
     var clicked_led = [false,false,false,false, false, false, false ,false];
-    var led_keys = ["q", "w", "e", "r"];
+    var led_keys = ["q", "w", "e", "r", "q", "w", "e", "r"];
 
 
     //Catch all accounting for both touch and mouse events to toggle the 4 gpios on or off
-    //led is gpio number (0,1,2,3)
-    for (let led = 0; led < 4; led++) {  
+    //led is gpio number (0,1,2,3) => Public, anyone can toggle
+    //4,5,6,7 => Simon
+
+    for (let led = 0; led < 8; led++) {  
 
         addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], (event)=>{ 
-            /* Only when simon not speaking, can user
-             * toggle leds on and off */
-            if (!simon_speaks && (!curr_player || curr_player === username)) {
-                //gpio0_on (0,1,2,3))
-                socket.emit(`gpio${led}_on`); 
-                clicked_led[led] = true; 
+
+            //gpio0_on (0,1,2,3))
+            if (led < 4) {
+                if (isCamPublic) {
+                    socket.emit(`gpio${led}_on`); 
+                    clicked_led[led] = true; 
+                }
+            } else {
+                /* Only when simon not speaking, can user
+                 * toggle leds on and off */
+                if (!isCamPublic && !simon_speaks && curr_player === username) {
+                    socket.emit(`gpio${led}_on`); 
+                    clicked_led[led] = true; 
+                }
             }
 
             switch(led) {
@@ -43,77 +53,108 @@ export function simon_sockets() {
                 case 1: btnpress1.play(); break;
                 case 2: btnpress2.play(); break;
                 case 3: btnpress3.play(); break;
+                // case 4: btnpress0.play(); break;
+                // case 5: btnpress1.play(); break;
+                // case 6: btnpress2.play(); break;
+                // case 7: btnpress3.play(); break;
             }
             // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
-            if (!simon_speaks && (!curr_player || curr_player === username)) {
-                //only triggered when button has been
-                //clicked before
-                if (clicked_led[led]) {
+            if (led < 4) {
+                if (isCamPublic && clicked_led[led]) {
                     console.log("TURNING OFF LED");
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
+                }
+            }
+            else {
+                if (!isCamPublic && !simon_speaks && (curr_player === username)) {
+                    console.log("Simon screen.... off");
+                    //only triggered when button has been
+                    //clicked before
+                    if (clicked_led[led]) {
+                        console.log(`TURNING OFF LED ${led}`);
+                        socket.emit(`gpio${led}_off`);
+                        clicked_led[led] = false;
 
-                    console.log(`SIMON _ON ${curr_player}`);
+                        console.log(`SIMON _ON ${curr_player}`);
 
-                    if (curr_player) {
                         socket.emit(`player-says`, led); 
                         console.log("SENT PLAYER INPUT")
-                    } //player's input is taken into account if simon game is in progress
+                    }
                 }
             }
         });
 
         window.addEventListener("keydown", (event)=> {
-            // console.log(userpassbox_focus)
-            if (!simon_speaks && event.key === led_keys[led] && !isInputFocused) {
-                if (!curr_player || curr_player === username) {
+            if (led < 4) {
+                if (isCamPublic && event.key === led_keys[led] && !isInputFocused) {
                     socket.emit(`gpio${led}_on`); 
-                    clicked_led[0] = true; //flag
-                    console.log(`Curr Player: ${curr_player}`);
-                }
-                // var current = document.getElementsByClassName("active_led");
-                // current[i].className = current[i].className.replace(" active", "");
-                if (!gpio_list[led].className.includes("active_led")) {
-                    gpio_list[led].className += " active_led";
-                    switch(led) {
-                        case 0: btnpress0.play(); console.log("0 play"); break;
-                        case 1: btnpress1.play(); console.log("1 play"); break;
-                        case 2: btnpress2.play(); console.log("2 play"); break;
-                        case 3: btnpress3.play(); console.log("3 play"); break;
+                    clicked_led[led] = true; //flag
+                    // var current = document.getElementsByClassName("active_led");
+                    // current[i].className = current[i].className.replace(" active", "");
+                    if (!gpio_list[led].className.includes("active_led")) {
+                        gpio_list[led].className += " active_led";
                     }
-                    // btnpress.play();
                 }
+            }
+            else {
+                if (!isCamPublic && !simon_speaks && event.key === led_keys[led] && !isInputFocused) {
+                    if (curr_player === username) {
+                        socket.emit(`gpio${led}_on`); 
+                        clicked_led[led] = true; //flag
+                        console.log(`Curr Player: ${curr_player}`);
+                    }
+                    // var current = document.getElementsByClassName("active_led");
+                    // current[i].className = current[i].className.replace(" active", "");
+                    if (!gpio_list[led].className.includes("active_led")) {
+                        gpio_list[led].className += " active_led";
+                    }
+                }
+            }
+            switch(led) {
+                case 0: btnpress0.play(); break;
+                case 1: btnpress1.play(); break;
+                case 2: btnpress2.play(); break;
+                case 3: btnpress3.play(); break;
+                // case 4: btnpress0.play(); break;
+                // case 5: btnpress1.play(); break;
+                // case 6: btnpress2.play(); break;
+                // case 7: btnpress3.play(); break;
             }
         }, true);
 
         window.addEventListener("keyup", (event)=> {
-            if (!simon_speaks && event.key === led_keys[led] && !isInputFocused) {
 
-                if (!curr_player || curr_player === username) {
+            if (led < 4) {
+                if (isCamPublic) {
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
-                }
 
-                if (gpio_list[led].className.includes(" active_led")) {
-                    gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
-
-                    switch(led) {
-                        case 0: btnpress0.pause(); btnpress0.currentTime = 0; break;
-                        case 1: btnpress1.pause(); btnpress1.currentTime = 0; break;
-                        case 2: btnpress2.pause(); btnpress2.currentTime = 0; break;
-                        case 3: btnpress3.pause(); btnpress3.currentTime = 0; break;
+                    if (gpio_list[led].className.includes(" active_led")) {
+                        gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
                     }
                 }
-
-                if (curr_player === username) {
-                    socket.emit(`player-says`, led); 
-                } //player's input is taken into account if simon game is in progress
-
             }
-            console.log(`Curr Player: ${curr_player}`);
+
+            else {
+                if (!isCamPublic && !simon_speaks && event.key === led_keys[led] && !isInputFocused) {
+
+                    if (curr_player === username) {
+                        socket.emit(`gpio${led}_off`);
+                        clicked_led[led] = false;
+                        socket.emit(`player-says`, led); 
+                        //player's input is taken into account if simon game is in progress
+                    }
+
+                    if (gpio_list[led].className.includes(" active_led")) {
+                        gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
+                    }
+                }
+                console.log(`Curr Player: ${curr_player}`);
+            }
         }, true);
 
     }

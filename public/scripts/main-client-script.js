@@ -204,9 +204,11 @@ for (let i=0; i < inputs_class.length; i++) {
 
 
 var isCamPublic = true;
+function toggle_flag(bool_val) { bool_val ? false : true; }
+
 btn_pubsimon.onclick = () => {
-    let publicVideo = 'https://192.168.20.17:5000/stream.mjpg'
-    let simonVideo = 'https://192.168.20.4:3000/stream.mjpg'
+    let simonVideo = 'https://192.168.20.17:5000/stream.mjpg'
+    let publicVideo = 'https://192.168.20.4:3000/stream.mjpg'
 
     videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
     isCamPublic = (isCamPublic) ? false : true;
@@ -221,7 +223,7 @@ function addMultipleEventListener(element, events, handler) {
 /* Simon Says flags */
 // var simon_on = false; 
 // var simon_speaks = false;
-const gpio_list = [gpio0, gpio1, gpio2, gpio3];
+const gpio_list = [gpio0, gpio1, gpio2, gpio3, gpio0, gpio1, gpio2, gpio3];
 const box_list = [box1, box2, box3, box4, box5];
 
 
@@ -251,4 +253,5 @@ export {
     play_btns, socket , 
     isCamPublic,
     btn_pubsimon,
+    toggle_flag,
 } ;
