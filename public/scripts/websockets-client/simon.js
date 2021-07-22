@@ -95,9 +95,9 @@ export function simon_sockets() {
                     clicked_led[led] = true; //flag
                     // var current = document.getElementsByClassName("active_led");
                     // current[i].className = current[i].className.replace(" active", "");
-                    if (!gpio_list[led].className.includes("active_led")) {
-                        gpio_list[led].className += " active_led";
-                    }
+                    // if (!gpio_list[led].className.includes("active_led")) {
+                    //     gpio_list[led].className += " active_led";
+                    // }
                 }
             }
             else {
@@ -109,20 +109,24 @@ export function simon_sockets() {
                     }
                     // var current = document.getElementsByClassName("active_led");
                     // current[i].className = current[i].className.replace(" active", "");
-                    if (!gpio_list[led].className.includes("active_led")) {
-                        gpio_list[led].className += " active_led";
-                    }
                 }
             }
-            switch(led) {
-                case 0: btnpress0.play(); break;
-                case 1: btnpress1.play(); break;
-                case 2: btnpress2.play(); break;
-                case 3: btnpress3.play(); break;
-                // case 4: btnpress0.play(); break;
-                // case 5: btnpress1.play(); break;
-                // case 6: btnpress2.play(); break;
-                // case 7: btnpress3.play(); break;
+
+            if (event.key === led_keys[led] && !isInputFocused) {
+                if (!gpio_list[led].className.includes("active_led")) {
+                    gpio_list[led].className += " active_led";
+
+                    switch(led) {
+                        case 0: btnpress0.play(); console.log("0 click"); break;
+                        case 1: btnpress1.play(); console.log("1 click"); break;
+                        case 2: btnpress2.play();  console.log("2 click"); break;
+                        case 3: btnpress3.play();  console.log("3 click"); break;
+                        case 4: btnpress0.play(); break;
+                        case 5: btnpress1.play(); break;
+                        case 6: btnpress2.play(); break;
+                        case 7: btnpress3.play(); break;
+                    }
+                }
             }
         }, true);
 
