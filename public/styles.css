@@ -431,7 +431,8 @@ li {
 }
 
 #videoStream {
-    /* background-image: url("/stream.mjpg"); */
+    background-image: url("/stream.mjpg");
+    /* background-image: url("https://192.168.20.17:5000/stream.mjpg"); */
     /* background-size: 100% 100%; */
     /* background-position:  right; */
     /* background-position:  ; */

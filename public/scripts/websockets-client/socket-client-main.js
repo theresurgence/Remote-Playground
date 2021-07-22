@@ -1,5 +1,12 @@
 import { simon_sockets } from './simon.js';
 
+import { 
+    isCamPublic,
+    btn_pubsimon,
+} from '../main-client-script.js';
+
+// import {queue} from '../../../websockets-server/main-sockets.js';
+
 /* Main Client Websockets Events */
 
 export function main_sockets(
@@ -86,7 +93,13 @@ export function main_sockets(
         }      
     });
 
-    queue_btn.onclick = () =>  socket.emit('enterqueue', username);
+    queue_btn.onclick = () =>  { 
+        socket.emit('enterqueue', username);
+        if (username && isCamPublic) {
+            btn_pubsimon.click(); //switch to Playground view 
+        }
+    }
+
     exit_btn.onclick = () =>  socket.emit('exitqueue', username); 
 
     //Send message to chat

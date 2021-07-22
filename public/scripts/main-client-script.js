@@ -3,10 +3,10 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('https://192.168.20.4:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://192.168.20.4:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
 // const socket = io.connect('https://20.194.44.54:8080', {reconnect: true}); //client establishes websocket connection to server
@@ -41,6 +41,8 @@ const online = document.getElementById('online'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
 
+    videoStream = document.getElementById('videoStream'),
+    btn_pubsimon = document.getElementById('PubSimon'),
     curr_score = document.getElementById('curr_score'),
 
 
@@ -201,6 +203,16 @@ for (let i=0; i < inputs_class.length; i++) {
     }
 
 
+var isCamPublic = true;
+btn_pubsimon.onclick = () => {
+    let publicVideo = 'https://192.168.20.17:5000/stream.mjpg'
+    let simonVideo = 'https://192.168.20.4:3000/stream.mjpg'
+
+    videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
+    isCamPublic = (isCamPublic) ? false : true;
+}
+
+
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
 }
@@ -236,5 +248,7 @@ export {
     btnpress3, 
     addMultipleEventListener,
     gpio_list,
-    play_btns, socket 
+    play_btns, socket , 
+    isCamPublic,
+    btn_pubsimon,
 } ;

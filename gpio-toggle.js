@@ -4,12 +4,21 @@
 const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
- const LED_0 = new Gpio(17, 'out'),
+const LED_0 = new Gpio(26, 'out'),   //simon says LEDS
        LED_1 = new Gpio(22, 'out'),
-       LED_2 = new Gpio(26, 'out'),
-       LED_3 = new Gpio(12, 'out');
+       LED_2 = new Gpio(27, 'out'),
+       LED_3 = new Gpio(19, 'out'),
 
- const leds_list = [LED_0, LED_1, LED_2, LED_3];
+       LED_4 = new Gpio(14, 'out'),  //Public playground LEDs
+       LED_5 = new Gpio(16, 'out'),
+       LED_6 = new Gpio(20, 'out'),
+       LED_7 = new Gpio(21, 'out');
+
+//26 22 27 19
+//14 16 20 21
+
+
+ const leds_list = [LED_0, LED_1, LED_2, LED_3, LED_4, LED_5, LED_6, LED_7];
 
  var simon_info = { index: 0 , hist: []}; //to be exported to other modules
 

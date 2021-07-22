@@ -71,18 +71,18 @@ function getUserbyId(id) {
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-// const gpio = require('./gpio-toggle'); //import gpio functions and variables
-// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+const gpio = require('./gpio-toggle'); //import gpio functions and variables
+const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-// videoStream.acceptConnections(app, {
-//     width: 1280,
-//     height: 720,
-//     // width: 1920,
-//     // height: 1080,
-//     fps: 10,
-//     encoding: 'JPEG',
-//     quality: 10 //lower is faster
-// }, '/stream.mjpg', true); 
+videoStream.acceptConnections(app, {
+    width: 1280,
+    height: 720,
+    // width: 1920,
+    // height: 1080,
+    fps: 30,
+    encoding: 'JPEG',
+    quality: 8 //lower is faster
+}, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -102,7 +102,7 @@ app.use(session({
 
 /* import all web sockets required */
 const online = 0; //number of online users
-const { main_sockets } = require('./websockets-server/main-sockets');
+const { main_sockets } = require('./websockets-server/main-sockets.js');
 
 main_sockets(socket(server), db, online); 
 

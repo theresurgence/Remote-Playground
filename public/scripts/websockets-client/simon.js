@@ -10,7 +10,8 @@ import {
     btnpress3, 
     addMultipleEventListener,
     gpio_list, 
-    play_btns, socket 
+    play_btns, socket, 
+    isCamPublic,
 } from '../main-client-script.js';
 
 var simon_on = false;
@@ -20,7 +21,7 @@ var simon_speaks = false;
 
 export function simon_sockets() {
 
-    var clicked_led = [false,false,false,false];
+    var clicked_led = [false,false,false,false, false, false, false ,false];
     var led_keys = ["q", "w", "e", "r"];
 
 
