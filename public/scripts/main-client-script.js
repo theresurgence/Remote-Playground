@@ -3,13 +3,13 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('https://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
-const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
@@ -22,12 +22,6 @@ const online = document.getElementById('online'),
     box3 = document.getElementById('box3'),
     box4 = document.getElementById('box4'),
     box5 = document.getElementById('box5'),
-    idlebtn1 = document.getElementById('idlebutton1'),
-    idlebtn2 = document.getElementById('idlebutton2'),
-    idlebtn3 = document.getElementById('idlebutton3'),
-    bar1 = document.getElementById("bar1"),
-    bar2 = document.getElementById("bar2"),
-    bar3 = document.getElementById("bar3"),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
@@ -40,7 +34,7 @@ const online = document.getElementById('online'),
     chatcon = document.getElementById('cht'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
-
+    cashout_btn = document.getElementById('cashout'),
     videoStream = document.getElementById('videoStream'),
     btn_pubsimon = document.getElementById('PubSimon'),
     curr_score = document.getElementById('curr_score'),
@@ -102,31 +96,6 @@ for (let i=0; i < inputs_class.length; i++) {
       bgmusic.play();
     }
 
-    //temp resource for idle game
-    var tickets = 0;
-
-    idlebtn1.onclick = () => {
-      btnpress.play();
-      tickets += 1;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
-      move(bar1);
-      
-    }
-
-    idlebtn2.onclick = () => {
-      btnpress.play();
-      tickets += 5;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
-      move(bar2);
-    }
-
-    idlebtn3.onclick = () => {
-      btnpress.play();
-      tickets += 50;
-      ticketcount.innerHTML = `Tickets: ${tickets}`;    
-      move(bar3);
-    }
-    
     //ability to collapse 2nd column
     var isCollapsed = false;
 
@@ -157,6 +126,7 @@ for (let i=0; i < inputs_class.length; i++) {
 
     infobtn.onclick = () => {
       infomodal.style.display = "block";
+      notification();
     }
 
     span.onclick = () => {
@@ -167,9 +137,7 @@ for (let i=0; i < inputs_class.length; i++) {
       if (event.target == infomodal) {
         infomodal.style.display = "none";
       }
-    }
-
-
+    }   
     //Idle Progress Bar
     var i = 0;
 
@@ -207,11 +175,11 @@ var isCamPublic = true;
 function toggle_flag(bool_val) { bool_val ? false : true; }
 
 btn_pubsimon.onclick = () => {
-    // let simonVideo = 'https://192.168.20.17:5000/stream.mjpg'
-    // let publicVideo = 'https://192.168.20.4:3000/stream.mjpg'
+    let publicVideo = 'http://192.168.20.17:5000/cam/'
+    let simonVideo = 'http://192.168.20.18:3000/stream.mjpg'
     
-    let simonVideo = 'https://20.194.44.54/stream.mjpg'
-    let publicVideo = 'https://20.194.44.54/cam/'
+    // let simonVideo = 'https://20.194.44.54/stream.mjpg'
+    // let publicVideo = 'https://20.194.44.54/cam/'
 
     isCamPublic = (isCamPublic) ? false : true;
 
@@ -243,6 +211,8 @@ main_sockets(
     exit_btn,
     inputfield,
     username, 
+    cashout_btn,
+    ticketcount
 );
 
 

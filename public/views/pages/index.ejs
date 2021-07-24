@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <script defer src="../../../socket.io/socket.io.js"></script>
-    <script defer type="module" src="../../scripts/main-client-script.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script defer type="module" src="../../scripts/main-client-script.js"></script>  
     <title>Remote Playground</title>
 </head>
 
@@ -18,6 +22,10 @@
     <audio id="led2_sound"> <source src="../../images/led2.ogg" type="audio/ogg"> </audio>
     <audio id="led3_sound"> <source src="../../images/led3.ogg" type="audio/ogg"> </audio>
 
+    <audio id="blingsound">
+        <source src="../../images/bling.mp3" type="audio/mp3">
+    </audio>
+
     <audio loop id="bgmusic">
         <source src="../../images/elevatormusic.mp3" type="audio/mp3">
     </audio>
@@ -28,17 +36,22 @@
     <div id="big-container" class="big-container1">
 
     <div class="queue-container">
-        <div class="queue-box bgGreen"><p class="textshdw white" style="font-size: 22px;" id="box1"></p></div>
-        <div class="queue-box bgOrange "><p class="textshdw white" style="font-size: 22px;" id="box2"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box3"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
-        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
+        <div class="queue-box bgOrange"><p class="textshdw white" style="font-size: 22px;" id="box1"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box2"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box3"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
+        <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
         <div class="queue-info">
+<!-- <<<<<<< HEAD -->
+<!--             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"><b>Queue Number: Not in Queue</b></p> -->
+<!--             <input id="queuebutton" type="button" class="button orange textshdw" value="QUEUE UP"> --> 
+<!-- ======= -->
             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"></p>
             <input id="queuebutton" type="button" class="button red textshdw" value="QUEUE UP"> 
+<!-- >>>>>>> main -->
             <input id="exitbutton" type="button" class="button grey textshdw" style="border-radius: 50%; padding: 15px 15px" value="X">
-        </div>
-        
+            <input id="testbutton" type="button" class="button red" value="notif">
+        </div>      
     </div>
 
     <div id="stat" class="statuses-container">
@@ -56,44 +69,88 @@
         <div class="play-box"><img id="videoStream" ></div> 
 
         <div class="idle-box">
-            <h1 id="ticket-count" class="textshdw white">Tickets: 0</h1>
+            <div><h1 id="ticket-count" class="textshdw white">Tickets: 0</h1></div>
+
+            
+            <!-- <input id="expand" type="button" value="EXPAND" class="button green textshdw"> -->
+            <input id="cashout" type="button" value="CASH OUT" class="button green textshdw">
+         
+            
+
             <div class="idlebtn-container">
-            <div class="hopscotch resource">
-                <input id="idlebutton1" type="button" value="hopscotch" class="button purple">
-                <img id="hopscotch" src="../../images/hopscotch.png" height=150px width=150px>
-                <div class="progbar-container">
-                    <div id="bar1" class="bar"></div>
-                </div>
-            </div>
 
-            <div class="swing resource">
-                <input id="idlebutton2" type="button" value="swing" class="button purple">
-                <img id="swing" src="../../images/swing.png" height=150px width=150px>
-                <div class="progbar-container">
-                    <div id="bar2" class="bar"></div>
+                <div class="hopscotch resource">
+                    <div class="icon">                   
+                        <input id="idlebutton1" type="image" src="../../images/hopscotch.png" height=100px width=100px>   
+                    </div>                                
+                    <div class="containerbar">
+                        <p style="font-size: 14px;"><u id="income1">0</u> TICKETS/HOP</p>
+                        <div class="progbar-container"><div id="bar1" class="progbar"></div></div>                     
+                    </div>
+                    <div class="resource-count">
+                        <h1 id="res-display-1">0</h1>
+                    </div>
+                    <div class="containerinfo">     
+                        <p style="font-size: 14px; text-align: center; color: whitesmoke;">NEXT: <u id="cost1">0</u> Tickets</p>                                       
+                        <input id="addbutton1" type="button" value="+" class="button red textshdw">                        
+                    </div>
                 </div>
-            </div>
 
-            <div class="slide resource">
-                <input id="idlebutton3" type="button" value="tunnel-slide" class="button purple">
-                <img id="slide" src="../../images/slide.png" height=150px width=150px>
-                <div class="progbar-container">
-                    <div id="bar3" class="bar"></div>
+                <div class="swing resource">
+                    <div class="icon">                   
+                        <input id="idlebutton2" type="image" src="../../images/swing.png" height=100px width=100px>   
+                    </div>                                
+                    <div class="containerbar">
+                        <p style="font-size: 14px;"><u id="income2">0</u> TICKETS/SWING</p>
+                        <div class="progbar-container"><div id="bar2" class="progbar"></div></div>                     
+                    </div>
+                    <div class="resource-count">
+                        <h1 id="res-display-2">0</h1>
+                    </div>
+                    <div class="containerinfo">     
+                        <p style="font-size: 14px; text-align: center; color: whitesmoke;">NEXT: <u id="cost2">60</u> Tickets</p>                                       
+                        <input id="addbutton2" type="button" value="+" class="button red textshdw">                   
+                    </div>
                 </div>
-            </div>
+
+                <div class="slide resource">
+                    <div class="icon">                   
+                        <input id="idlebutton3" type="image" src="../../images/slide.png" height=100px width=100px>   
+                    </div>                                
+                    <div class="containerbar">
+                        <p style="font-size: 14px;"><u id="income3">0</u> TICKETS/SLIDE</p>
+                        <div class="progbar-container"><div id="bar3" class="progbar"></div></div>                     
+                    </div>
+                    <div class="resource-count">
+                        <h1 id="res-display-3">0</h1>
+                    </div>
+                    <div class="containerinfo">     
+                        <p style="font-size: 14px; text-align: center; color: whitesmoke;">NEXT: <u id="cost3">8640</u> Tickets</p>                                       
+                        <input id="addbutton3" type="button" value="+" class="button red textshdw"> 
+                    </div>
+                </div>
+
+                <div class="achievements">
+                    
+                    <div id="achievements" style="display: none;"><% if (auth) { %> <%= JSON.stringify(isAchieve[0]) %> <% } %></div>
+                    
+                    
+                </div>
+
             </div>
 
         </div>
-        <input id="collapsecol" type="button" class="button grey" value=">" style="align-self: center;">
+        <input id="collapsecol" type="button" class="smallbtn" value=">" style="background-color: dimgrey;">
     </div>
 
-    
+    <script defer type="text/javascript">
+        
+    </script>
         
     
     
 
     <div class="play-buttons">                  
-        <!-- <input id="simon-startquit" type="button" class="button red leds" value="Start"> -->
         <input id="gpio0" type="button" class="btn-3d red leds"> 
         <input id="gpio1" type="button" class="btn-3d green leds">
         <input id="gpio2" type="button" class="btn-3d blue leds">

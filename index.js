@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; 
-const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 const sqlite3 = require('better-sqlite3');
 const ejs = require('ejs');
 const path = require('path');
@@ -16,6 +15,8 @@ const flash = require('express-flash');
 const session = require('express-session');   
 const initializePassport = require('./passport-config');
 const methodOverride = require('method-override');
+
+const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
 /************* HTTPS******************/
 // const https = require('https')
@@ -28,8 +29,6 @@ const methodOverride = require('method-override');
 // .listen(port, function () {
 //   console.log('App started on port 3000! Go to https://localhost:3000/')
 // })
-
-
 /************* HTTPS******************/
 
 
@@ -71,18 +70,18 @@ function getUserbyId(id) {
 var auth = false;
 
 /************************************ COMMENT OUT if not PI  **********************************/
-const gpio = require('./gpio-toggle'); //import gpio functions and variables
-const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+// const gpio = require('./gpio-toggle'); //import gpio functions and variables
+// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-videoStream.acceptConnections(app, {
-    width: 1280,
-    height: 720,
-    // width: 1920,
-    // height: 1080,
-    fps: 30,
-    encoding: 'JPEG',
-    quality: 8 //lower is faster
-}, '/stream.mjpg', true); 
+// videoStream.acceptConnections(app, {
+//     width: 1280,
+//     height: 720,
+//     // width: 1920,
+//     // height: 1080,
+//     fps: 30,
+//     encoding: 'JPEG',
+//     quality: 8 //lower is faster
+// }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
@@ -126,7 +125,7 @@ app.use(methodOverride('_method'));
 
 
 app.get('/', (req, res) => {
-
+    console.log(res.statusCode);
     auth = req.isAuthenticated();
     function topthree () {
         let sql = 'SELECT name, score FROM userinfo ORDER BY score DESC LIMIT 3';
@@ -134,6 +133,8 @@ app.get('/', (req, res) => {
     }
 
     let entries = topthree();
+    let sql2 = "SELECT * FROM userachievements";
+    let isAchieve = db.prepare(sql2).all();
 
     if (!auth) {
         res.render('pages/index', {
@@ -148,6 +149,7 @@ app.get('/', (req, res) => {
         entries: entries,
         online: online,
         dpindex: req.user.dpindex,
+        isAchieve: isAchieve
     });
     }
     console.log(`Global ${online}`);
@@ -190,10 +192,9 @@ app.get('/profile', (req, res) => {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
 
-    
-    // db.prepare('.mode html').run();
-    // let game_history = db.prepare(`SELECT * FROM ${req.user.name}`);
-    // console.log(game_history)
+    let sql = "SELECT * FROM userachievements";
+
+    let isAchieve = db.prepare(sql).all();
 
     res.render('pages/profile', {
         auth: auth,
@@ -202,6 +203,7 @@ app.get('/profile', (req, res) => {
         userscore: req.user.score,
         online: online,
         dpindex: req.user.dpindex,
+        isAchieve: isAchieve
     });
     }
 });
@@ -277,5 +279,8 @@ function initUser (name, email, password, score) {
     db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
 }
 
+module.exports = {
+    server
+}
 
 
