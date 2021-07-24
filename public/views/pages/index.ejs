@@ -17,6 +17,10 @@
     <audio id="btnsound">
         <source src="../../images/rollover1.ogg" type="audio/ogg">
     </audio>
+    <audio id="led0_sound"> <source src="../../images/led0.ogg" type="audio/ogg"> </audio>
+    <audio id="led1_sound"> <source src="../../images/led1.ogg" type="audio/ogg"> </audio>
+    <audio id="led2_sound"> <source src="../../images/led2.ogg" type="audio/ogg"> </audio>
+    <audio id="led3_sound"> <source src="../../images/led3.ogg" type="audio/ogg"> </audio>
 
     <audio id="blingsound">
         <source src="../../images/bling.mp3" type="audio/mp3">
@@ -38,8 +42,13 @@
         <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
         <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
         <div class="queue-info">
-            <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"><b>Queue Number: Not in Queue</b></p>
-            <input id="queuebutton" type="button" class="button orange textshdw" value="QUEUE UP"> 
+<!-- <<<<<<< HEAD -->
+<!--             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"><b>Queue Number: Not in Queue</b></p> -->
+<!--             <input id="queuebutton" type="button" class="button orange textshdw" value="QUEUE UP"> --> 
+<!-- ======= -->
+            <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"></p>
+            <input id="queuebutton" type="button" class="button red textshdw" value="QUEUE UP"> 
+<!-- >>>>>>> main -->
             <input id="exitbutton" type="button" class="button grey textshdw" style="border-radius: 50%; padding: 15px 15px" value="X">
             <input id="testbutton" type="button" class="button red" value="notif">
         </div>      
@@ -56,11 +65,8 @@
 
     <div class="playground-container">
         <!-- <div class="play-box"><img id="videoStream" src="../../images/maintenance_notxt.png" height=400px width=400px></div> -->
-        <!-- Temporary 1280x720 pic of the leds. CSS crops it --> 
-        <div class="play-box"><img id="videoStream" src="../../images/leds.jpg" ></div>
-
-        <!-- Comment if no RPI -->
-        <!-- <div id="play-box"><img id="videoStream" src="/stream.mjpg" ></div> -->
+        <!-- Comment if no RPI CSS has the src btw -->
+        <div class="play-box"><img id="videoStream" ></div> 
 
         <div class="idle-box">
             <div><h1 id="ticket-count" class="textshdw white">Tickets: 0</h1></div>
@@ -145,13 +151,15 @@
     
 
     <div class="play-buttons">                  
-        <!-- <input id="simon-startquit" type="button" class="button red leds" value="Start"> -->
         <input id="gpio0" type="button" class="btn-3d red leds"> 
         <input id="gpio1" type="button" class="btn-3d green leds">
         <input id="gpio2" type="button" class="btn-3d red leds">
         <input id="gpio3" type="button" class="btn-3d green leds">               
 
         <p id="curr_score"><b>Score: 0 </b></p>
+
+        <input id="PubSimon" type="button" value="Switch Camera" class="button purple">
+
     </div>        
 
 
@@ -167,7 +175,6 @@
             </div>
         </div>
     </div>
-
     </div>
 </body>
 </html>

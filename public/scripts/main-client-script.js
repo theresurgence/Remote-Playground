@@ -3,13 +3,13 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
-// const socket = io.connect('https://192.168.20.4:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
-// const socket = io.connect('https://20.194.44.54:8080', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
@@ -25,12 +25,18 @@ const online = document.getElementById('online'),
     collapsecol = document.getElementById('collapsecol'),
     ticketcount = document.getElementById('ticket-count'),
     btnpress = document.getElementById('btnsound'),
+
+    btnpress0 = document.getElementById('led0_sound'),
+    btnpress1 = document.getElementById('led1_sound'),
+    btnpress2 = document.getElementById('led2_sound'),
+    btnpress3 = document.getElementById('led3_sound'),
+
     chatcon = document.getElementById('cht'),
     statcon = document.getElementById('stat'),
     bigcon = document.getElementById('big-container'),
     cashout_btn = document.getElementById('cashout'),
-    simon_startquit_btn = document.getElementById('simon-startquit'),
-
+    videoStream = document.getElementById('videoStream'),
+    btn_pubsimon = document.getElementById('PubSimon'),
     curr_score = document.getElementById('curr_score'),
 
 
@@ -47,16 +53,11 @@ const online = document.getElementById('online'),
 
 
 
-var input_focus = false;
-
+var isInputFocused = false;
 for (let i=0; i < inputs_class.length; i++) {
-    inputs_class[i].addEventListener('focus', function() { input_focus = true; console.log(input_focus) });
-    inputs_class[i].addEventListener('blur', function() { input_focus = false; console.log(input_focus) });
+    inputs_class[i].addEventListener('focus', function() { isInputFocused = true; console.log(`Input: ${isInputFocused}`) });
+    inputs_class[i].addEventListener('blur', function() { isInputFocused = false; console.log(`Input ${isInputFocused}`) });
 }
-
-// function addMultipleEventListener(element, events, handler) {
-//   events.forEach(e => element.addEventListener(e, handler))
-// }
 
 
     //Sticky Navbar
@@ -75,6 +76,8 @@ for (let i=0; i < inputs_class.length; i++) {
       if (event.key === "Enter") {
         event.preventDefault();
         chat_btn.click();
+
+
       }
     });
 
@@ -135,6 +138,55 @@ for (let i=0; i < inputs_class.length; i++) {
         infomodal.style.display = "none";
       }
     }   
+    //Idle Progress Bar
+    var i = 0;
+
+    async function move(progbar) {
+      
+      var width = 0;
+      if (progbar == bar1) {
+        var id = setInterval(frame, 10); //run frame every 10ms
+      }
+      else if (progbar == bar2) {
+        var id = setInterval(frame, 30); //run frame every 30ms
+      }
+      else if (progbar == bar3) {
+        var id = setInterval(frame, 50); //run frame every 50ms
+      }
+      
+      
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+          i = 0;
+          progbar.style.width = 0 + "%";
+          return true;
+        } else {
+          width++;
+          progbar.style.width = width + "%";
+          return false;
+        }
+      }
+  
+    }
+
+
+var isCamPublic = true;
+function toggle_flag(bool_val) { bool_val ? false : true; }
+
+btn_pubsimon.onclick = () => {
+    // let simonVideo = 'https://192.168.20.17:5000/stream.mjpg'
+    // let publicVideo = 'https://192.168.20.4:3000/stream.mjpg'
+    
+    let simonVideo = 'https://20.194.44.54/stream.mjpg'
+    let publicVideo = 'https://20.194.44.54/cam/'
+
+    isCamPublic = (isCamPublic) ? false : true;
+
+    videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
+    console.log(`isCamPublic ${isCamPublic}`);
+}
+
 
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
@@ -142,22 +194,17 @@ function addMultipleEventListener(element, events, handler) {
 
 
 /* Simon Says flags */
-var simon_on = false; 
-var simon_speaks = false;
-const gpio_list = [gpio0, gpio1, gpio2, gpio3];
+// var simon_on = false; 
+// var simon_speaks = false;
+const gpio_list = [gpio0, gpio1, gpio2, gpio3, gpio0, gpio1, gpio2, gpio3];
 const box_list = [box1, box2, box3, box4, box5];
 
 
 //intialize all websockets
-main_sockets(window, document, 
-    socket,
-    addMultipleEventListener,
-    gpio_list,
+main_sockets(
+    document,
+    socket, 
     box_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns,
     chat_btn,
     curr_score,
     queue_btn,
@@ -169,4 +216,17 @@ main_sockets(window, document,
 );
 
 
-export { input_focus, btnpress } ;
+export { 
+    isInputFocused, 
+    btnpress, 
+    btnpress0, 
+    btnpress1, 
+    btnpress2, 
+    btnpress3, 
+    addMultipleEventListener,
+    gpio_list,
+    play_btns, socket , 
+    isCamPublic,
+    btn_pubsimon,
+    toggle_flag,
+} ;

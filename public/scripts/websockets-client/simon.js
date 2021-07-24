@@ -1,130 +1,198 @@
 /* Simon Says Client Websocket Events */ 
 
-import { input_focus, btnpress } from '../main-client-script.js';
 
-export function simon_sockets(window, document, socket, 
+import { 
+    isInputFocused, 
+    btnpress, 
+    btnpress0, 
+    btnpress1, 
+    btnpress2, 
+    btnpress3, 
     addMultipleEventListener,
-    gpio_list,
-    simon_on,
-    simon_speaks,
-    simon_startquit_btn,
-    play_btns,
-) {
+    gpio_list, 
+    play_btns, socket, 
+    isCamPublic,
+} from '../main-client-script.js';
 
+var simon_on = false;
+var curr_player = ""; //flag for simon_on also
+var username = document.getElementById("user").innerHTML;
+var simon_speaks = false;
 
-    var clicked_led = [false,false,false,false];
-    var led_keys = ["q", "w", "e", "r"];
+export function simon_sockets() {
 
+    var clicked_led = [false,false,false,false, false, false, false ,false];
+    var led_keys = ["q", "w", "e", "r", "q", "w", "e", "r"];
 
-
-    console.log(play_btns)
-    console.log(play_btns[0])
 
     //Catch all accounting for both touch and mouse events to toggle the 4 gpios on or off
-    //led is gpio number (0,1,2,3)
-    for (let led = 0; led < 4; led++) {  
+    //led is gpio number (0,1,2,3) => Public, anyone can toggle
+    //4,5,6,7 => Simon
+
+    for (let led = 0; led < 8; led++) {  
 
         addMultipleEventListener(gpio_list[led], ["mousedown", "touchstart"], (event)=>{ 
 
-            /* Only when simon not speaking, can user
-             * toggle leds on and off */
-            if (!simon_speaks) {
-
-                //gpio0_on (0,1,2,3))
-                socket.emit(`gpio${led}_on`); 
-                clicked_led[led] = true; //flag
-                console.log("DOWN!");
-                btnpress.play();
-                // event.preventDefault(); //prevents touchstart and mousedown events double counting!
+            //gpio0_on (0,1,2,3))
+            if (led < 4) {
+                if (isCamPublic) {
+                    socket.emit(`gpio${led}_on`); 
+                    clicked_led[led] = true; 
+                }
+            } else {
+                /* Only when simon not speaking, can user
+                 * toggle leds on and off */
+                if (!isCamPublic && !simon_speaks && curr_player === username) {
+                    socket.emit(`gpio${led}_on`); 
+                    clicked_led[led] = true; 
+                }
             }
+
+            switch(led) {
+                case 0: btnpress0.play(); break;
+                case 1: btnpress1.play(); break;
+                case 2: btnpress2.play(); break;
+                case 3: btnpress3.play(); break;
+                // case 4: btnpress0.play(); break;
+                // case 5: btnpress1.play(); break;
+                // case 6: btnpress2.play(); break;
+                // case 7: btnpress3.play(); break;
+            }
+            // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
-
-            if (!simon_speaks) {
-
-                //only triggered when button has been
-                //clicked before
-                if (clicked_led[led]) {
+            if (led < 4) {
+                if (isCamPublic && clicked_led[led]) {
                     console.log("TURNING OFF LED");
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
+                }
+            }
+            else {
+                if (!isCamPublic && !simon_speaks && (curr_player === username)) {
+                    console.log("Simon screen.... off");
+                    //only triggered when button has been
+                    //clicked before
+                    if (clicked_led[led]) {
+                        console.log(`TURNING OFF LED ${led}`);
+                        socket.emit(`gpio${led}_off`);
+                        clicked_led[led] = false;
 
-                    console.log(`SIMON _ON ${simon_on}`);
+                        console.log(`SIMON _ON ${curr_player}`);
 
-                    if (simon_on) {
                         socket.emit(`player-says`, led); 
                         console.log("SENT PLAYER INPUT")
-                    } //player's input is taken into account if simon game is in progress
+                    }
                 }
             }
         });
 
         window.addEventListener("keydown", (event)=> {
-            // console.log(userpassbox_focus)
-            if (!simon_speaks && event.key === led_keys[led] && !input_focus) {
-                socket.emit(`gpio${led}_on`); 
-                clicked_led[0] = true; //flag
-                // var current = document.getElementsByClassName("active_led");
-                // current[i].className = current[i].className.replace(" active", "");
-                if (!gpio_list[led].className.includes("active_led")) {
-                    gpio_list[led].className += " active_led";
-                    btnpress.play();
+            if (led < 4) {
+                if (isCamPublic && event.key === led_keys[led] && !isInputFocused) {
+                    socket.emit(`gpio${led}_on`); 
+                    clicked_led[led] = true; //flag
+                    // var current = document.getElementsByClassName("active_led");
+                    // current[i].className = current[i].className.replace(" active", "");
+                    // if (!gpio_list[led].className.includes("active_led")) {
+                    //     gpio_list[led].className += " active_led";
+                    // }
                 }
-                console.log(gpio_list[led].className);
+            }
+            else {
+                if (!isCamPublic && !simon_speaks && event.key === led_keys[led] && !isInputFocused) {
+                    if (curr_player === username) {
+                        socket.emit(`gpio${led}_on`); 
+                        clicked_led[led] = true; //flag
+                        console.log(`Curr Player: ${curr_player}`);
+                    }
+                    // var current = document.getElementsByClassName("active_led");
+                    // current[i].className = current[i].className.replace(" active", "");
+                }
             }
 
+            if (event.key === led_keys[led] && !isInputFocused) {
+                if (!gpio_list[led].className.includes("active_led")) {
+                    gpio_list[led].className += " active_led";
+
+                    switch(led) {
+                        case 0: btnpress0.play(); console.log("0 click"); break;
+                        case 1: btnpress1.play(); console.log("1 click"); break;
+                        case 2: btnpress2.play();  console.log("2 click"); break;
+                        case 3: btnpress3.play();  console.log("3 click"); break;
+                        case 4: btnpress0.play(); break;
+                        case 5: btnpress1.play(); break;
+                        case 6: btnpress2.play(); break;
+                        case 7: btnpress3.play(); break;
+                    }
+                }
+            }
         }, true);
 
         window.addEventListener("keyup", (event)=> {
-            if (!simon_speaks && event.key === led_keys[led] && !input_focus) {
-            // if (!simon_speaks && event.key === led_keys[led] && !userpassbox_focus) {
-                socket.emit(`gpio${led}_on`); 
-                console.log("TURNING OFF LED");
-                socket.emit(`gpio${led}_off`);
-                clicked_led[led] = false;
 
-                console.log(`SIMON _ON ${simon_on}`);
+            if (led < 4) {
+                if (isCamPublic) {
+                    socket.emit(`gpio${led}_off`);
+                    clicked_led[led] = false;
 
-                if (gpio_list[led].className.includes(" active_led"))
-                    gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
+                    if (gpio_list[led].className.includes(" active_led")) {
+                        gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
+                    }
+                }
+            }
 
-                if (simon_on) {
-                    socket.emit(`player-says`, led); 
-                    console.log("SENT PLAYER INPUT")
-                } //player's input is taken into account if simon game is in progress
+            else {
+                if (!isCamPublic && !simon_speaks && event.key === led_keys[led] && !isInputFocused) {
+
+                    if (curr_player === username) {
+                        socket.emit(`gpio${led}_off`);
+                        clicked_led[led] = false;
+                        socket.emit(`player-says`, led); 
+                        //player's input is taken into account if simon game is in progress
+                    }
+
+                    if (gpio_list[led].className.includes(" active_led")) {
+                        gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
+                    }
+                }
+                console.log(`Curr Player: ${curr_player}`);
             }
         }, true);
 
     }
 
+    socket.on('simon-on-check', (queue_0)=>{ 
+        curr_player = queue_0;
+        if (!curr_player || curr_player === username)
+            play_btns[0].style.opacity =  1;
+        else
+            play_btns[0].style.opacity =  0.5;
+    });
 
     /**server to call server, need client as middleman**/
 
     socket.on('simon-start-server', ()=>{ 
-        let player_name = document.getElementById("user").innerHTML;
-        console.log(`Player name: ${player_name}`);
-        socket.emit('simon-start', player_name); 
-        simon_on = true;
+        curr_player = document.getElementById("user").innerHTML;
+        console.log(`Player name: ${curr_player}`);
+        socket.emit('simon-start', curr_player); 
+        simon_on = true;   //////////////////////////////////////////////////////////////////NEEDED?????
     });
 
     socket.on('simon-start-server-next', (next_player)=>{ 
         socket.emit('simon-start', next_player); 
-        console.log(`nexplayer is ${next_player}`);
+        console.log(`nextplayer is ${next_player}`);
         simon_on = true;
     });
 
-    socket.on('simon-end-server', ()=>{ 
-        let player_name = document.getElementById("user").innerHTML;
-        console.log(`Player name: ${player_name}`);
-        socket.emit('simon-end', player_name); 
-        simon_on = false;
-    });
+    // socket.on('simon-end-server', ()=>{ 
+    //     console.log(`Player name: ${curr_player}`);
+    //     socket.emit('simon-end', curr_player); 
+    //     simon_on = false;
+    // });
 
-    socket.on('exitqueue-server', ()=>{ 
-        let username = document.getElementById("user").innerHTML;
-        socket.emit('exitqueue', username);
-    });
+    socket.on('exitqueue-server', ()=>{ socket.emit('exitqueue', username); });
 
     /**server to call server, need client as middleman**/
 
@@ -138,8 +206,8 @@ export function simon_sockets(window, document, socket,
     /* events for player room and public room */
 
     socket.on('simon-start-public', ()=>{
-        play_btns[0].style.display = "none";
-        console.log("disappear")
+        play_btns[0].style.opacity= 0.3;
+        console.log("OPacity")
     });
 
     /* NEED TO ADD MORE CCODE */
@@ -149,39 +217,8 @@ export function simon_sockets(window, document, socket,
         console.log("simon_start_plaeyr")
     });
 
-    socket.on('simon-end-public', ()=>{
-        play_btns[0].style.display = "flex";
-        simon_on = false; 
-        console.log("appear")
-    });
-
-    /* NEED TO ADD MORE CODE */
-    socket.on('simon-end-player', ()=>{
-        simon_on = false; 
-        simon_startquit_btn.value = "Start";
-        // alert("Game Over");
-        console.log("CHNAGE BUTTON");
-        /// GAME OVER CODE OR SMTH////
-    });
+    socket.on('simon-end-public', ()=>{ simon_on = false; });
+    socket.on('simon-end-player', ()=>{ simon_on = false; });
 
 }
-    //simon_startquit_btn.onclick = () => { 
-    //    let player_name = document.getElementById("user").innerHTML;
-    //    console.log(`Player name: ${player_name}`);
-
-    //    //To start game
-    //    if (simon_startquit_btn.value == "Start") {
-
-    //        socket.emit('simon-start', player_name); 
-
-    //        simon_startquit_btn.value = "Quit";
-    //        simon_on = true;
-
-    //    //To quit a game in progress 
-    //    } else {
-    //        simon_on = false;
-    //        socket.emit('simon-end', player_name); 
-    //        simon_startquit_btn.value = "Start";
-    //    }
-    //};
 
