@@ -75,13 +75,13 @@ function main_sockets(io, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
         /***************** RPI COMMENT OUT **************************************************************************/
 
 
