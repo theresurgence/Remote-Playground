@@ -19,7 +19,9 @@ var curr_player = ""; //flag for simon_on also
 var username = document.getElementById("user").innerHTML;
 var simon_speaks = false;
 
-export function simon_sockets() {
+export { curr_player, simon_sockets };
+
+function simon_sockets() {
 
     var clicked_led = [false,false,false,false, false, false, false ,false];
     var led_keys = ["q", "w", "e", "r", "q", "w", "e", "r"];
@@ -181,7 +183,8 @@ export function simon_sockets() {
         if (!curr_player || curr_player === username)
             play_btns[0].style.opacity =  1;
         else
-            play_btns[0].style.opacity =  0.5;
+            if (!isCamPublic)
+                play_btns[0].style.opacity =  0.5;
     });
 
     /**server to call server, need client as middleman**/
@@ -219,8 +222,8 @@ export function simon_sockets() {
     /* events for player room and public room */
 
     socket.on('simon-start-public', ()=>{
-        play_btns[0].style.opacity= 0.3;
-        console.log("OPacity")
+        if (!isCamPublic)
+            play_btns[0].style.opacity= 0.3;
     });
 
     /* NEED TO ADD MORE CCODE */

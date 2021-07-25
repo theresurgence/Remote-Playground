@@ -1,5 +1,6 @@
 /* Import Websockets module */
 import { main_sockets } from './websockets-client/socket-client-main.js'
+import { curr_player } from './websockets-client/simon.js'
 
 
 //************************ uncomment this below if no RPI ******************************************************/
@@ -185,6 +186,13 @@ btn_pubsimon.onclick = () => {
 
     videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
     console.log(`isCamPublic ${isCamPublic}`);
+
+    if (isCamPublic)
+        play_btns[0].style.opacity =  1;
+    else {
+        if (curr_player && curr_player !== username)
+            play_btns[0].style.opacity =  0.5;
+    }
 }
 
 

@@ -162,7 +162,13 @@ export function main_sockets(
 
     // Variables/Objects for idle game
     const achievementsJson = document.getElementById("achievements").innerHTML;
-    const achievements = JSON.parse(achievementsJson);
+    var achievements;
+    if (username !== "")
+        achievements = JSON.parse(achievementsJson);
+
+    console.log(achievements);
+
+
     var tickets = 0, hopResCount = 0, swingResCount = 0, slideResCount = 0, prestigeMultiplier = 1;
     const hopStartCost = 4, swingStartCost = 60, slideStartCost = 8640;
     const hopBaseIncome = 1.67, swingBaseIncome = 60, slideBaseIncome = 4320;
