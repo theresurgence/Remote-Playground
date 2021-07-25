@@ -38,6 +38,7 @@ async function simon_start(socket, io, db) {
 
         console.log("SIMON SAYS STARTS")
 
+        await gpio.sleep(1000);
         simon_says(socket, io);  //simon will start blinking
     });
 
@@ -51,6 +52,9 @@ async function simon_says(socket, io) {
     io.emit('simon-not-speaking');  //to false
 
     gpio.index_reset(); //reset hist_index
+
+    // io.to('simon room').emit('simon-timeout-start');
+
     console.log('Player can speak');
 }
 

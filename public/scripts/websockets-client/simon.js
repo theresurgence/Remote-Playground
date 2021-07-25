@@ -45,6 +45,7 @@ export function simon_sockets() {
                 if (!isCamPublic && !simon_speaks && curr_player === username) {
                     socket.emit(`gpio${led}_on`); 
                     clicked_led[led] = true; 
+                    // socket.emit('simon-clear-timeout');
                 }
             }
 
@@ -61,7 +62,7 @@ export function simon_sockets() {
             // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
-        addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
+        addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], async ()=>{ 
             if (led < 4) {
                 if (isCamPublic && clicked_led[led]) {
                     console.log("TURNING OFF LED");
@@ -83,6 +84,8 @@ export function simon_sockets() {
 
                         socket.emit(`player-says`, led); 
                         console.log("SENT PLAYER INPUT")
+
+                        // socket.emit('simon-timeout');
                     }
                 }
             }
@@ -106,6 +109,8 @@ export function simon_sockets() {
                         socket.emit(`gpio${led}_on`); 
                         clicked_led[led] = true; //flag
                         console.log(`Curr Player: ${curr_player}`);
+
+                        // socket.emit('simon-clear-timeout');
                     }
                     // var current = document.getElementsByClassName("active_led");
                     // current[i].className = current[i].className.replace(" active", "");
@@ -130,10 +135,10 @@ export function simon_sockets() {
             }
         }, true);
 
-        window.addEventListener("keyup", (event)=> {
+        window.addEventListener("keyup", async (event)=> {
 
-            if (led < 4) {
-                if (isCamPublic) {
+            if (led < 4)  {
+                if (isCamPublic && event.key === led_keys[led] && !isInputFocused) {
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
 
@@ -156,12 +161,20 @@ export function simon_sockets() {
                     if (gpio_list[led].className.includes(" active_led")) {
                         gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
                     }
+
+                    // await socket.emit('simon-clear-timeout');
+                    // socket.emit('simon-timeout');
+
+                    console.log(`Curr Player: ${curr_player}`);
                 }
-                console.log(`Curr Player: ${curr_player}`);
             }
         }, true);
 
     }
+
+    // socket.on('simon-timeout-start', ()=>{ 
+    //     socket.emit('simon-timeout');
+    // });
 
     socket.on('simon-on-check', (queue_0)=>{ 
         curr_player = queue_0;

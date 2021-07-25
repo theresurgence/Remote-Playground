@@ -1,6 +1,3 @@
-/* Future add ons: timing difficulty levels
-//  */
-
 const Gpio = require('onoff').Gpio; //Gpio class
 
 //initialize GPIO pins
@@ -47,9 +44,9 @@ const  LED_4 = new Gpio(26, 'out'),   //simon says LEDS
 
  //on LED for 1s, off for 1s
  async function blink(curr_LED) {
-     await sleep(200); //sleep only within function, code outside fn will still run normally
+     await sleep(500); //sleep only within function, code outside fn will still run normally
      LED_ctl(curr_LED, 1);
-     await sleep(200);
+     await sleep(500);
      LED_ctl(curr_LED, 0);
  };
 
@@ -100,6 +97,7 @@ const  LED_4 = new Gpio(26, 'out'),   //simon says LEDS
 
      simon_info,
      start_signal,
+     sleep,
  }; 
 
 
