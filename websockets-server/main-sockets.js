@@ -75,13 +75,13 @@ function main_sockets(io, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
 
         // var simonTimeout;
         // socket.on('simon-timeout', () => { 
@@ -122,9 +122,6 @@ function main_sockets(io, db, online) {
             }
             io.emit('queuestatus', queue);
             io.to(socket.id).emit('queuetext', queue, is_loggedin, false);
-            // db.prepare(`INSERT INTO queuestack (name) VALUES ('${username}');`).run();
-            // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
-            // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
         });
 
         socket.on('exitqueue', async (username) => {
@@ -160,19 +157,58 @@ function main_sockets(io, db, online) {
                     }
                     if (queue.length == 0)
                         simon_on = false;
-
-                // db.prepare(`DELETE FROM queuestack WHERE name = '${username}'`).run();
-                // let queueinfo = db.prepare(`SELECT * FROM queuestack`).all();
-                // let queuepos = db.prepare(`SELECT (queue_no) FROM queuestack WHERE name = '${username}'`).all();
                 }
             }
         }
         )
 
+        socket.on('led-multiplier', (username) => {
+            let sqlselect = `SELECT score from ${username} ORDER BY ID DESC LIMIT 1`;
+            let led_multiplier;
+            try {
+                led_multiplier = db.prepare(sqlselect).get().Score;
+                console.log(`multiplier: ${led_multiplier}`);
+            } catch(err) {
+                led_multiplier = 1;
+                console.log("Error fixed");
+            }
+
+            led_multiplier = (led_multiplier) ? led_multiplier : 1;
+            
+            console.log(`${username} MULTIPLIER ${led_multiplier}`);
+            
+            io.to(socket.id).emit('led-multiplier', led_multiplier);
+        });
+
+
+
         socket.on('cashout', (currTicket, username) => {
             let sqlselect = `SELECT score FROM userinfo WHERE name = '${username}'`;
             let scoreobj = db.prepare(sqlselect).all();
-            let newscore = scoreobj[0].score + currTicket;
+
+            let sqlselect_led = `SELECT score from ${username} ORDER BY ID DESC LIMIT 1`;
+
+            let led_multiplier;
+
+            try {
+                led_multiplier = db.prepare(sqlselect_led).get().Score;
+                console.log(`multiplier: ${led_multiplier}`);
+            } catch(err) {
+                led_multiplier = 1;
+                console.log("Error fixed");
+            }
+
+            if (led_multiplier) {
+                led_update = `UPDATE ${username} SET score = 1 ORDER BY ID DESC LIMIT 1 `;      
+                db.prepare(led_update).run();
+            } else //if led_multiplier is null
+                led_multiplier = 1;
+
+            let newscore = scoreobj[0].score + currTicket * led_multiplier;
+            console.log("HEREEEE");
+            console.log(scoreobj[0].score);
+            console.log(currTicket);
+            console.log(led_multiplier);
             let sqlupdate = `UPDATE userinfo SET score = ${newscore} WHERE name = '${username}'`;      
             db.prepare(sqlupdate).run();
         })

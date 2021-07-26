@@ -208,7 +208,11 @@ function simon_sockets() {
     //     simon_on = false;
     // });
 
-    socket.on('exitqueue-server', ()=>{ socket.emit('exitqueue', username); });
+    socket.on('exitqueue-server', ()=>{ 
+        socket.emit('exitqueue', username); 
+        if (username)
+            socket.emit('led-multiplier', username);
+    });
 
     /**server to call server, need client as middleman**/
 
