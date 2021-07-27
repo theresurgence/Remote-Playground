@@ -8,6 +8,7 @@ import { curr_player } from './websockets-client/simon.js'
 
 /************************************** comment if no RPI *****************************/
 // const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('http://192.168.20.18:4000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
 const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
@@ -155,7 +156,7 @@ for (let i=0; i < inputs_class.length; i++) {
 
     infobtn.onclick = () => {
       infomodal.style.display = "block";
-      // notification();
+      notification();
     }
 
     span.onclick = () => {
