@@ -453,10 +453,10 @@ li {
 }
 
 #videoStream {
-    background-image: url("./images/leds.jpg");
+    /* background-image: url("./images/leds.jpg"); */
 
     /* background-image: url("http://192.168.20.17:5000/cam/"); */
-    /* background-image: url("https://20.194.44.54/cam/"); /1* deploy *1/ */ 
+    background-image: url("https://20.194.44.54/cam/"); /* deploy */ 
 
     /* background-size: 100% 100%; */
     /* background-position:  right; */
