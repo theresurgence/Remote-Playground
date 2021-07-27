@@ -51,7 +51,24 @@ const online = document.getElementById('online'),
     queue_btn = document.getElementById('queuebutton'),
     exit_btn = document.getElementById('exitbutton'),
     navbar = document.getElementById('nav-bar'),
-    inputs_class = document.getElementsByClassName('inputs');
+    inputs_class = document.getElementsByClassName('inputs'),
+
+    idlebtn_container = document.getElementsByClassName('idlebtn-container')[0],
+    idle_tooltiptext = document.getElementById('idletooltip');
+    
+    {/*         <div class="idlebtn-container tooltip"> */}
+    {/*             <span class="tooltiptext" id="idletooltip">Please login to play</span> */}
+
+
+
+if (username) {
+    idlebtn_container.className = idlebtn_container.className.replace(" tooltip", "");
+    idle_tooltiptext.innerHTML = "";
+    idle_tooltiptext.className = idle_tooltiptext.className.replace("tooltiptext", "");
+    idle_tooltiptext.id = idle_tooltiptext.className.replace("tooltiptext", "");
+}
+
+
 
 
 ///SWITCH      CAMERA///////////////////////////////////////////////////////

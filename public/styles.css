@@ -627,6 +627,19 @@ li {
   opacity: 1;
 }
 
+#idletooltip {
+  /* position: absolute; */
+  right: 300%;
+  /* z-index: 1; */
+  bottom: -30%;
+  /* right: 200%; */
+  /* left: -<F2>%; */
+  margin-left: 20%;
+  /* margin auto; */
+
+}
+
+
 .play-buttons {
     background-color: bisque;
     display: flex;
