@@ -244,52 +244,58 @@ export function main_sockets(
     }
 
     addbtn1.onclick = () => {
-        let hopCurrCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount-1)));
-        let hopNextCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount)));
-        
-        if (hopResCount == 0) {
-            hopResCount += 1;
-            hopCurrCost = hopStartCost;
-            rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
-            income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
-            notification(hopResCount, 'hop');
+        if (username) {
+            let hopCurrCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount-1)));
+            let hopNextCost = twoDp(hopStartCost * (hopBaseMultiplier ** (hopResCount)));
+
+            if (hopResCount == 0) {
+                hopResCount += 1;
+                hopCurrCost = hopStartCost;
+                rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
+                income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+                notification(hopResCount, 'hop');
+            }
+
+            if (tickets >= hopCurrCost) {
+                hopResCount += 1; 
+                rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
+                income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
+                tickets -= hopCurrCost;
+                ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`;      
+                notification(hopResCount, 'hop');   
+                // dispResInfo(rescount1, hopResCount, cost1, hopCurrCost, hopNextCost, income1, hopBaseIncome);
+            }    
         }
-            
-        if (tickets >= hopCurrCost) {
-            hopResCount += 1; 
-            rescount1.innerHTML = `${hopResCount}`; cost1.innerHTML = `${hopNextCost}`;
-            income1.innerHTML = `${twoDp(hopBaseIncome * hopResCount * prestigeMultiplier)}`;
-            tickets -= hopCurrCost;
-            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`;      
-            notification(hopResCount, 'hop');   
-            // dispResInfo(rescount1, hopResCount, cost1, hopCurrCost, hopNextCost, income1, hopBaseIncome);
-        }    
     }
 
     addbtn2.onclick = () => {
-        let swingCurrCost = twoDp(swingStartCost * (swingBaseMultiplier ** swingResCount));
-        let swingNextCost = twoDp(swingStartCost * (swingBaseMultiplier ** (swingResCount+1)));
-        if (tickets >= swingCurrCost) {
-            swingResCount += 1;
-            rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
-            income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
-            tickets -= swingCurrCost;      
-            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
-            notification(swingResCount, 'swing');
-        }     
+        if (username) {
+            let swingCurrCost = twoDp(swingStartCost * (swingBaseMultiplier ** swingResCount));
+            let swingNextCost = twoDp(swingStartCost * (swingBaseMultiplier ** (swingResCount+1)));
+            if (tickets >= swingCurrCost) {
+                swingResCount += 1;
+                rescount2.innerHTML = `${swingResCount}`; cost2.innerHTML = `${swingNextCost}`;
+                income2.innerHTML = `${twoDp(swingBaseIncome * swingResCount * prestigeMultiplier)}`;
+                tickets -= swingCurrCost;      
+                ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+                notification(swingResCount, 'swing');
+            }     
+        }
     }
 
     addbtn3.onclick = () => {       
-        let slideCurrCost = twoDp(slideStartCost * (slideBaseMultiplier ** slideResCount));
-        let slideNextCost = twoDp(slideStartCost * (slideBaseMultiplier ** (slideResCount+1)));
-        if (tickets >= slideCurrCost) {
-            slideResCount += 1;
-            rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
-            income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
-            tickets -= slideCurrCost;
-            ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
-            notification(slideResCount, 'slide');
-        }       
+        if (username) {
+            let slideCurrCost = twoDp(slideStartCost * (slideBaseMultiplier ** slideResCount));
+            let slideNextCost = twoDp(slideStartCost * (slideBaseMultiplier ** (slideResCount+1)));
+            if (tickets >= slideCurrCost) {
+                slideResCount += 1;
+                rescount3.innerHTML = `${slideResCount}`; cost3.innerHTML = `${slideNextCost}`;
+                income3.innerHTML = `${twoDp(slideBaseIncome * slideResCount * prestigeMultiplier)}`;
+                tickets -= slideCurrCost;
+                ticketcount.innerHTML = `Tickets: ${twoDp(tickets)}`; 
+                notification(slideResCount, 'slide');
+            }       
+        }
     }
 
     //Helper function to round and display 2 decimal places
