@@ -43,59 +43,6 @@ span.onclick = () => {
   profilemodal.style.display = "none";
 }
 
-// dp0.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar0.PNG";
-//   profilepicheader.src = "../../images/avatar0.PNG";
-// }
-
-// dp1.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar1.PNG";
-//   profilepicheader.src = "../../images/avatar1.PNG";
-// }
-
-// dp2.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar2.PNG";
-//   profilepicheader.src = "../../images/avatar2.PNG";
-// }
-
-// dp3.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar3.PNG";
-//   profilepicheader.src = "../../images/avatar3.PNG";
-  
-// }
-
-// dp4.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar4.PNG";
-//   profilepicheader.src = "../../images/avatar4.PNG";
-// }
-
-// dp5.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar5.PNG";
-//   profilepicheader.src = "../../images/avatar5.PNG";
-// }
-
-// dp6.onclick = () => {
-//   profilemodal.style.display = "none";
-//   profilepic.src = "../../images/avatar6.PNG";
-//   profilepicheader.src = "../../images/avatar6.PNG";
-// }
-
-// function setdp() {
-//   const xhttp = new XMLHttpRequest();
-//   xhttp.onreadystatechange = () => {
-//     if (this.readyState == 4 && this.status == 200) {
-
-//     }
-//   }
-// }
-
-
 window.onclick = (event) => {
   if (event.target == profilemodal) {
     profilemodal.style.display = "none";
