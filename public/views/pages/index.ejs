@@ -42,13 +42,8 @@
         <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;"id="box4"></p></div>
         <div class="queue-box bgDarkBlue"><p class="textshdw white" style="font-size: 22px;" id="box5"></p></div>
         <div class="queue-info">
-<!-- <<<<<<< HEAD -->
-<!--             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"><b>Queue Number: Not in Queue</b></p> -->
-<!--             <input id="queuebutton" type="button" class="button orange textshdw" value="QUEUE UP"> --> 
-<!-- ======= -->
             <p id="queuetext" class="leader-text textshdw white" style="font-size: 18px;"></p>
             <input id="queuebutton" type="button" class="button red textshdw" value="QUEUE UP"> 
-<!-- >>>>>>> main -->
             <input id="exitbutton" type="button" class="button grey textshdw" style="border-radius: 50%; padding: 15px 15px" value="X">
             <!-- <input id="testbutton" type="button" class="button red" value="notif"> -->
         </div>      
@@ -70,6 +65,7 @@
 
         <div class="idle-box">
             <div><h1 id="ticket-count" class="textshdw white">Tickets: 0</h1></div>
+            <h2 id="multiplier" class="textshdw white">Simon Says Multiplier: x1</h2>
 
             
             <!-- <input id="expand" type="button" value="EXPAND" class="button green textshdw"> -->
@@ -147,16 +143,16 @@
         
     </script>
         
-    
-    
+    <div class="play-buttons tooltip">                  
+        <span class="tooltiptext">Press "Q", "W", "E", "R" to control LEDs</span>
 
-    <div class="play-buttons">                  
         <input id="gpio0" type="button" class="btn-3d red leds"> 
         <input id="gpio1" type="button" class="btn-3d green leds">
         <input id="gpio2" type="button" class="btn-3d blue leds">
         <input id="gpio3" type="button" class="btn-3d yellow leds">               
 
-        <p id="curr_score"><b>Score: 0 </b></p>
+        <p id="curr_score" style="white-space: pre-line;"><b>Multiplier: x1  </b></p>
+        <p id="playground-status-header" style="white-space: pre-wrap;"><b>Public Playground</b></p>
 
         <input id="PubSimon" type="button" value="Switch Camera" class="button purple">
 

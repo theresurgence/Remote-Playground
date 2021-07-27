@@ -1,15 +1,16 @@
-/* Import Websockets module */
 import { main_sockets } from './websockets-client/socket-client-main.js'
+import { curr_player } from './websockets-client/simon.js'
+/* Import Websockets module */
 
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
 // const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
-// const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
@@ -39,6 +40,8 @@ const online = document.getElementById('online'),
     btn_pubsimon = document.getElementById('PubSimon'),
     curr_score = document.getElementById('curr_score'),
 
+    playground_status = document.getElementById('playground-status-header'),
+    multiplier = document.getElementById('multiplier'),
 
     username = document.getElementById("user").innerHTML,
     inputfield = document.getElementById("chat-input"),
@@ -50,8 +53,34 @@ const online = document.getElementById('online'),
     inputs_class = document.getElementsByClassName('inputs');
 
 
+///SWITCH      CAMERA///////////////////////////////////////////////////////
+var isCamPublic = true;
+function toggle_flag(bool_val) { bool_val ? false : true; }
 
+btn_pubsimon.onclick = () => {
+    // let publicVideo = 'http://192.168.20.17:5000/cam/'
+    // let simonVideo = 'http://192.168.20.18:3000/stream.mjpg'
+    
+    let simonVideo = 'https://20.194.44.54/stream.mjpg'
+    let publicVideo = 'https://20.194.44.54/cam/'
 
+    isCamPublic = (isCamPublic) ? false : true;
+
+    videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
+    console.log(`isCamPublic ${isCamPublic}`);
+
+    if (isCamPublic) {
+        play_btns[0].style.opacity =  1;
+        playground_status.innerHTML = "<b>Public Playground</b>"
+    }
+    else {
+        if (curr_player && curr_player !== username) {
+            play_btns[0].style.opacity =  0.5;
+        }
+        playground_status.innerHTML = "<b>Simon Says</b>    "
+    }
+}
+///SWITCH      CAMERA///////////////////////////////////////////////////////
 
 var isInputFocused = false;
 for (let i=0; i < inputs_class.length; i++) {
@@ -126,7 +155,7 @@ for (let i=0; i < inputs_class.length; i++) {
 
     infobtn.onclick = () => {
       infomodal.style.display = "block";
-      notification();
+      // notification();
     }
 
     span.onclick = () => {
@@ -171,23 +200,6 @@ for (let i=0; i < inputs_class.length; i++) {
     }
 
 
-var isCamPublic = true;
-function toggle_flag(bool_val) { bool_val ? false : true; }
-
-btn_pubsimon.onclick = () => {
-    let publicVideo = 'http://192.168.20.17:5000/cam/'
-    let simonVideo = 'http://192.168.20.18:3000/stream.mjpg'
-    
-    // let simonVideo = 'https://20.194.44.54/stream.mjpg'
-    // let publicVideo = 'https://20.194.44.54/cam/'
-
-    isCamPublic = (isCamPublic) ? false : true;
-
-    videoStream.src = (isCamPublic) ? publicVideo : simonVideo;
-    console.log(`isCamPublic ${isCamPublic}`);
-}
-
-
 function addMultipleEventListener(element, events, handler) {
   events.forEach(e => element.addEventListener(e, handler))
 }
@@ -212,7 +224,8 @@ main_sockets(
     inputfield,
     username, 
     cashout_btn,
-    ticketcount
+    ticketcount,
+    multiplier
 );
 
 

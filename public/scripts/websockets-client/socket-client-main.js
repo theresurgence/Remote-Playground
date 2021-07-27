@@ -22,12 +22,19 @@ export function main_sockets(
     username, 
     cashout_btn,
     ticketcount,
-    testbtn
+    multiplier,
 )  {
+
+    if (username)
+        socket.emit('led-multiplier', username);
+
+    socket.on('led-multiplier', (led_multiplier) => {
+        multiplier.innerHTML = `Simon Says Multiplier: x${led_multiplier}`;
+    });
 
     //Listen for events
     socket.on('curr-score', (score)=>{
-        curr_score.innerHTML = `<b>Score: ${score}</b>`;  
+        curr_score.innerHTML = `<b>Multiplier: ${score}</b>`;  
         console.log("CHANGE SCORE");
     });
 
@@ -151,15 +158,21 @@ export function main_sockets(
         }
         
     }    
-    ////test test 
-    //testbtn = document.getElementById("testbutton");
-    //testbtn.onclick = () => {
-    //    alertify.message("alert test");
-    //}
+    //test test 
+    // testbtn = document.getElementById("testbutton");
+    // testbtn.onclick = () => {
+    //     alertify.message("alert test");
+    // }
 
     // Variables/Objects for idle game
     const achievementsJson = document.getElementById("achievements").innerHTML;
-    const achievements = JSON.parse(achievementsJson);
+    var achievements;
+    if (username !== "")
+        achievements = JSON.parse(achievementsJson);
+
+    console.log(achievements);
+
+
     var tickets = 0, hopResCount = 0, swingResCount = 0, slideResCount = 0, prestigeMultiplier = 1;
     const hopStartCost = 4, swingStartCost = 60, slideStartCost = 8640;
     const hopBaseIncome = 1.67, swingBaseIncome = 60, slideBaseIncome = 4320;

@@ -21,7 +21,7 @@ async function simon_start(socket, io, db) {
 
         console.log(player_name);
 
-        // db.prepare(`INSERT INTO ${player_name} (Start) VALUES (DateTime('now'))`).run();
+        db.prepare(`INSERT INTO ${player_name} (Start) VALUES (DateTime('now'))`).run();
 
         io.sockets.emit('curr-score', curr_score); 
 
@@ -38,6 +38,7 @@ async function simon_start(socket, io, db) {
 
         console.log("SIMON SAYS STARTS")
 
+        await gpio.sleep(1000);
         simon_says(socket, io);  //simon will start blinking
     });
 
@@ -51,6 +52,9 @@ async function simon_says(socket, io) {
     io.emit('simon-not-speaking');  //to false
 
     gpio.index_reset(); //reset hist_index
+
+    // io.to('simon room').emit('simon-timeout-start');
+
     console.log('Player can speak');
 }
 
@@ -103,28 +107,30 @@ function simon_end(socket, io, db) {
     gpio.hist_reset();
 
     console.log("SIMON END Function")
-    curr_score = 0;
 
     io.emit('simon-on-check', queue[0]);
     io.to(socket.id).emit('exitqueue-server');
 
-    // console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
-    // console.log(`DATABASE: ${db}`);
+    console.log(`PLAYER NAME HERE: ${PLAYER_NAME}`);
+    console.log(`DATABASE: ${db}`);
 
-    // let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
-    // db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
+    let latest_Start = db.prepare(`SELECT Start FROM ${PLAYER_NAME} ORDER BY ID DESC LIMIT 1`).get();
+    db.prepare(`UPDATE ${PLAYER_NAME} SET END=DateTime('now'), Score='${curr_score}' WHERE Start='${latest_Start.Start}'`).run();
 
+    let hiscore = db.prepare(`SELECT Score FROM userinfo WHERE name='${PLAYER_NAME}'`).get().score;
+    console.log(hiscore)
 
-    // let hiscore = db.prepare(`SELECT Score FROM userinfo WHERE name='${PLAYER_NAME}'`).get().score;
-    // console.log(hiscore)
-
-    // if (hiscore < curr_score) {
-        // db.prepare(`UPDATE userinfo SET Score='${curr_score}' WHERE name='${PLAYER_NAME}'`).run();
-    // }
+    if (hiscore < curr_score) {
+        db.prepare(`UPDATE userinfo SET Score='${curr_score}' WHERE name='${PLAYER_NAME}'`).run();
+    }
     
-    // console.log(latest_Start.Start)
+    console.log(latest_Start.Start)
 
-    // console.log("update db with End time and Score");
+    console.log(curr_score);
+    console.log("update db with End time and Score");
+
+
+    curr_score = 0;
 
 }
 

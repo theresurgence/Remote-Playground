@@ -19,7 +19,9 @@ var curr_player = ""; //flag for simon_on also
 var username = document.getElementById("user").innerHTML;
 var simon_speaks = false;
 
-export function simon_sockets() {
+export { curr_player, simon_sockets };
+
+function simon_sockets() {
 
     var clicked_led = [false,false,false,false, false, false, false ,false];
     var led_keys = ["q", "w", "e", "r", "q", "w", "e", "r"];
@@ -45,6 +47,7 @@ export function simon_sockets() {
                 if (!isCamPublic && !simon_speaks && curr_player === username) {
                     socket.emit(`gpio${led}_on`); 
                     clicked_led[led] = true; 
+                    // socket.emit('simon-clear-timeout');
                 }
             }
 
@@ -61,7 +64,7 @@ export function simon_sockets() {
             // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
-        addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], ()=>{ 
+        addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], async ()=>{ 
             if (led < 4) {
                 if (isCamPublic && clicked_led[led]) {
                     console.log("TURNING OFF LED");
@@ -83,6 +86,8 @@ export function simon_sockets() {
 
                         socket.emit(`player-says`, led); 
                         console.log("SENT PLAYER INPUT")
+
+                        // socket.emit('simon-timeout');
                     }
                 }
             }
@@ -106,6 +111,8 @@ export function simon_sockets() {
                         socket.emit(`gpio${led}_on`); 
                         clicked_led[led] = true; //flag
                         console.log(`Curr Player: ${curr_player}`);
+
+                        // socket.emit('simon-clear-timeout');
                     }
                     // var current = document.getElementsByClassName("active_led");
                     // current[i].className = current[i].className.replace(" active", "");
@@ -130,10 +137,10 @@ export function simon_sockets() {
             }
         }, true);
 
-        window.addEventListener("keyup", (event)=> {
+        window.addEventListener("keyup", async (event)=> {
 
-            if (led < 4) {
-                if (isCamPublic) {
+            if (led < 4)  {
+                if (isCamPublic && event.key === led_keys[led] && !isInputFocused) {
                     socket.emit(`gpio${led}_off`);
                     clicked_led[led] = false;
 
@@ -156,19 +163,28 @@ export function simon_sockets() {
                     if (gpio_list[led].className.includes(" active_led")) {
                         gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
                     }
+
+                    // await socket.emit('simon-clear-timeout');
+                    // socket.emit('simon-timeout');
+
+                    console.log(`Curr Player: ${curr_player}`);
                 }
-                console.log(`Curr Player: ${curr_player}`);
             }
         }, true);
 
     }
+
+    // socket.on('simon-timeout-start', ()=>{ 
+    //     socket.emit('simon-timeout');
+    // });
 
     socket.on('simon-on-check', (queue_0)=>{ 
         curr_player = queue_0;
         if (!curr_player || curr_player === username)
             play_btns[0].style.opacity =  1;
         else
-            play_btns[0].style.opacity =  0.5;
+            if (!isCamPublic)
+                play_btns[0].style.opacity =  0.5;
     });
 
     /**server to call server, need client as middleman**/
@@ -192,7 +208,11 @@ export function simon_sockets() {
     //     simon_on = false;
     // });
 
-    socket.on('exitqueue-server', ()=>{ socket.emit('exitqueue', username); });
+    socket.on('exitqueue-server', ()=>{ 
+        socket.emit('exitqueue', username); 
+        if (username)
+            socket.emit('led-multiplier', username);
+    });
 
     /**server to call server, need client as middleman**/
 
@@ -206,8 +226,8 @@ export function simon_sockets() {
     /* events for player room and public room */
 
     socket.on('simon-start-public', ()=>{
-        play_btns[0].style.opacity= 0.3;
-        console.log("OPacity")
+        if (!isCamPublic)
+            play_btns[0].style.opacity= 0.3;
     });
 
     /* NEED TO ADD MORE CCODE */
