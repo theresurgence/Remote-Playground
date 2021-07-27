@@ -120,7 +120,7 @@ export function main_sockets(
     //Notification Test
     function notification(count, type) {
         console.log('yo' + count + type);
-        console.log(count == 1);
+        console.log(achievements);
         if (type == 'hop') {
             if (count == 1 && achievements.ach1 != 1) {
                 alertify.notify("Get Hoppin' (Unlock Hopscotch)", 'success', 3);  
@@ -134,31 +134,28 @@ export function main_sockets(
             if (count == 1 && achievements.ach4 != 1) {
                 alertify.notify("Swing and a Hit (Unlock Swing)", 'success', 3);  
             } else if (count == 50 && achievements.ach5 != 1) {
-                alertify.notify("Swing 50 (Swing 50 Times)", 'success', 3);
+                alertify.notify("Swing 50 (Own 50 Swings)", 'success', 3);
             } else if (count == 200 && achievements.ach6 != 1) {
-                alertify.notify("The Pendulum (Swing 500 Times)", 'success', 3);
+                alertify.notify("The Pendulum (Own 200 Swings)", 'success', 3);
             } 
             socket.emit('achievement', count, 'swing', username);
         } else if (type == 'slide') {
             if (count == 1 && achievements.ach7 != 1) {
                 alertify.notify("Slip n Slide (Unlock Slide)", 'success', 3);  
             } else if (count == 50 && achievements.ach8 != 1) {
-                alertify.notify("Slide 50 (Slide 50 Times)", 'success', 3);
+                alertify.notify("Slide 50 (Own 50 Slides)", 'success', 3);
             } else if (count == 200 && achievements.ach9 != 1) {
-                alertify.notify("Mr Smooth (Slide 500 Times)", 'success', 3);
+                alertify.notify("Mr Smooth (Own 200 Slides)", 'success', 3);
             } 
             socket.emit('achievement', count, 'slide', username);
         }
         
     }    
-    
-    //test test 
-    testbtn = document.getElementById("testbutton");
-    
-
-    testbtn.onclick = () => {
-        alertify.message("alert test");
-    }
+    ////test test 
+    //testbtn = document.getElementById("testbutton");
+    //testbtn.onclick = () => {
+    //    alertify.message("alert test");
+    //}
 
     // Variables/Objects for idle game
     const achievementsJson = document.getElementById("achievements").innerHTML;
@@ -363,15 +360,5 @@ export function main_sockets(
 
     simon_sockets();
 }
-
-
-/* Possible Code to be added eventually */
-
-// const socket = require('socket.io-client')
-// import { io } from "socket.io-client"
-// const conn = socket(host, { upgrade: false, transports: ['websocket'] })
-
-
-
 
 

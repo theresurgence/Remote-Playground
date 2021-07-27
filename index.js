@@ -133,8 +133,9 @@ app.get('/', (req, res) => {
     }
 
     let entries = topthree();
-    let sql2 = "SELECT * FROM userachievements";
-    let isAchieve = db.prepare(sql2).all();
+   
+    
+    
 
     if (!auth) {
         res.render('pages/index', {
@@ -143,14 +144,16 @@ app.get('/', (req, res) => {
             online: online,
         });
     } else {
-    res.render('pages/index', {
-        auth: auth,
-        userid: req.user.name,
-        entries: entries,
-        online: online,
-        dpindex: req.user.dpindex,
-        isAchieve: isAchieve
-    });
+        let sql2 = `SELECT * FROM userachievements WHERE (id = ${req.user.id})`;
+        let isAchieve = db.prepare(sql2).all();
+        res.render('pages/index', {
+            auth: auth,
+            userid: req.user.name,
+            entries: entries,
+            online: online,
+            dpindex: req.user.dpindex,
+            isAchieve: isAchieve
+        });
     }
     console.log(`Global ${online}`);
 });
@@ -192,7 +195,7 @@ app.get('/profile', (req, res) => {
         res.status(404).send('Error: Invalid Access, not logged in');
     } else {
 
-    let sql = "SELECT * FROM userachievements";
+    let sql = `SELECT * FROM userachievements WHERE (id = ${req.user.id})`;
 
     let isAchieve = db.prepare(sql).all();
 
@@ -274,6 +277,8 @@ app.delete('/logout', (req, res) => {
 
 function initUser (name, email, password, score) {
     db.prepare(`INSERT INTO userinfo (name, email, password, score) VALUES ('${name}', '${email}', '${password}', ${score});`).run();
+    let id = db.prepare(`SELECT (id) FROM userinfo WHERE (name = '${name}');`).all();
+    db.prepare(`INSERT INTO userachievements (id,ach1) VALUES (${id[0].id}, 0);`).run();
 
     //score table
     db.prepare(`CREATE TABLE ${name} (Id INTEGER PRIMARY KEY, Start TEXT, End TEXT, Score INTEGER) `).run();
