@@ -1,17 +1,15 @@
 import { main_sockets } from './websockets-client/socket-client-main.js'
 import { curr_player } from './websockets-client/simon.js'
-/* Import Websockets module */
-
 
 //************************ uncomment this below if no RPI ******************************************************/
-// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
 // const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
 // const socket = io.connect('http://192.168.20.18:4000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
-const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server
 
 /* Declare all Document Objects to be manipulated */
 const online = document.getElementById('online'),
@@ -56,10 +54,6 @@ const online = document.getElementById('online'),
     idlebtn_container = document.getElementsByClassName('idlebtn-container')[0],
     idle_tooltiptext = document.getElementById('idletooltip');
     
-    {/*         <div class="idlebtn-container tooltip"> */}
-    {/*             <span class="tooltiptext" id="idletooltip">Please login to play</span> */}
-
-
 
 if (username) {
     idlebtn_container.className = idlebtn_container.className.replace(" tooltip", "");

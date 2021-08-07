@@ -11,20 +11,6 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
-// <<<<<<< HEAD
-// const db = new sqlite3(path.resolve('./userinfo.db')); 
-
-
-// module.exports = function (io, queue, db, online) {
-
-//     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
-
-//         io.to(socket.id).emit('check-register');
-//         socket.on('receive-register', (username)=> {
-//             console.log(`USERNAME: ${username}`);
-            
-//             if (username != '')
-// =======
 module.exports = {
     main_sockets, 
     queue,
@@ -83,11 +69,6 @@ function main_sockets(io, db, online) {
         simon_sockets.socket_simon_end(socket, io, db, );
         simon_sockets.player_says(socket, io, db);
 
-        // var simonTimeout;
-        // socket.on('simon-timeout', () => { 
-        //     simonTimeout = setTimeout(() => simon_sockets.simon_end(socket, io, db), 3000); console.log("TIMEOUT");
-        // });
-        // socket.on('simon-clear-timeout', () => { clearTimeout(simonTimeout); console.log("CLEAR"); });
         /***************** RPI COMMENT OUT **************************************************************************/
 
 

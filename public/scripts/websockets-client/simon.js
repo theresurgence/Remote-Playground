@@ -56,12 +56,7 @@ function simon_sockets() {
                 case 1: btnpress1.play(); break;
                 case 2: btnpress2.play(); break;
                 case 3: btnpress3.play(); break;
-                // case 4: btnpress0.play(); break;
-                // case 5: btnpress1.play(); break;
-                // case 6: btnpress2.play(); break;
-                // case 7: btnpress3.play(); break;
             }
-            // event.preventDefault(); //prevents touchstart and mousedown events double counting!
         });
 
         addMultipleEventListener(gpio_list[led], ["mouseup", "touchend", "mouseleave"], async ()=>{ 
@@ -98,11 +93,6 @@ function simon_sockets() {
                 if (isCamPublic && event.key === led_keys[led] && !isInputFocused) {
                     socket.emit(`gpio${led}_on`); 
                     clicked_led[led] = true; //flag
-                    // var current = document.getElementsByClassName("active_led");
-                    // current[i].className = current[i].className.replace(" active", "");
-                    // if (!gpio_list[led].className.includes("active_led")) {
-                    //     gpio_list[led].className += " active_led";
-                    // }
                 }
             }
             else {
@@ -111,11 +101,7 @@ function simon_sockets() {
                         socket.emit(`gpio${led}_on`); 
                         clicked_led[led] = true; //flag
                         console.log(`Curr Player: ${curr_player}`);
-
-                        // socket.emit('simon-clear-timeout');
                     }
-                    // var current = document.getElementsByClassName("active_led");
-                    // current[i].className = current[i].className.replace(" active", "");
                 }
             }
 
@@ -157,15 +143,11 @@ function simon_sockets() {
                         socket.emit(`gpio${led}_off`);
                         clicked_led[led] = false;
                         socket.emit(`player-says`, led); 
-                        //player's input is taken into account if simon game is in progress
                     }
 
                     if (gpio_list[led].className.includes(" active_led")) {
                         gpio_list[led].className = gpio_list[led].className.replace(" active_led", "");
                     }
-
-                    // await socket.emit('simon-clear-timeout');
-                    // socket.emit('simon-timeout');
 
                     console.log(`Curr Player: ${curr_player}`);
                 }
@@ -173,10 +155,6 @@ function simon_sockets() {
         }, true);
 
     }
-
-    // socket.on('simon-timeout-start', ()=>{ 
-    //     socket.emit('simon-timeout');
-    // });
 
     socket.on('simon-on-check', (queue_0)=>{ 
         curr_player = queue_0;
@@ -187,13 +165,12 @@ function simon_sockets() {
                 play_btns[0].style.opacity =  0.5;
     });
 
-    /**server to call server, need client as middleman**/
 
     socket.on('simon-start-server', ()=>{ 
         curr_player = document.getElementById("user").innerHTML;
         console.log(`Player name: ${curr_player}`);
         socket.emit('simon-start', curr_player); 
-        simon_on = true;   //////////////////////////////////////////////////////////////////NEEDED?????
+        simon_on = true; 
     });
 
     socket.on('simon-start-server-next', (next_player)=>{ 
@@ -202,23 +179,11 @@ function simon_sockets() {
         simon_on = true;
     });
 
-    // socket.on('simon-end-server', ()=>{ 
-    //     console.log(`Player name: ${curr_player}`);
-    //     socket.emit('simon-end', curr_player); 
-    //     simon_on = false;
-    // });
-
     socket.on('exitqueue-server', ()=>{ 
         socket.emit('exitqueue', username); 
         if (username)
             socket.emit('led-multiplier', username);
     });
-
-    /**server to call server, need client as middleman**/
-
-
-
-
 
     socket.on('simon-is-speaking', ()=>{ simon_speaks = true });
     socket.on('simon-not-speaking', ()=>{ simon_speaks = false });

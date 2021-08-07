@@ -18,22 +18,6 @@ const methodOverride = require('method-override');
 
 const server = app.listen(port, () => console.log(`Server started on port ${port}`));
 
-/************* HTTPS******************/
-// const https = require('https')
-// const fs = require('fs');
-
-// const server = https.createServer({
-//   key: fs.readFileSync('./ssl/key.pem'),
-//   cert: fs.readFileSync('./ssl/cert.pem')
-// }, app)
-// .listen(port, function () {
-//   console.log('App started on port 3000! Go to https://localhost:3000/')
-// })
-/************* HTTPS******************/
-
-
-
-
 initializePassport(
     passport, 
     getUserbyEmail,
@@ -69,29 +53,24 @@ function getUserbyId(id) {
 
 var auth = false;
 
-/************************************ COMMENT OUT if not PI  **********************************/
-const gpio = require('./gpio-toggle'); //import gpio functions and variables
-const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
+/************************************ COMMENT OUT if not using RPI  **********************************/
+// const gpio = require('./gpio-toggle'); //import gpio functions and variables
+// const videoStream = require('raspberrypi-node-camera-web-streamer/videoStream');
 
-videoStream.acceptConnections(app, {
-    width: 1280,
-    height: 720,
-    // width: 1920,
-    // height: 1080,
-    fps: 20,
-    encoding: 'JPEG',
-    quality: 7 //lower is faster
-}, '/stream.mjpg', true); 
+// videoStream.acceptConnections(app, {
+//     width: 1280,
+//     height: 720,
+//     // width: 1920,
+//     // height: 1080,
+//     fps: 20,
+//     encoding: 'JPEG',
+//     quality: 7 //lower is faster
+// }, '/stream.mjpg', true); 
 
 /************************************ COMMENT OUT if not PI  **********************************/
 
 let db = new sqlite3(path.resolve('./userinfo.db'));                                         
 
-var gpio0_status, gpio1_status, gpio2_status, gpio3_status= 0;
-var simon_on = false; 
-
-// app.use(session({ secret: 'somevalue' }));
-// use of this????
 app.use(session({
     secret: 'somevalue',
     resave: true,

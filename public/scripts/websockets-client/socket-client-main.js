@@ -6,10 +6,8 @@ import {
     toggle_flag,
 } from '../main-client-script.js';
 
-// import {queue} from '../../../websockets-server/main-sockets.js';
 
 /* Main Client Websockets Events */
-
 export function main_sockets(
     document,
     socket, 
@@ -158,11 +156,6 @@ export function main_sockets(
         }
         
     }    
-    //test test 
-    // testbtn = document.getElementById("testbutton");
-    // testbtn.onclick = () => {
-    //     alertify.message("alert test");
-    // }
 
     // Variables/Objects for idle game
     const achievementsJson = document.getElementById("achievements").innerHTML;
