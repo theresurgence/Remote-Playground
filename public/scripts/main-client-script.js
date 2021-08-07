@@ -2,11 +2,11 @@ import { main_sockets } from './websockets-client/socket-client-main.js'
 import { curr_player } from './websockets-client/simon.js'
 
 //************************ uncomment this below if no RPI ******************************************************/
-const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
+// const socket = io.connect('https://localhost:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /************************************** comment if no RPI *****************************/
 // const socket = io.connect('http://192.168.20.18:3000', {reconnect: true}); //client establishes websocket connection to server
-// const socket = io.connect('http://192.168.20.18:4000', {reconnect: true}); //client establishes websocket connection to server
+const socket = io.connect('http://192.168.18.44:3000', {reconnect: true}); //client establishes websocket connection to server
 
 /**********************DEPLOYMENT ********************/
 // const socket = io.connect('https://20.194.44.54', {reconnect: true}); //client establishes websocket connection to server

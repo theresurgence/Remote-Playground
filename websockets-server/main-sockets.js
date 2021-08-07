@@ -21,7 +21,6 @@ function main_sockets(io, db, online) {
     io.on('connection', (socket) => { //when a new client connects to server, websocket connected!
 
         // console.log(socket);
-
         //emit to client to check if user has logged in
         io.to(socket.id).emit('check-login');
         socket.on('checked-login', (username)=> {
@@ -45,9 +44,6 @@ function main_sockets(io, db, online) {
 
         io.to(socket.id).emit('simon-on-check', queue[0]); //send curr_player if have
 
-        // var r = btw_range(200,255) ; var g = btw_range(200,255); var b = btw_range(200,255);
-
-
         socket.on('disconnect', (reason)=> {
             console.log(socket.id, 'disconnected:', reason);
             online -= 1;
@@ -61,13 +57,13 @@ function main_sockets(io, db, online) {
 
 
         /***************** RPI COMMENT OUT **************************************************************************/
-        require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
+        // require('./gpio-onoff')(socket);  /* GPIO onoff websockets */
 
-        /* Simon Says Mini Game websockets */
-        simon_sockets = require('./simon')
-        simon_sockets.simon_start(socket, io, db);
-        simon_sockets.socket_simon_end(socket, io, db, );
-        simon_sockets.player_says(socket, io, db);
+        // /* Simon Says Mini Game websockets */
+        // simon_sockets = require('./simon')
+        // simon_sockets.simon_start(socket, io, db);
+        // simon_sockets.socket_simon_end(socket, io, db, );
+        // simon_sockets.player_says(socket, io, db);
 
         /***************** RPI COMMENT OUT **************************************************************************/
 
@@ -129,7 +125,6 @@ function main_sockets(io, db, online) {
                         await simon_sockets.simon_end(socket, io, db);
                         console.log("SIMON FULLY END")
 
-                        /////////////////////////////////////////////////////////////////////////////////////////
                         //next
                         let next_player = queue[0];
                         console.log(`Nextplayer: ${next_player}\n`);

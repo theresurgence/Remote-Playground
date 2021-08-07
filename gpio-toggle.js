@@ -81,7 +81,6 @@ const  LED_4 = new Gpio(26, 'out'),   //simon says LEDS
      index_add,
 
      simon_info,
-     start_signal,
      sleep,
  }; 
 
